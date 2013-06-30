@@ -13,14 +13,13 @@ public final class Config {
 	
 	/**
 	 * Parse the passed class for annotated fields with the
-	 * <i>@ConfigurationOption</i>
+	 * <i>@ConfigurationOption</i> or a class with <i>@ConfigurationClass</i>
 	 * 
 	 * @author Cayde Dixon (cazzar)
 	 * @param instance
 	 *            the instance of the configurations option if it is non static
 	 * @param config
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public static void parse(Object instance, Configuration config) {
 		Class clazz = instance.getClass();
 		if (clazz.isAnnotationPresent(ConfigurationClass.class)) {
@@ -130,15 +129,6 @@ public final class Config {
 			
 			Float actual = Float.valueOf((String) value);
 			field.set(instance, actual);
-			// double def = field.getFloat(instance);
-			// double value;
-			// if (!comment.isEmpty()) value = config.get(category, key, def,
-			// comment).getDouble(def);
-			// else value = config.get(category, key, def).getDouble(def);
-			
-			// float actualValue = Float.valueOf(String.valueOf(value));
-			// field.setFloat(instance, actualValue);
-			
 		}
 		else {}
 	}
