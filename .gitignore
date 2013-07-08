@@ -1,0 +1,8 @@
+/forge
+/tmp
+*.jar
+*.zip
+bin
+out
+*.class
+.classpath
