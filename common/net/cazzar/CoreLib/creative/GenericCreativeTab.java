@@ -1,18 +1,13 @@
 /**
  * 
  */
-package net.cazzar.CoreLib.creative;
+package net.cazzar.corelib.creative;
 
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.ItemStack;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-/**
- * @author Cayde
- *
- */
 public class GenericCreativeTab extends CreativeTabs {
 	int iconID;
 	

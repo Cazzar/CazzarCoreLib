@@ -1,9 +1,9 @@
-package net.cazzar.CoreLib.packetsystem.packets;
+package net.cazzar.corelib.packetsystem.packets;
 
 import java.util.HashMap;
 import java.util.Map.Entry;
 
-import net.cazzar.CoreLib.lib.Reference;
+import net.cazzar.corelib.lib.Reference;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.packet.Packet;
 

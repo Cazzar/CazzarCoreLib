@@ -1,4 +1,4 @@
-package net.cazzar.CoreLib.configuration.annotations;
+package net.cazzar.corelib.configuration.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

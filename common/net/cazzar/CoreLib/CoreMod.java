@@ -1,17 +1,19 @@
 /**
  * 
  */
-package net.cazzar.CoreLib;
+package net.cazzar.corelib;
 
 import java.util.Map;
 
+import cpw.mods.fml.relauncher.IFMLCallHook;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 
 /**
  * @author Cayde
  *
  */
-public class CoreMod implements IFMLLoadingPlugin {
+@IFMLLoadingPlugin.MCVersion("1.6.1")
+public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
 	@Override
 	public String[] getLibraryRequestClass() {
 		return null;
@@ -19,21 +21,27 @@ public class CoreMod implements IFMLLoadingPlugin {
 
 	@Override
 	public String[] getASMTransformerClass() {
-		return null;
+		return new String[] {
+                "net.cazzar.corelib.asm.CoreLibAccessTransformer"
+        };
 	}
 
 	@Override
 	public String getModContainerClass() {
-		return ModContainer.class.getCanonicalName();
+		return "net.cazzar.corelib.ModContainer";
 	}
 
 	@Override
 	public String getSetupClass() {
-		return null;
+		return this.getClass().getCanonicalName();
 	}
 
 	@Override
 	public void injectData(Map<String, Object> data) {
 	}
-	
+
+    @Override
+    public Void call() throws Exception {
+        return null;
+    }
 }

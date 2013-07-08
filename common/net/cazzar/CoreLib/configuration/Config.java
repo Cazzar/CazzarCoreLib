@@ -1,12 +1,12 @@
-package net.cazzar.CoreLib.configuration;
+package net.cazzar.corelib.configuration;
 
 import java.lang.reflect.Field;
 
-import net.cazzar.CoreLib.configuration.annotations.BlockID;
-import net.cazzar.CoreLib.configuration.annotations.ConfigurationClass;
-import net.cazzar.CoreLib.configuration.annotations.ConfigurationComment;
-import net.cazzar.CoreLib.configuration.annotations.ConfigurationOption;
-import net.cazzar.CoreLib.configuration.annotations.ItemID;
+import net.cazzar.corelib.configuration.annotations.BlockID;
+import net.cazzar.corelib.configuration.annotations.ConfigurationClass;
+import net.cazzar.corelib.configuration.annotations.ConfigurationComment;
+import net.cazzar.corelib.configuration.annotations.ConfigurationOption;
+import net.cazzar.corelib.configuration.annotations.ItemID;
 import net.minecraftforge.common.Configuration;
 
 public final class Config {

@@ -1,10 +1,9 @@
-package net.cazzar.CoreLib;
+package net.cazzar.corelib;
 
 import java.util.Arrays;
 
-import net.cazzar.CoreLib.events.PlayerTracker;
-import net.cazzar.CoreLib.lib.Reference;
-import net.minecraftforge.common.MinecraftForge;
+import net.cazzar.corelib.events.PlayerTracker;
+import net.cazzar.corelib.lib.Reference;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;

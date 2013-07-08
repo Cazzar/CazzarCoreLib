@@ -1,4 +1,4 @@
-package net.cazzar.corelib.lib;
+package net.cazzar.corelib.util;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;

@@ -1,13 +1,13 @@
 /**
  * 
  */
-package net.cazzar.CoreLib.packetsystem;
+package net.cazzar.corelib.packetsystem;
 
 import java.util.logging.Level;
 
-import net.cazzar.CoreLib.lib.LogHelper;
-import net.cazzar.CoreLib.packetsystem.packets.BasePacket;
-import net.cazzar.CoreLib.packetsystem.packets.BasePacket.ProtocolException;
+import net.cazzar.corelib.lib.LogHelper;
+import net.cazzar.corelib.packetsystem.packets.BasePacket;
+import net.cazzar.corelib.packetsystem.packets.BasePacket.ProtocolException;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.network.INetworkManager;
@@ -44,7 +44,7 @@ public class PacketHandler implements IPacketHandler {
 			if (player instanceof EntityPlayerMP) {
 				((EntityPlayerMP) player).playerNetServerHandler
 						.kickPlayerFromServer("Protocol Exception!");
-				LogHelper.log(Level.INFO, "Player "
+				LogHelper.corelog.log(Level.INFO, "Player "
 						+ ((EntityPlayer) player).username
 						+ " caused a Protocol Exception!");
 			}

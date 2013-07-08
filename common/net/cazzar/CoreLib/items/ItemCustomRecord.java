@@ -1,4 +1,4 @@
-package net.cazzar.CoreLib.items;
+package net.cazzar.corelib.items;
 
 import java.util.HashMap;
 import java.util.List;

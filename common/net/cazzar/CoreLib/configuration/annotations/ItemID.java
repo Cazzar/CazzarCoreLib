@@ -1,3 +1,3 @@
-package net.cazzar.CoreLib.configuration.annotations;
+package net.cazzar.corelib.configuration.annotations;
 
 public @interface ItemID {}
