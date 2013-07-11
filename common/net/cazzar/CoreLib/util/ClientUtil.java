@@ -14,15 +14,15 @@ import cpw.mods.fml.relauncher.SideOnly;
  */
 @SideOnly(Side.CLIENT)
 public class ClientUtil {
-	public Minecraft mc() {
+	public static Minecraft mc() {
 		return Minecraft.getMinecraft();
 	}
 	
-	public boolean isClient() {
+	public static boolean isClient() {
 		return FMLCommonHandler.instance().getSide().isClient();
 	}
 	
-	public boolean isSinglePlayer() {
+	public static boolean isSinglePlayer() {
 		return mc().isSingleplayer();
 	}
 }

@@ -3,13 +3,12 @@ package net.cazzar.corelib.client.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.client.resources.ResourceLocation;
-
+import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
 public class TexturedButton extends GuiButton {
 
-    private final ResourceLocation	textureFile;
+    private final ResourceLocation textureFile;
     private final int				xOffset, yOffset, yOffsetForDisabled,
             xOffsetForDisabled, xOffsetForHovered, yOffsetForHovered;
     private final GuiContainer gui;

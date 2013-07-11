@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="Cazzar Core Lib" default="reobfuscate">
+<project name="Cazzar Core Lib" default="test-release">
     <property file="../scp.properties"/>
     <property name="mod.base" location="${basedir}"/>
     <property name="mod.src" location="${mod.base}/common"/>
     <property name="mod.bin" location="${mod.base}/bin"/>
+
+    <taskdef name="GetString"
+             classname="net.cazzar.ant.tasks.GetString"
+             classpath="AntTasks.jar"
+            />
+    <taskdef name="S3Upload"
+             classname="net.cazzar.ant.tasks.S3Upload"
+             classpath="AntTasks.jar"
+            />
 
     <target name="download-forge" depends="setupvars" unless="forge.downloaded">
         <echo>Downloading Minecraft Forge...</echo>
@@ -100,7 +109,7 @@
                source="1.6"
                target="1.6"
                deprecation="false"
-               destdir="${mcp.bin}"
+               destdir="${temp.bin}"
                includeantruntime="false"
                includejavaruntime="true"
                debug="true"
@@ -134,18 +143,26 @@
                 <pathelement location="${mcp.lib}/org/scala-lang/scala-compiler/2.10.2/scala-compiler-2.10.2.jar"/>
                 <pathelement location="${mcp.lib}/org/scala-lang/scala-library/2.10.2/scala-library-2.10.2.jar"/>
                 <pathelement location="${mcp.jars}/versions/${minecraft.version}/${minecraft.version}.jar"/>
+                <pathelement location="${forge.jar.built}" />
             </classpath>
             <src path="${temp.src}"/>
             <!--<src path="${mod.src}" />-->
         </javac>
     </target>
 
+    <target name="unobf-jar" depends="build" >
+        <jar destfile="${mod.jar.dev}">
+            <fileset dir="${temp.bin}" includes="**" />
+        </jar>
+    </target>
+
     <!-- - - - - - - - - - - - - - - - - -
               target: reobfuscate
          Reobfuscate the compiled                
          - - - - - - - - - - - - - - - - - -->
-    <target name="reobfuscate" depends="build">
+    <target name="reobfuscate" depends="unobf-jar">
         <unzip src="${forge.jar.built}" dest="${mcp.bin}"/>
+        <copydir dest="${mcp.bin}" src="${temp.bin}" includes="**" />
         <echo message="Reobfuscating ${modname}." level="info"/>
         <exec executable="${python.exe}" dir="${mcp.base}" failonerror="true">
             <arg value="${mcp.base}/runtime/reobfuscate.py"/>
@@ -153,7 +170,7 @@
         </exec>
         <echo message="Building a release jar."/>
         <jar destfile="${mod.jar.release}">
-            <fileset dir="${mcp.reobf}" includes="**"/>
+            <fileset dir="${mcp.reobf}" includes="net/cazzar/**"/>
             <fileset dir="${mod.src}">
                 <exclude name="mcmod.info"/>
                 <exclude name="**/*.java"/>
@@ -203,6 +220,8 @@
                  token="@BUILD_NUMBER@"
                  value="${build_number.build_number}"
                 />
+
+        <mkdir dir="${temp.bin}" />
     </target>
 
     <!-- - - - - - - - - - - - - - - - - -
@@ -215,10 +234,11 @@
         <echo>Setting up values...</echo>
 
         <property environment="env"/>
-        <property name="modname" value="JukeboxReloaded"/>
+        <property name="modname" value="CazzarCoreLib"/>
 
         <property name="temp.dir" location="${mod.base}/tmp"/>
         <property name="temp.src" location="${temp.dir}/src"/>
+        <property name="temp.bin" location="${temp.dir}/bin"/>
 
         <property name="forge.base" location="${mod.base}/forge"/>
         <property name="forge.jar.built" location="${mod.base}/minecraftforge-built.jar"/>
@@ -259,9 +279,11 @@
         <property name="forge.version" value="${build.forgeversion}"/>
 
         <property name="mod.jar.release"
-                  location="${mod.base}/build/${version}/${modname}-universal-${minecraft.version}-${version}-Forge-${build.forgeversion}.jar"
+                  location="${mod.base}/build/${modname}-universal-${minecraft.version}-${version}-Forge-${build.forgeversion}.jar"
                 />
-
+        <property name="mod.jar.dev"
+                  location="${mod.base}/build/${modname}-universal-${minecraft.version}-${version}-Forge-${build.forgeversion}-dev.jar"
+                />
 
         <condition property="forge.downloaded" value="true">
             <resourceexists>
@@ -325,19 +347,14 @@
           target: scp-test                      
          - - - - - - - - - - - - - - - - - -->
     <target name="scp-test" depends="reobfuscate">
-        <sshexec host="${scp.server}"
-                 username="${scp.username}"
-                 password="${scp.password}"
-                 command="mkdir -p ${scp.basedir}/${modname}/test/${version}/"
+        <S3Upload accessKey="${aws.accessId}"
+                  secretKey="${aws.secretKey}"
+                  bucketName="${aws.bucket}"
+                  prefix="${modname}/test/${version}"
+                  file="${mod.jar.release}"
                 />
 
-        <scp file="${mod.jar.release}"
-             todir="${scp.username}@${scp.server}:${scp.basedir}/${modname}/test/${version}/"
-             password="${scp.password}"
-             failonerror="true"
-                />
-
-        <echo message="The direct download URL is: ${scp.downloadbase}/${modname}/test/${version}/${modname}-universal-${minecraft.version}-${version}-Forge-${build.forgeversion}.jar"
+        <echo message="The direct download URL is: ${scp.downloadbase}/${modname}/test/${modname}-universal-${minecraft.version}-${version}-Forge-${build.forgeversion}.jar"
               level="info"
                 />
     </target>
@@ -349,19 +366,14 @@
             depends="reobfuscate"
             description="Upload the reobfusticated release version"
             >
-        <sshexec host="${scp.server}"
-                 username="${scp.username}"
-                 password="${scp.password}"
-                 command="mkdir -p ${scp.basedir}/${modname}/${version}/"
+        <S3Upload accessKey="${aws.accessId}"
+                  secretKey="${aws.secretKey}"
+                  bucketName="${aws.bucket}"
+                  prefix="${modname}"
+                  file="${mod.jar.release}"
                 />
 
-        <scp file="${mod.jar.release}"
-             todir="${scp.username}@${scp.server}:${scp.basedir}/${modname}/${version}/"
-             password="${scp.password}"
-             failonerror="true"
-                />
-
-        <echo message="The direct download URL is: ${scp.downloadbase}/${modname}/${version}/${modname}-universal-${minecraft.version}-${version}-Forge-${build.forgeversion}.jar"
+        <echo message="The direct download URL is: ${scp.downloadbase}${modname}/${modname}-universal-${minecraft.version}-${version}-Forge-${build.forgeversion}.jar"
               level="info"
                 />
         <taskdef name="GetString"
@@ -369,7 +381,7 @@
                  classpath="AntTasks.jar"
                 />
         <GetString
-                url="${adfly.api}${scp.downloadbase}/${modname}/${version}/${modname}-universal-${minecraft.version}-${version}-Forge-${build.forgeversion}.jar"
+                url="${adfly.api}${scp.downloadbase}${modname}/${modname}-universal-${minecraft.version}-${version}-Forge-${build.forgeversion}.jar"
                 />
     </target>
 </project>

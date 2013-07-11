@@ -1,5 +1,7 @@
 package net.cazzar.corelib.lib;
 
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.cazzar.corelib.util.CommonUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundManager;
@@ -79,7 +81,8 @@ public class SoundSystemHelper {
         return getSoundSystem().playing(identifier);
     }
 
+    @SideOnly(Side.CLIENT)
     public static void registerRecord(String s) {
-
+        getSoundManager().soundPoolStreaming.addSound(s);
     }
 }
