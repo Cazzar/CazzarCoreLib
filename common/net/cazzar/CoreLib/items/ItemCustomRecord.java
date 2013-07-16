@@ -14,9 +14,14 @@ import java.util.List;
 
 import static java.util.Collections.addAll;
 
+/**
+ * A custom
+ */
 public class ItemCustomRecord extends ItemRecord {
     String recordInfo;
     String[] details;
+    @SideOnly(Side.CLIENT)
+    EnumRarity rarity = null;
 
     public ItemCustomRecord(int ID, String recordFile, String recordInfo, String... details) {
         super(ID, recordFile.substring(0, recordFile.indexOf('.')));
@@ -50,7 +55,10 @@ public class ItemCustomRecord extends ItemRecord {
     @Override
     @SideOnly(Side.CLIENT)
     public EnumRarity getRarity(ItemStack par1ItemStack) {
-        return EnumRarity.rare;
+        if (rarity == null) {
+            return EnumRarity.rare;
+        }
+        return rarity;
     }
 
     @Override
@@ -63,5 +71,15 @@ public class ItemCustomRecord extends ItemRecord {
     @SideOnly(Side.CLIENT)
     public void registerIcons(IconRegister register) {
         itemIcon = register.registerIcon(recordName);
+    }
+
+    /**
+     * Set the rarity of the
+     *
+     * @param rarity
+     */
+    @SideOnly(Side.CLIENT)
+    public void setRarity(EnumRarity rarity) {
+        this.rarity = rarity;
     }
 }

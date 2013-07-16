@@ -8,21 +8,31 @@ import java.util.List;
 /**
  * User: Cayde
  */
-public abstract class Command implements ICommand{
+public abstract class Command implements ICommand {
     private final String name;
 
+    /**
+     * Initializes the {@link Command} class
+     *
+     * @param name
+     */
     public Command(String name) {
         this.name = name;
     }
 
+    /**
+     * Gets the command name
+     *
+     * @return the command name
+     */
     @Override
-    public String getCommandName() {
+    public final String getCommandName() {
         return name;
     }
 
     @Override
     public String getCommandUsage(ICommandSender icommandsender) {
-        return "/" +  name;
+        return "/" + name;
     }
 
     @Override

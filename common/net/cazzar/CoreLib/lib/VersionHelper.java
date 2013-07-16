@@ -46,8 +46,8 @@ public class VersionHelper implements Runnable {
     }
 
     /**
-     * Checks the version of the currently running instance of the mod against the remote version authority, and sets the
-     * result of the check appropriately
+     * Checks the version of the currently running instance of the mod against the remote version authority, and sets
+     * the result of the check appropriately
      */
     public void checkVersion() {
 
@@ -175,9 +175,9 @@ public class VersionHelper implements Runnable {
 
     public void logResult() {
 
-        if (result == Result.CURRENT || result == Result.OUTDATED) LogHelper.corelog.log(Level.INFO,
+        if (result == Result.CURRENT || result == Result.OUTDATED) LogHelper.coreLog.log(Level.INFO,
                 getResultMessage());
-        else LogHelper.corelog.log(Level.WARNING, getResultMessage());
+        else LogHelper.coreLog.log(Level.WARNING, getResultMessage());
     }
 
     @Override
@@ -185,7 +185,7 @@ public class VersionHelper implements Runnable {
 
         int count = 0;
 
-        LogHelper.corelog
+        LogHelper.coreLog
                 .log(Level.INFO,
                         "Initializing remote version check against remote version authority, located at "
                                 + REMOTE_VERSION_XML_FILE);

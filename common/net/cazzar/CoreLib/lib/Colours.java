@@ -26,7 +26,7 @@ public enum Colours {
     UNDERLINE('n'),
     RESET('r');
 
-    static char section = '§';
+    private static char section = '§';
     private final char code;
     private final int red, green, blue;
 
@@ -41,6 +41,11 @@ public enum Colours {
         this(code, 0, 0, 0);
     }
 
+    /**
+     * Get the LWJGL {@link Color} of the Minecraft colours
+     *
+     * @return The LWJGL colour
+     */
     public Color getColour() {
         return new Color(red, green, blue);
     }
@@ -50,6 +55,11 @@ public enum Colours {
         return String.valueOf(section) + code;
     }
 
+    /**
+     * Get the hexadecimal version of the colour
+     *
+     * @return A {@link String} containing the colour in hex format <i>RRGGBBAA</i>
+     */
     public String getHex() {
         return String.format("%s%s%sFF", red, green, blue);
     }

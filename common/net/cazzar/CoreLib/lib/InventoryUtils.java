@@ -5,6 +5,12 @@ import net.minecraft.nbt.*;
 
 public class InventoryUtils {
 
+    /**
+     * Read the items from NBT
+     *
+     * @param items   the items
+     * @param tagList the NBT tag list
+     */
     public static void readItemStacksFromTag(ItemStack[] items,
                                              NBTTagList tagList) {
         for (int i = 0; i < tagList.tagCount(); i++) {
@@ -20,10 +26,25 @@ public class InventoryUtils {
         }
     }
 
+    /**
+     * Create a {@link NBTTagList} of the items
+     *
+     * @param items the list of items
+     *
+     * @return the generated tag list
+     */
     public static NBTTagList writeItemStacksToTag(ItemStack[] items) {
         return writeItemStacksToTag(items, 64);
     }
 
+    /**
+     * Create a {@link NBTTagList} of the items
+     *
+     * @param items       the list of items
+     * @param maxQuantity the max stack size.
+     *
+     * @return the generated tag list
+     */
     public static NBTTagList writeItemStacksToTag(ItemStack[] items,
                                                   int maxQuantity) {
         final NBTTagList tagList = new NBTTagList();
