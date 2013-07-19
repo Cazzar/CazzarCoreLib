@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2013 cazzar
+ *
+ *     This program is free software: you can redistribute it and/or modify
+ *     it under the terms of the GNU General Public License as published by
+ *     the Free Software Foundation, either version 3 of the License, or
+ *     (at your option) any later version.
+ *
+ *     This program is distributed in the hope that it will be useful,
+ *     but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *     GNU General Public License for more details.
+ *
+ *     You should have received a copy of the GNU General Public License
+ *     along with this program.  If not, see [http://www.gnu.org/licenses/].
+ */
+
 /**
  *
  */
@@ -11,17 +28,20 @@ import net.cazzar.corelib.lib.LogHelper;
 
 import java.io.File;
 import java.lang.reflect.Field;
-import java.lang.reflect.Modifier;
 import java.util.Map;
 import java.util.logging.Level;
 
 public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
-    private static final boolean runtimeDeobfuscationEnabled = true;
-    private static final String deobfuscationFileName = null;
-    private static final File mcLocation = null;
+    private static boolean runtimeDeobfuscationEnabled = true;
+    private static String deobfuscationFileName = null;
+    private static File mcLocation = null;
 
     public static String getDeobfuscationFileName() {
         return deobfuscationFileName;
+    }
+
+    public static boolean getRuntimeDeobfuscationEnabled() {
+        return runtimeDeobfuscationEnabled;
     }
 
     @Override
@@ -32,8 +52,8 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
     @Override
     public String[] getASMTransformerClass() {
         return new String[]{
-                "net.cazzar.corelib.asm.CoreLibAccessTransformer",
-                "net.cazzar.corelib.asm.SrgAccessTransformer"
+                //"net.cazzar.corelib.asm.CoreLibAccessTransformer"
+                //"net.cazzar.corelib.asm.SrgAccessTransformer"
         };
     }
 
@@ -53,9 +73,6 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
             try {
                 Field f = this.getClass().getDeclaredField(key);
                 f.setAccessible(true);
-                Field modifiers = f.getClass().getDeclaredField("modifiers");
-                modifiers.setAccessible(true);
-                modifiers.setInt(f, f.getModifiers() & ~Modifier.FINAL);
                 f.set(null, data.get(key));
             } catch (NoSuchFieldException ignored) {
             } catch (IllegalAccessException e) {
@@ -68,6 +85,7 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
     public Void call() throws Exception {
         McpMappings.instance();
 
+        java.lang.System.out.println("TICK!");
         new SrgAccessTransformer("cazzarcorelib_at.cfg");
         return null;
     }
