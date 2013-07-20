@@ -1,4 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ Copyright (C) 2013 cazzar
+  ~
+  ~     This program is free software: you can redistribute it and/or modify
+  ~     it under the terms of the GNU General Public License as published by
+  ~     the Free Software Foundation, either version 3 of the License, or
+  ~     (at your option) any later version.
+  ~
+  ~     This program is distributed in the hope that it will be useful,
+  ~     but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~     GNU General Public License for more details.
+  ~
+  ~     You should have received a copy of the GNU General Public License
+  ~     along with this program.  If not, see [http://www.gnu.org/licenses/].
+  -->
+
 <project name="Cazzar Core Lib" default="test-release">
     <property file="../scp.properties"/>
     <property name="mod.base" location="${basedir}"/>
@@ -31,9 +48,9 @@
                dest="${mod.base}"
                 />
 
-        <mkdir dir="${forge.accesstransformers}" />
+        <mkdir dir="${forge.accesstransformers}"/>
 
-        <copy todir="${forge.accesstransformers}" file="${mod.src}/cazzarcorelib_at.cfg" />
+        <copy todir="${forge.accesstransformers}" file="${mod.src}/cazzarcorelib_at.cfg"/>
 
         <exec executable="${python.exe}" dir="${forge.base}" failonerror="true">
             <arg value="${forge.base}/install.py"/>
@@ -66,7 +83,7 @@
                         location="${mcp.lib}/com/paulscode/libraryjavasound/20101123/libraryjavasound-20101123.jar"/>
                 <pathelement
                         location="${mcp.lib}/com/paulscode/librarylwjglopenal/20100824/librarylwjglopenal-20100824.jar"/>
-                <pathelement location="${mcp.lib}/com/paulscode/soundsystem/20120107/soundsystem-20120107.jar" />
+                <pathelement location="${mcp.lib}/com/paulscode/soundsystem/20120107/soundsystem-20120107.jar"/>
                 <pathelement location="${mcp.lib}/commons-io/commons-io/2.4/commons-io-2.4.jar"/>
                 <pathelement location="${mcp.lib}/lzma/lzma/0.0.1/lzma-0.0.1.jar"/>
                 <pathelement location="${mcp.lib}/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar"/>
@@ -127,7 +144,7 @@
                         location="${mcp.lib}/com/paulscode/libraryjavasound/20101123/libraryjavasound-20101123.jar"/>
                 <pathelement
                         location="${mcp.lib}/com/paulscode/librarylwjglopenal/20100824/librarylwjglopenal-20100824.jar"/>
-                <pathelement location="${mcp.lib}/com/paulscode/soundsystem/20120107/soundsystem-20120107.jar" />
+                <pathelement location="${mcp.lib}/com/paulscode/soundsystem/20120107/soundsystem-20120107.jar"/>
                 <pathelement location="${mcp.lib}/commons-io/commons-io/2.4/commons-io-2.4.jar"/>
                 <pathelement location="${mcp.lib}/lzma/lzma/0.0.1/lzma-0.0.1.jar"/>
                 <pathelement location="${mcp.lib}/net/java/jinput/jinput/2.0.5/jinput-2.0.5.jar"/>
@@ -143,16 +160,16 @@
                 <pathelement location="${mcp.lib}/org/scala-lang/scala-compiler/2.10.2/scala-compiler-2.10.2.jar"/>
                 <pathelement location="${mcp.lib}/org/scala-lang/scala-library/2.10.2/scala-library-2.10.2.jar"/>
                 <pathelement location="${mcp.jars}/versions/${minecraft.version}/${minecraft.version}.jar"/>
-                <pathelement location="${forge.jar.built}" />
+                <pathelement location="${forge.jar.built}"/>
             </classpath>
             <src path="${temp.src}"/>
             <!--<src path="${mod.src}" />-->
         </javac>
     </target>
 
-    <target name="unobf-jar" depends="build" >
+    <target name="unobf-jar" depends="build">
         <jar destfile="${mod.jar.dev}">
-            <fileset dir="${temp.bin}" includes="**" />
+            <fileset dir="${temp.bin}" includes="**"/>
         </jar>
     </target>
 
@@ -162,7 +179,7 @@
          - - - - - - - - - - - - - - - - - -->
     <target name="reobfuscate" depends="unobf-jar">
         <unzip src="${forge.jar.built}" dest="${mcp.bin}"/>
-        <copydir dest="${mcp.bin}" src="${temp.bin}" includes="**" />
+        <copydir dest="${mcp.bin}" src="${temp.bin}" includes="**"/>
         <echo message="Reobfuscating ${modname}." level="info"/>
         <exec executable="${python.exe}" dir="${mcp.base}" failonerror="true">
             <arg value="${mcp.base}/runtime/reobfuscate.py"/>
@@ -221,7 +238,7 @@
                  value="${build_number.build_number}"
                 />
 
-        <mkdir dir="${temp.bin}" />
+        <mkdir dir="${temp.bin}"/>
     </target>
 
     <!-- - - - - - - - - - - - - - - - - -
@@ -354,7 +371,7 @@
                   file="${mod.jar.release}"
                 />
 
-        <echo message="The direct download URL is: ${scp.downloadbase}/${modname}/test/${modname}-universal-${minecraft.version}-${version}-Forge-${build.forgeversion}.jar"
+        <echo message="The direct download URL is: ${scp.downloadbase}${modname}/test/${modname}-universal-${minecraft.version}-${version}-Forge-${build.forgeversion}.jar"
               level="info"
                 />
     </target>
