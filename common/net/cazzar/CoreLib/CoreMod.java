@@ -85,7 +85,6 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
     public Void call() throws Exception {
         McpMappings.instance();
 
-        java.lang.System.out.println("TICK!");
         new SrgAccessTransformer("cazzarcorelib_at.cfg");
         return null;
     }

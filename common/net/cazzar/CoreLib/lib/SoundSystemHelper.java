@@ -71,8 +71,7 @@ public class SoundSystemHelper {
      * @param volume     the volume to play at
      * @param identifier the identifier to play at.
      */
-    public static void playRecord(String record, float x, float y,
-                                  float z, float volume, String identifier) {
+    public static void playRecord(String record, float x, float y, float z, float volume, String identifier) {
         if (!isSoundEnabled()) return;
 
         SoundSystem sndSystem = getSoundSystem();
@@ -80,26 +79,21 @@ public class SoundSystemHelper {
         ItemRecord itemrecord = ItemRecord.getRecord(record);
         if (itemrecord == null) return;
 
-        Minecraft.getMinecraft().ingameGUI.setRecordPlayingMessage(itemrecord
-                .getRecordTitle());
+        Minecraft.getMinecraft().ingameGUI.setRecordPlayingMessage(itemrecord.getRecordTitle());
         if (sndSystem.playing(identifier)) sndSystem.stop(identifier);
 
-        SoundPoolEntry song = getSoundManager().soundPoolStreaming
-                .getRandomSoundFromSoundPool(record);
-        song = SoundEvent.getResult(new PlayStreamingEvent(getSoundManager(),
-                song, identifier, x, y, z));
+        SoundPoolEntry song = getSoundManager().soundPoolStreaming.getRandomSoundFromSoundPool(record);
+        song = SoundEvent.getResult(new PlayStreamingEvent(getSoundManager(), song, identifier, x, y, z));
 
         if (song == null) return;
         if (sndSystem.playing("BgMusic")) sndSystem.stop("BgMusic");
 
         float f3 = 16.0F * volume;
-        sndSystem.newStreamingSource(true, identifier, song.func_110457_b(),
-                song.func_110458_a(), false, x, y, z, 2, f3 * 4.0F);
+        sndSystem.newStreamingSource(true, identifier, song.func_110457_b(), song.func_110458_a(), false, x, y, z, 2, f3 * 4.0F);
 
         sndSystem.setVolume(identifier, volume * Minecraft.getMinecraft().gameSettings.soundVolume);
 
-        MinecraftForge.EVENT_BUS.post(new PlayStreamingSourceEvent(
-                getSoundManager(), identifier, x, y, z));
+        MinecraftForge.EVENT_BUS.post(new PlayStreamingSourceEvent(getSoundManager(), identifier, x, y, z));
         sndSystem.play(identifier);
     }
 
