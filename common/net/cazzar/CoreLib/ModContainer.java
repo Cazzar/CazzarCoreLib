@@ -26,6 +26,9 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.TickRegistry;
+import cpw.mods.fml.relauncher.Side;
+import net.cazzar.corelib.client.ClientTickHandler;
 import net.cazzar.corelib.events.PlayerTracker;
 import net.cazzar.corelib.lib.Reference;
 
@@ -55,6 +58,8 @@ public class ModContainer extends DummyModContainer {
     @Subscribe
     public void preInit(FMLPreInitializationEvent event) throws IOException {
         GameRegistry.registerPlayerTracker(new PlayerTracker());
+
+        TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);
     }
 
     @Subscribe

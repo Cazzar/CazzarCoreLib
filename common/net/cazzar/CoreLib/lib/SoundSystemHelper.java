@@ -17,12 +17,15 @@
 
 package net.cazzar.corelib.lib;
 
+import com.google.common.collect.Lists;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.cazzar.corelib.util.ClientUtil;
 import net.cazzar.corelib.util.CommonUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.SoundManager;
 import net.minecraft.client.audio.SoundPoolEntry;
+import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemRecord;
 import net.minecraftforge.client.event.sound.PlayStreamingEvent;
 import net.minecraftforge.client.event.sound.PlayStreamingSourceEvent;
@@ -30,8 +33,12 @@ import net.minecraftforge.client.event.sound.SoundEvent;
 import net.minecraftforge.common.MinecraftForge;
 import paulscode.sound.SoundSystem;
 
+import java.util.List;
+
 @SuppressWarnings("UnusedDeclaration")
 public class SoundSystemHelper {
+
+    private static List<Entity> entitiesPlayingMusic = Lists.newArrayList();
 
     /**
      * Get the Minecraft sound system manager
@@ -153,5 +160,66 @@ public class SoundSystemHelper {
     @SideOnly(Side.CLIENT)
     public static void registerRecord(String s) {
         getSoundManager().soundPoolStreaming.addSound(s);
+    }
+
+    /**
+     * Play a record at the Entity
+     */
+    public static void playRecordAtEntity(Entity entity, String recordName, float volume) {
+        //The sound name, the entity, the volume, the pitch, priority
+        //getSoundManager().playEntitySound("streaming." + recordName, entity, 0.5F * ClientUtil.mc().gameSettings.soundVolume, 0, true);
+        if (!isSoundEnabled()) {
+            return;
+        }
+        String s1 = "entity_" + entity.entityId;
+
+        if (getSoundSystem().playing(s1)) {
+            getSoundManager().updateSoundLocation(entity);
+        } else {
+            if (getSoundSystem().playing(s1)) {
+                getSoundSystem().stop(s1);
+            }
+
+            if (recordName != null) {
+                SoundPoolEntry soundpoolentry = getSoundManager().soundPoolStreaming.getRandomSoundFromSoundPool(recordName);
+
+                if (soundpoolentry != null && volume > 0.0F) {
+                    float f2 = 16.0F;
+
+                    if (volume > 1.0F) {
+                        f2 *= volume;
+                    }
+
+                    getSoundSystem().newSource(true, s1, soundpoolentry.func_110457_b(), soundpoolentry.func_110458_a(), false, (float) entity.posX, (float) entity.posY, (float) entity.posZ, 2, f2);
+                    //getSoundSystem().setLooping(s1, true);
+                    //getSoundSystem().setPitch(s1, 0);
+
+                    if (volume > 1.0F) {
+                        volume = 1.0F;
+                    }
+
+                    getSoundSystem().setVolume(s1, volume * ClientUtil.mc().gameSettings.soundVolume);
+                    getSoundSystem().setVelocity(s1, (float) entity.motionX, (float) entity.motionY, (float) entity.motionZ);
+                    getSoundSystem().play(s1);
+                }
+            }
+        }
+
+
+        entitiesPlayingMusic.add(entity);
+    }
+
+    public static synchronized void updateEntitySoundVelocities() {
+        for (Entity e : entitiesPlayingMusic) {
+            //getSoundManager().updateSoundLocation(e);
+            String s = "entity_" + e.entityId;
+
+            if (getSoundSystem().playing(s)) {
+                getSoundSystem().setPosition(s, (float) e.posX, (float) e.posY, (float) e.posZ);
+                getSoundSystem().setVelocity(s, (float) e.motionX, (float) e.motionY, (float) e.motionZ);
+            } else {
+                entitiesPlayingMusic.remove(e);
+            }
+        }
     }
 }
