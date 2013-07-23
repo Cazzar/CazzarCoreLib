@@ -138,7 +138,8 @@ public class SoundSystemHelper {
     /**
      * Check if a identifier is playing
      *
-     * @param identifier the identifier to check
+     * @param identifier the identifier to check.
+     * @return if the {@link SoundSystem} is playing with that identifier.
      */
     public static boolean isPlaying(String identifier) {
         return isSoundEnabled() && getSoundSystem().playing(identifier);
@@ -171,7 +172,7 @@ public class SoundSystemHelper {
         if (!isSoundEnabled()) {
             return;
         }
-        String s1 = "entity_" + entity.entityId;
+        String s1 = getEntityChannel(entity);
 
         if (getSoundSystem().playing(s1)) {
             getSoundManager().updateSoundLocation(entity);
@@ -212,7 +213,7 @@ public class SoundSystemHelper {
     public static synchronized void updateEntitySoundVelocities() {
         for (Entity e : entitiesPlayingMusic) {
             //getSoundManager().updateSoundLocation(e);
-            String s = "entity_" + e.entityId;
+            String s = getEntityChannel(e);
 
             if (getSoundSystem().playing(s)) {
                 getSoundSystem().setPosition(s, (float) e.posX, (float) e.posY, (float) e.posZ);
@@ -221,5 +222,9 @@ public class SoundSystemHelper {
                 entitiesPlayingMusic.remove(e);
             }
         }
+    }
+
+    public static String getEntityChannel(Entity entity) {
+        return "entity_" + entity.entityId;
     }
 }

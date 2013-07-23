@@ -26,6 +26,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 public class PlayerRespawnEvent extends PlayerEvent {
     /**
      * A basic event for the Player respawning.
+     * @param player the player that triggered the event
      */
     public PlayerRespawnEvent(EntityPlayer player) {
         super(player);

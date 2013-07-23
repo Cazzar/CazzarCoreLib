@@ -29,7 +29,7 @@ public final class Config {
      * <i>@ConfigurationClass</i>
      *
      * @param instance the instance of the configurations option if it is non static
-     * @param config
+     * @param config the instance of the configuration to parse from.
      */
     public static void parse(Object instance, Configuration config) {
         Class clazz = instance.getClass();
@@ -129,18 +129,18 @@ public final class Config {
         } else if (type == float.class || type == Float.class) {
             Object def = field.get(instance);
             String value;
-            value = config.get(category, key, String.valueOf((Float) def),
+            value = config.get(category, key, String.valueOf(def),
                     comment).getString();
 
-            Float actual = Float.valueOf((String) value);
+            Float actual = Float.valueOf(value);
             field.set(instance, actual);
         }
     }
 
     private static void parseClass(Object instance, Configuration config) {
-        Class<? extends Object> clazz = instance.getClass();
+        Class<?> clazz = instance.getClass();
 
-        ConfigurationClass annotation = (ConfigurationClass) clazz
+        ConfigurationClass annotation = clazz
                 .getAnnotation(ConfigurationClass.class);
         if (annotation == null) {
             return;

@@ -27,6 +27,7 @@ public class PlayerLoginEvent extends PlayerEvent {
 
     /**
      * A basic event for the Player logging in.
+     * @param player the player that triggered the event
      */
     public PlayerLoginEvent(EntityPlayer player) {
         super(player);
