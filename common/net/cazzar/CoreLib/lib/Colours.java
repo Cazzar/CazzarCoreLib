@@ -43,7 +43,7 @@ public enum Colours {
     UNDERLINE('n'),
     RESET('r');
 
-    private static char section = '§';
+    private static char section = '\u00a7';
     private final char code;
     private final int red, green, blue;
 
