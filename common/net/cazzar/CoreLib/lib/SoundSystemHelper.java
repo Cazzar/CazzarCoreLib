@@ -96,7 +96,7 @@ public class SoundSystemHelper {
         if (sndSystem.playing("BgMusic")) sndSystem.stop("BgMusic");
 
         float f3 = 16.0F * volume;
-        sndSystem.newStreamingSource(true, identifier, song.func_110457_b(), song.func_110458_a(), false, x, y, z, 2, f3 * 4.0F);
+        sndSystem.newStreamingSource(true, identifier, song.getSoundUrl(), song.getSoundName(), false, x, y, z, 2, f3 * 4.0F);
 
         sndSystem.setVolume(identifier, volume * Minecraft.getMinecraft().gameSettings.soundVolume);
 
@@ -191,7 +191,7 @@ public class SoundSystemHelper {
                         f2 *= volume;
                     }
 
-                    getSoundSystem().newSource(true, s1, soundpoolentry.func_110457_b(), soundpoolentry.func_110458_a(), false, (float) entity.posX, (float) entity.posY, (float) entity.posZ, 2, f2);
+                    getSoundSystem().newSource(true, s1, soundpoolentry.getSoundUrl(), soundpoolentry.getSoundName(), false, (float) entity.posX, (float) entity.posY, (float) entity.posZ, 2, f2);
                     //getSoundSystem().setLooping(s1, true);
                     //getSoundSystem().setPitch(s1, 0);
 

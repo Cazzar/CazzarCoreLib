@@ -43,7 +43,6 @@ public enum Colours {
     UNDERLINE('n'),
     RESET('r');
 
-    private static char section = '\u00a7'; 
     private final char code;
     private final int red, green, blue;
 
@@ -69,6 +68,7 @@ public enum Colours {
 
     @Override
     public String toString() {
+        char section = '\u00a7';
         return String.valueOf(section) + code;
     }
 

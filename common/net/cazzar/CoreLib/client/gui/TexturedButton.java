@@ -73,7 +73,7 @@ public class TexturedButton extends GuiButton {
     public void drawButton(Minecraft mc, int x, int y) {
         if (drawButton) {
             // mc.renderEngine.bindTexture(textureFile);
-            mc.renderEngine.func_110577_a(textureFile);
+            mc.renderEngine.bindTexture(textureFile);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             field_82253_i = x >= xPosition && y >= yPosition
                     && x < xPosition + width && y < yPosition + height;

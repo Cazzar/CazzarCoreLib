@@ -37,7 +37,6 @@ import static java.util.Collections.addAll;
 public class ItemCustomRecord extends ItemRecord {
     String recordInfo;
     String[] details;
-    @SideOnly(Side.CLIENT)
     EnumRarity rarity = null;
 
     public ItemCustomRecord(int ID, String recordFile, String recordInfo, String... details) {

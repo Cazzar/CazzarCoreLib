@@ -28,13 +28,13 @@ import net.minecraft.client.Minecraft;
 /**
  * @author Cayde
  */
-@SideOnly(Side.CLIENT)
 public class ClientUtil {
     /**
      * Get the minecraft instance
      *
      * @return the Minecraft instance
      */
+    @SideOnly(Side.CLIENT)
     public static Minecraft mc() {
         return Minecraft.getMinecraft();
     }
@@ -48,6 +48,7 @@ public class ClientUtil {
         return FMLCommonHandler.instance().getSide().isClient();
     }
 
+    @SideOnly(Side.CLIENT)
     public static boolean isSinglePlayer() {
         return mc().isSingleplayer();
     }

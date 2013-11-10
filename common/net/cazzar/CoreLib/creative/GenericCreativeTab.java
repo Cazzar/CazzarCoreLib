@@ -23,6 +23,7 @@ package net.cazzar.corelib.creative;
 import cpw.mods.fml.common.registry.LanguageRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.cazzar.corelib.util.ClientUtil;
 import net.minecraft.creativetab.CreativeTabs;
 
 /**
@@ -50,7 +51,8 @@ public class GenericCreativeTab extends CreativeTabs {
      * @return the tab for easy chaining setup.
      */
     public GenericCreativeTab setTranslation(String trans) {
-        LanguageRegistry.instance().addStringLocalization("itemGroup." + getTabLabel(), trans);
+        if (ClientUtil.isClient())
+            LanguageRegistry.instance().addStringLocalization("itemGroup." + getTabLabel(), trans);
         return this;
     }
 
