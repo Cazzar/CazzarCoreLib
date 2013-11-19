@@ -38,6 +38,33 @@ public class ClientTickHandler implements ITickHandler {
     @Override
     public void tickStart(EnumSet<TickType> type, Object... tickData) {
         SoundSystemHelper.updateEntitySoundVelocities();
+
+        /*if (ClientUtil.mc().theWorld != null && ClientUtil.mc().theWorld.playerEntities.size() > 0) {
+            @SuppressWarnings("unchecked") List<AbstractClientPlayer> players = ClientUtil.mc().theWorld.playerEntities;
+
+            for(AbstractClientPlayer player : players) {
+                if (player == null) continue;
+
+                if (true) {
+                    //YAY! Reflection!
+                    Field skin = ReflectionHelper.findField(AbstractClientPlayer.class, "locationSkin", "field_110312_d");
+                    if (skin == null)
+                        continue;
+
+                    try {
+                        ResourceLocation location = (ResourceLocation) skin.get(player);
+                        ResourceLocation cheetah = new ResourceLocation("cazzarcore", "textures/entity/Cheetah.png");
+
+                        if (!location.equals(cheetah)) {
+                            skin.set(player, cheetah);
+                        }
+
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }*/
     }
 
     /**

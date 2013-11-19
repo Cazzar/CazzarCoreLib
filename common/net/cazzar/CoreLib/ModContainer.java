@@ -29,8 +29,10 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import net.cazzar.corelib.client.ClientTickHandler;
+import net.cazzar.corelib.client.RenderEventHandler;
 import net.cazzar.corelib.events.PlayerTracker;
 import net.cazzar.corelib.lib.Reference;
+import net.minecraftforge.common.MinecraftForge;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -48,7 +50,7 @@ public class ModContainer extends DummyModContainer {
         meta.url = "http://www.cazzar.net/";
         meta.version = "@VERSION@";
     }
-
+                    3
     @Override
     public boolean registerBus(EventBus bus, LoadController controller) {
         bus.register(this);
@@ -59,6 +61,7 @@ public class ModContainer extends DummyModContainer {
     public void preInit(FMLPreInitializationEvent event) throws IOException {
         GameRegistry.registerPlayerTracker(new PlayerTracker());
 
+        MinecraftForge.EVENT_BUS.register(new RenderEventHandler());
         TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);
     }
 
