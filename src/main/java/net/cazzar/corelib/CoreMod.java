@@ -46,7 +46,7 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
 
     @Override
     public String[] getLibraryRequestClass() {
-        return null;
+        return new String[0];
     }
 
     @Override
