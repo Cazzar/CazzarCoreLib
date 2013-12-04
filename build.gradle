@@ -67,7 +67,7 @@ task sourceJar(type: Jar) {
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-        appendix = 'javadoc-'+project.minecraft.minecraftVersion
+        appendix = 'javadoc-'+project.minecraft.version
         from 'build/docs/javadoc'
 }
 
