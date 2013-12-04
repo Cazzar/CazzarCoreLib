@@ -1,20 +1,19 @@
-// this is the part that adds the GMCP plugin to your project
 buildscript {
-	repositories { 
-		mavenCentral()
-		maven { 
-			url 'https://oss.sonatype.org/content/groups/public/' 
-		}
-		maven {
-			name 'forge'
-			url 'http://files.minecraftforge.net/maven'
-		}
-	}
-	
-	dependencies { 
-		classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
-		classpath 'org.ajoberstar:gradle-git:0.7.0-SNAPSHOT'
-	}
+    repositories {
+        mavenCentral()
+        maven {
+            url 'https://oss.sonatype.org/content/groups/public/'
+        }
+        maven {
+            name 'forge'
+            url 'http://files.minecraftforge.net/maven'
+        }
+    }
+
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
+        classpath 'org.ajoberstar:gradle-git:0.7.0-SNAPSHOT'
+    }
 }
 
 apply plugin: 'forge'  // actually applies the plugin.
@@ -28,9 +27,6 @@ repositories {  mavenCentral() }
 dependencies {
     deployerJars 'org.springframework.build.aws:org.springframework.build.aws.maven:3.0.0.RELEASE'
 }
-
-def repo = grgit.repo('.')
-
 group = 'net.cazzar.corelib'
 version = '1.0.2'
 archivesBaseName = 'CazzarCoreLib'
@@ -39,94 +35,100 @@ logger.lifecycle ''+version
 
 minecraft { version = '1.6.4-9.11.1.964' }
 
-// add some stff to the version
-version = "MC${minecraft.version}-$version-${repo.history.log().find().abbreviatedId}"
+def repoDir = new File('.git')
+if (repoDir.exists()) {
+    def repo = grgit.repo('.')
+    version = "MC${minecraft.version}-$version-${repo.history.log().find().abbreviatedId}"
+}
+else {
+    version = "MC${minecraft.version}-$version-DEV"
+}
 
 processResources
-{
-    // replace stuff in text files, not binary ones.
-    from(sourceSets.main.resources.srcDirs) {
-        include '**/*.lang'
-        include '**/*.info'
-		
-        expand 'version':project.version, 'mcversion':project.minecraft.version // replace version and MCVersion
-    }
-        
-        // copy everything else, thats not text
-    from(sourceSets.main.resources.srcDirs) {
-        exclude '**/*.lang'
-        exclude '**/*.info'
-    }
-}
+        {
+            // replace stuff in text files, not binary ones.
+            from(sourceSets.main.resources.srcDirs) {
+                include '**/*.lang'
+                include '**/*.info'
+
+                expand 'version':project.version, 'mcversion':project.minecraft.version // replace version and MCVersion
+            }
+
+            // copy everything else, thats not text
+            from(sourceSets.main.resources.srcDirs) {
+                exclude '**/*.lang'
+                exclude '**/*.info'
+            }
+        }
 
 jar { classifier = 'universal'}
 
 task sourceJar(type: Jar) {
-        from sourceSets.main.allSource
-        classifier = 'src'
+    from sourceSets.main.allSource
+    classifier = 'src'
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-        appendix = 'javadoc-'+project.minecraft.version
-        from 'build/docs/javadoc'
+    appendix = 'javadoc-'+project.minecraft.version
+    from 'build/docs/javadoc'
 }
 
 // because the normal default jar task has been modified to be obfuscated
 task deobfJar(type: Jar) {
-        from sourceSets.main.output
-        classifier = 'deobf'
+    from sourceSets.main.output
+    classifier = 'deobf'
 }
 
 artifacts { archives deobfJar }
 
 uploadArchives {
-	repositories.mavenDeployer {
-		configuration = configurations.deployerJars
-		
-		s3credentials = [userName: project.properties.awsUserID,
-						passphrase: project.properties.awsSecretKey]
-		
-		repository(url: 's3://CazzarMods/repo/')  { authentication(s3credentials) }
-		pom {
-			groupId = project.group
-			version = project.version
-			artifactId = project.archivesBaseName
-			
-			project {
-				name project.archivesBaseName
-				packaging 'jar'
-				description 'Cazzar\'s Core Library for mods'
-				url ''
-				
-				scm {
-					url 'https://bitbucket.org/cazzar/cazzarcorelib'
-					connection 'scm:git:https://bitbucket.org/cazzar/cazzarcorelib.git'
-					developerConnection 'scm:git:git@bitbucket.org:cazzar/cazzarcorelib.git'
-				}
-				issueManagement {
-					system 'bitbucket'
-					url 'https://bitbucket.org/cazzar/cazzarcorelib/issues'
-				}
-				
-				licenses {
-					license {
-						name 'GNU GENERAL PUBLIC LICENSE Version 3'
-						url 'https://www.gnu.org/licenses/gpl-3.0.txt'
-						distribution 'repo'
-					}
-				}
-					
-				developers {
-					developer {
-						id 'cazzar'
-						name 'Cayde Dixon'
-						roles {
-							role 'packager'
-							role 'developer'
-						}
-					}
-				}
-			}
-		}
-	}
+    repositories.mavenDeployer {
+        configuration = configurations.deployerJars
+
+        s3credentials = [userName: project.properties.awsUserID,
+                passphrase: project.properties.awsSecretKey]
+
+        repository(url: 's3://CazzarMods/repo/')  { authentication(s3credentials) }
+        pom {
+            groupId = project.group
+            version = project.version
+            artifactId = project.archivesBaseName
+
+            project {
+                name project.archivesBaseName
+                packaging 'jar'
+                description 'Cazzar\'s Core Library for mods'
+                url ''
+
+                scm {
+                    url 'https://bitbucket.org/cazzar/cazzarcorelib'
+                    connection 'scm:git:https://bitbucket.org/cazzar/cazzarcorelib.git'
+                    developerConnection 'scm:git:git@bitbucket.org:cazzar/cazzarcorelib.git'
+                }
+                issueManagement {
+                    system 'bitbucket'
+                    url 'https://bitbucket.org/cazzar/cazzarcorelib/issues'
+                }
+
+                licenses {
+                    license {
+                        name 'GNU GENERAL PUBLIC LICENSE Version 3'
+                        url 'https://www.gnu.org/licenses/gpl-3.0.txt'
+                        distribution 'repo'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'cazzar'
+                        name 'Cayde Dixon'
+                        roles {
+                            role 'packager'
+                            role 'developer'
+                        }
+                    }
+                }
+            }
+        }
+    }
 }
