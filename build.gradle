@@ -29,13 +29,14 @@ dependencies {
 }
 group = 'net.cazzar.corelib'
 version = '1.0.2'
+//noinspection GroovyUnusedAssignment
 archivesBaseName = 'CazzarCoreLib'
 
 logger.lifecycle ''+version
 
 minecraft { version = '1.6.4-9.11.1.964' }
 
-def repoDir = new File('.git')
+def repoDir = new File(projectDir, '.git')
 if (repoDir.exists()) {
     def repo = grgit.repo('.')
     version = "MC${minecraft.version}-$version-${repo.history.log().find().abbreviatedId}"
@@ -54,7 +55,7 @@ processResources
                 expand 'version':project.version, 'mcversion':project.minecraft.version // replace version and MCVersion
             }
 
-            // copy everything else, thats not text
+            // copy everything else, that's not text
             from(sourceSets.main.resources.srcDirs) {
                 exclude '**/*.lang'
                 exclude '**/*.info'
@@ -77,6 +78,10 @@ task javadocJar(type: Jar, dependsOn: javadoc) {
 task deobfJar(type: Jar) {
     from sourceSets.main.output
     classifier = 'deobf'
+
+    manifest {
+        attributes(FMLCorePlugin: "net.cazzar.corelib.CoreMod")
+    }
 }
 
 artifacts { archives deobfJar }
@@ -85,10 +90,9 @@ uploadArchives {
     repositories.mavenDeployer {
         configuration = configurations.deployerJars
 
-        s3credentials = [userName: project.properties.awsUserID,
-                passphrase: project.properties.awsSecretKey]
-
-        repository(url: 's3://CazzarMods/repo/')  { authentication(s3credentials) }
+        repository(url: 's3://CazzarMods/repo/') {
+            authentication([userName: project.properties.awsUserID, passphrase: project.properties.awsSecretKey])
+        }
         pom {
             groupId = project.group
             version = project.version
@@ -130,5 +134,12 @@ uploadArchives {
                 }
             }
         }
+    }
+}
+
+jar {
+    update = true
+    manifest {
+        attributes(FMLCorePlugin: "net.cazzar.corelib.CoreMod")
     }
 }
