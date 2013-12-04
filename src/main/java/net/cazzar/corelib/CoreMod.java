@@ -44,9 +44,8 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
         return runtimeDeobfuscationEnabled;
     }
 
-    @Override
-    public String[] getLibraryRequestClass() {
-        return new String[0];
+    public static File getMcLocation() {
+        return mcLocation;
     }
 
     @Override
