@@ -23,7 +23,7 @@ apply plugin: 'maven' //For deploying
 configurations {
     deployerJars
 }
-repositories {  mavenCentral() }
+repositories { mavenCentral() }
 dependencies {
     deployerJars 'org.springframework.build.aws:org.springframework.build.aws.maven:3.0.0.RELEASE'
 }
@@ -32,7 +32,7 @@ version = '1.0.2'
 //noinspection GroovyUnusedAssignment
 archivesBaseName = 'CazzarCoreLib'
 
-logger.lifecycle ''+version
+logger.lifecycle '' + version
 
 minecraft { version = '1.6.4-9.11.1.964' }
 
@@ -40,8 +40,7 @@ def repoDir = new File(projectDir, '.git')
 if (repoDir.exists()) {
     def repo = grgit.repo('.')
     version = "MC${minecraft.version}-$version-${repo.history.log().find().abbreviatedId}"
-}
-else {
+} else {
     version = "MC${minecraft.version}-$version-DEV"
 }
 
@@ -52,7 +51,8 @@ processResources
                 include '**/*.lang'
                 include '**/*.info'
 
-                expand 'version':project.version, 'mcversion':project.minecraft.version // replace version and MCVersion
+                expand 'version': project.version, 'mcversion': project.minecraft.version
+                // replace version and MCVersion
             }
 
             // copy everything else, that's not text
@@ -62,7 +62,7 @@ processResources
             }
         }
 
-jar { classifier = 'universal'}
+jar { classifier = 'universal' }
 
 task sourceJar(type: Jar) {
     from sourceSets.main.allSource
@@ -70,7 +70,7 @@ task sourceJar(type: Jar) {
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    appendix = 'javadoc-'+project.minecraft.version
+    appendix = 'javadoc-' + project.minecraft.version
     from 'build/docs/javadoc'
 }
 
@@ -142,4 +142,8 @@ jar {
     manifest {
         attributes(FMLCorePlugin: "net.cazzar.corelib.CoreMod")
     }
+}
+
+wrapper {
+    version = "1.8"
 }
