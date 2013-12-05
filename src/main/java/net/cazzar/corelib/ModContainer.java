@@ -48,9 +48,14 @@ public class ModContainer extends DummyModContainer {
         meta.modId = Reference.MOD_ID;
         meta.name = "Cazzar Core Lib";
         meta.url = "http://www.cazzar.net/";
-        meta.version = "@VERSION@";
+        meta.version = getVersionFromJar();
     }
-	
+
+    public String getVersionFromJar() {
+        String version = getClass().getPackage().getImplementationVersion();
+        return version.isEmpty() ? "UNKNOWN" : version;
+    }
+
     @Override
     public boolean registerBus(EventBus bus, LoadController controller) {
         bus.register(this);

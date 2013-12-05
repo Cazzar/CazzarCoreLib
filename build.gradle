@@ -16,9 +16,9 @@ buildscript {
     }
 }
 
-apply plugin: 'forge'  // actually applies the plugin.
-apply plugin: 'grgit' //Now lets have some git intergration.
-apply plugin: 'maven' //For deploying
+apply plugin: 'forge'
+apply plugin: 'grgit'
+apply plugin: 'maven'
 
 configurations {
     deployerJars
@@ -27,42 +27,51 @@ repositories { mavenCentral() }
 dependencies {
     deployerJars 'org.springframework.build.aws:org.springframework.build.aws.maven:3.0.0.RELEASE'
 }
+
+
 group = 'net.cazzar.corelib'
 version = '1.0.2'
-//noinspection GroovyUnusedAssignment
+def actualVersion = version
 archivesBaseName = 'CazzarCoreLib'
 
-logger.lifecycle '' + version
-
 minecraft { version = '1.6.4-9.11.1.964' }
+logger.lifecycle "$archivesBaseName-$version"
 
-def repoDir = new File(projectDir, '.git')
-if (repoDir.exists()) {
+
+if (new File(projectDir, '.git').exists()) {
     def repo = grgit.repo('.')
     version = "MC${minecraft.version}-$version-${repo.history.log().find().abbreviatedId}"
+    actualVersion += "-${repo.history.log().find().abbreviatedId}"
 } else {
     version = "MC${minecraft.version}-$version-DEV"
+    actualVersion += "-DEV"
 }
 
-processResources
-        {
-            // replace stuff in text files, not binary ones.
-            from(sourceSets.main.resources.srcDirs) {
-                include '**/*.lang'
-                include '**/*.info'
+processResources {
+    // replace stuff in text files, not binary ones.
+    from(sourceSets.main.resources.srcDirs) {
+        include '**/*.lang'
+        include '**/*.info'
 
-                expand 'version': project.version, 'mcversion': project.minecraft.version
-                // replace version and MCVersion
-            }
+        expand 'version': project.version, 'mcversion': project.minecraft.version
+        // replace version and MCVersion
+    }
 
-            // copy everything else, that's not text
-            from(sourceSets.main.resources.srcDirs) {
-                exclude '**/*.lang'
-                exclude '**/*.info'
-            }
-        }
+    // copy everything else, that's not text
+    from(sourceSets.main.resources.srcDirs) {
+        exclude '**/*.lang'
+        exclude '**/*.info'
+    }
+}
 
-jar { classifier = 'universal' }
+//REGION: artifacts.
+jar {
+    classifier = 'universal'
+    manifest {
+        attributes FMLCorePlugin: "net.cazzar.corelib.CoreMod",
+                "Implementation-Version": actualVersion
+    }
+}
 
 task sourceJar(type: Jar) {
     from sourceSets.main.allSource
@@ -80,11 +89,18 @@ task deobfJar(type: Jar) {
     classifier = 'deobf'
 
     manifest {
-        attributes(FMLCorePlugin: "net.cazzar.corelib.CoreMod")
+        attributes FMLCorePlugin: "net.cazzar.corelib.CoreMod",
+                "Implementation-Version": actualVersion
     }
 }
 
 artifacts { archives deobfJar }
+//ENDREGION: artifacts.
+//REGION: Wrapper info
+wrapper {
+    version = "1.8"
+}
+//ENDREGION: Wrapper info
 
 uploadArchives {
     repositories.mavenDeployer {
@@ -135,15 +151,4 @@ uploadArchives {
             }
         }
     }
-}
-
-jar {
-    update = true
-    manifest {
-        attributes(FMLCorePlugin: "net.cazzar.corelib.CoreMod")
-    }
-}
-
-wrapper {
-    version = "1.8"
 }
