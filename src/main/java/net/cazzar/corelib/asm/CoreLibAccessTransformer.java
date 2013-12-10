@@ -24,10 +24,10 @@ import java.io.IOException;
 /**
  * @Author: Cayde
  */
-public class CoreLibAccessTransformer extends SrgAccessTransformer {
-
+public class CoreLibAccessTransformer extends RemappingAccessTransformer {
     public CoreLibAccessTransformer() throws IOException {
-        super("cazzarcorelib_at.cfg");
+        super();
+        readFile("");
         LogHelper.coreLog.info("Adding cazzarcorelib_at.cfg to the access transformers");
     }
 }
