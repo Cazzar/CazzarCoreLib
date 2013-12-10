@@ -19,6 +19,7 @@ package net.cazzar.corelib;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.DummyModContainer;
 import cpw.mods.fml.common.LoadController;
 import cpw.mods.fml.common.ModMetadata;
@@ -30,8 +31,10 @@ import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import net.cazzar.corelib.client.ClientTickHandler;
 import net.cazzar.corelib.client.RenderEventHandler;
+import net.cazzar.corelib.client.rendering.RenderPlayer;
 import net.cazzar.corelib.events.PlayerTracker;
 import net.cazzar.corelib.lib.Reference;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.io.IOException;
@@ -70,6 +73,7 @@ public class ModContainer extends DummyModContainer {
         MinecraftForge.EVENT_BUS.register(new RenderEventHandler());
         TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);
 
+        RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new RenderPlayer());
         //new Recipe(Item.feather).cross(Item.appleGold).setProduces(new ItemStack(Item.diamond, 64)).setRecipe();
     }
 

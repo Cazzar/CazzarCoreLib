@@ -23,7 +23,6 @@ package net.cazzar.corelib;
 import cpw.mods.fml.relauncher.IFMLCallHook;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 import net.cazzar.corelib.asm.McpMappings;
-import net.cazzar.corelib.asm.SrgAccessTransformer;
 import net.cazzar.corelib.lib.LogHelper;
 
 import java.io.File;
@@ -32,6 +31,7 @@ import java.util.Map;
 import java.util.logging.Level;
 
 public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
+    @SuppressWarnings("FieldCanBeLocal")
     private static boolean runtimeDeobfuscationEnabled = true;
     private static String deobfuscationFileName = null;
     private static File mcLocation = null;
@@ -83,8 +83,6 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
     @Override
     public Void call() throws Exception {
         McpMappings.instance();
-
-        new SrgAccessTransformer("cazzarcorelib_at.cfg");
         return null;
     }
 }
