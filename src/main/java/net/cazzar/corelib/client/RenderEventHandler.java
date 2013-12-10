@@ -17,25 +17,16 @@
 
 package net.cazzar.corelib.client;
 
-import cpw.mods.fml.relauncher.ReflectionHelper;
-import net.cazzar.corelib.client.model.ModelCheetah;
-import net.cazzar.corelib.lib.LogHelper;
-import net.minecraftforge.client.event.RenderPlayerEvent;
-import net.minecraftforge.event.ForgeSubscribe;
-
-import java.lang.reflect.Field;
-
 /**
  * @Author: Cayde
  */
 public class RenderEventHandler {
-    @ForgeSubscribe
+    /*@ForgeSubscribe
     public void prePlayerRender(RenderPlayerEvent.Pre event) {
-        //if (event.entityPlayer.username.equals("cazzar")) {
-        if (true) {
+        if (event.entityPlayer.username.equals("cazzar")) {
             //This will be fun!
 
-            Field modelBiped = ReflectionHelper.findField(event.renderer.getClass(), "modelBipedMain", "field_77109a");
+            Field modelBiped = ReflectionHelper.findField(event.renderer.getClass(), "modelBipedMain", "field_77109_a");
             if (modelBiped == null)
                 return;
 
@@ -48,12 +39,12 @@ public class RenderEventHandler {
 
         }
 
-        Field modelBiped = ReflectionHelper.findField(event.renderer.getClass(), "modelBipedMain", "field_77109a");
+        Field modelBiped = ReflectionHelper.findField(event.renderer.getClass(), "modelBipedMain", "field_77109_a");
 
         try {
             LogHelper.coreLog.info(modelBiped.get(event.renderer).getClass().getCanonicalName());
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 }

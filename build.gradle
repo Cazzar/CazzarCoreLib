@@ -1,3 +1,5 @@
+import org.ajoberstar.gradle.git.tasks.*
+
 buildscript {
     repositories {
         mavenCentral()
@@ -102,12 +104,18 @@ wrapper {
 }
 //ENDREGION: Wrapper info
 
+task tag(type: GitTag) {
+    tagName = actualVersion
+    message = "Release of ${version}"
+}
+
 uploadArchives {
+    dependsOn tag
     repositories.mavenDeployer {
         configuration = configurations.deployerJars
 
         repository(url: 's3://CazzarMods/repo/') {
-            authentication([userName: project.properties.awsUserID, passphrase: project.properties.awsSecretKey])
+            authentication([userName: project.awsUserID, passphrase: project.awsSecretKey])
         }
         pom {
             groupId = project.group
@@ -116,9 +124,9 @@ uploadArchives {
 
             project {
                 name project.archivesBaseName
-                packaging 'jar'
+//                packaging 'jar'
                 description 'Cazzar\'s Core Library for mods'
-                url ''
+//                url ''
 
                 scm {
                     url 'https://bitbucket.org/cazzar/cazzarcorelib'

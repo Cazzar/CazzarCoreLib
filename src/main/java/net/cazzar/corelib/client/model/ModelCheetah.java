@@ -20,9 +20,8 @@ public class ModelCheetah extends ModelBiped {
     ModelRenderer tailMiddle;
 
     public ModelCheetah() {
-
-            textureWidth = 64;
-            textureHeight = 32;
+        textureWidth = 64;
+        textureHeight = 32;
 
         tailBase = new ModelRenderer(this, 54, 0);
         tailBase.addBox(-1F, 0F, -1F, 2, 3, 2);
@@ -52,6 +51,8 @@ public class ModelCheetah extends ModelBiped {
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 
         LogHelper.coreLog.info("YAY!");
+
+
 
         super.render(entity, f, f1, f2, f3, f4, f5);
         setRotationAngles(f, f1, f2, f3, f4, f5, entity);
