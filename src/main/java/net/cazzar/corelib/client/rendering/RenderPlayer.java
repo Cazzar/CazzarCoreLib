@@ -11,12 +11,12 @@ import net.minecraft.util.ResourceLocation;
  */
 public class RenderPlayer extends net.minecraft.client.renderer.entity.RenderPlayer {
     ModelCheetah cheetah;
-    static ResourceLocation cheetahSkin = new ResourceLocation("cazzarcore:Cheetah");
+    static ResourceLocation cheetahSkin = new ResourceLocation("cazzarcore", "textures/entity/Cheetah.png");
 
     @Override
     protected ResourceLocation getEntityTexture(Entity par1Entity) {
         if (((EntityPlayer) par1Entity).username.equals("cazzar")) {
-            return cheetahSkin;
+            //return cheetahSkin;
         }
         return super.getEntityTexture(par1Entity);
     }
@@ -24,6 +24,5 @@ public class RenderPlayer extends net.minecraft.client.renderer.entity.RenderPla
     @Override
     protected void renderSpecials(AbstractClientPlayer clientPlayer, float par2) {
         super.renderSpecials(clientPlayer, par2);
-
     }
 }
