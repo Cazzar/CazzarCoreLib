@@ -70,9 +70,6 @@ public class ModContainer extends DummyModContainer {
 
         MinecraftForge.EVENT_BUS.register(new RenderEventHandler());
         TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);
-
-//        RenderingRegistry.registerEntityRenderingHandler(EntityPlayer.class, new RenderPlayer());
-//        new Recipe(Item.feather).cross(Item.appleGold).setProduces(new ItemStack(Item.diamond, 64)).setRecipe();
     }
 
     @Subscribe

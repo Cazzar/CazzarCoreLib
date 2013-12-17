@@ -21,15 +21,9 @@ import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
 import net.cazzar.corelib.CoreMod;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.tree.InsnList;
-import org.objectweb.asm.tree.MethodNode;
-import org.objectweb.asm.tree.TryCatchBlockNode;
+import org.objectweb.asm.tree.*;
 
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public abstract class MethodTransformer extends BasicTransformer {
     private static final Map<String, String> deobfMappings = Maps.newHashMap();
@@ -57,7 +51,9 @@ public abstract class MethodTransformer extends BasicTransformer {
     }
 
     @SuppressWarnings("Unchecked")
-    public final void replaceMethod(ClassNode node, int access, String name, String desc, InsnList instructions, TryCatchBlockNode... tryCatchBlocks) {
+    public final void replaceMethod(ClassNode node, int access, String name, String desc, InsnList insns, TryCatchBlockNode... tryCatchBlocks) {
+        InsnList instructions = transformInsns(insns);
+
         String srgName = getMapping(name);
         List<MethodDescription> methodNames = Lists.newArrayList(
                 new MethodDescription(name, desc),
@@ -84,5 +80,79 @@ public abstract class MethodTransformer extends BasicTransformer {
         }
 
         node.methods.add(method);
+    }
+
+    protected final void appendToMethod(ClassNode node, String name, String desc, InsnList insns, TryCatchBlockNode... tryCatchBlockNodes) {
+        appendToMethod(node, Opcodes.ACC_PUBLIC, name, desc, insns, tryCatchBlockNodes);
+    }
+
+    public final void appendToMethod(ClassNode node, int access, String name, String desc, InsnList insnList, TryCatchBlockNode... tryCatchBlockNodes) {
+        InsnList insns = transformInsns(insnList);
+        String srgName = getMapping(name);
+        List<MethodDescription> methodNames = Lists.newArrayList(
+                new MethodDescription(name, desc),
+                new MethodDescription(srgName, desc),
+                McpMappings.instance().getMethod(srgName)
+        );
+
+        MethodNode mtd = new MethodNode(access, srgName, desc, null, null);
+        Collections.addAll(mtd.tryCatchBlocks, tryCatchBlockNodes);
+        for (MethodNode methodNode : node.methods) {
+            for (MethodDescription match : methodNames) {
+                if (match == null)
+                    continue;
+                if (methodNode.name.equals(match.getName()) && methodNode.desc.equals(match.getDesc())) {
+                    AbstractInsnNode lastInsn = methodNode.instructions.getLast();
+                    while (lastInsn instanceof LabelNode || lastInsn instanceof LineNumberNode)
+                        lastInsn = lastInsn.getPrevious();
+
+                    if (isReturn(lastInsn))
+                        methodNode.instructions.insertBefore(lastInsn, insns);
+                    else
+                        methodNode.instructions.insert(insns);
+                }
+            }
+        }
+    }
+
+    private boolean isReturn(AbstractInsnNode node) {
+        switch (node.getOpcode()) {
+            case Opcodes.RET:
+            case Opcodes.RETURN:
+            case Opcodes.ARETURN:
+            case Opcodes.DRETURN:
+            case Opcodes.FRETURN:
+            case Opcodes.IRETURN:
+            case Opcodes.LRETURN:
+                return true;
+
+            default:
+                return false;
+        }
+    }
+
+    private InsnList transformInsns(InsnList insnList) {
+        if (!CoreMod.getRuntimeDeobfuscationEnabled())
+            return insnList;
+
+        InsnList insns = new InsnList();
+
+        for (ListIterator<AbstractInsnNode> i = insnList.iterator(); i.hasNext(); ) {
+            AbstractInsnNode currNode = i.next();
+            if (currNode instanceof FieldInsnNode) {
+                FieldInsnNode node = (FieldInsnNode) currNode;
+
+                node.name = getMapping(node.name);
+            } else if (currNode instanceof MethodInsnNode) {
+                MethodInsnNode node = (MethodInsnNode) currNode;
+
+                String mtd = getMapping(node.name);
+                node.name = getMapping(node.name);
+            }
+
+            insns.add(currNode);
+        }
+
+        return insns;
     }
 }
