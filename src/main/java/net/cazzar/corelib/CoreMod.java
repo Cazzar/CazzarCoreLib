@@ -30,6 +30,7 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.logging.Level;
 
+@IFMLLoadingPlugin.TransformerExclusions("net.cazzar.corelib.asm.*")
 public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
     @SuppressWarnings("FieldCanBeLocal")
     private static boolean runtimeDeobfuscationEnabled = true;

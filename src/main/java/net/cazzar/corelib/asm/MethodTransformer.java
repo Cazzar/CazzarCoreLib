@@ -50,7 +50,6 @@ public abstract class MethodTransformer extends BasicTransformer {
         replaceMethod(node, Opcodes.ACC_PUBLIC, name, desc, instructions, tryCatchBlocks);
     }
 
-    @SuppressWarnings("Unchecked")
     public final void replaceMethod(ClassNode node, int access, String name, String desc, InsnList insns, TryCatchBlockNode... tryCatchBlocks) {
         InsnList instructions = transformInsns(insns);
 
@@ -154,5 +153,27 @@ public abstract class MethodTransformer extends BasicTransformer {
         }
 
         return insns;
+    }
+
+    public final void prependToMethod(ClassNode node, int access, String name, String desc, InsnList insnList, TryCatchBlockNode... tryCatchBlockNodes) {
+        InsnList insns = transformInsns(insnList);
+        String srgName = getMapping(name);
+        List<MethodDescription> methodNames = Lists.newArrayList(
+                new MethodDescription(name, desc),
+                new MethodDescription(srgName, desc),
+                McpMappings.instance().getMethod(srgName)
+        );
+
+        MethodNode mtd = new MethodNode(access, srgName, desc, null, null);
+        Collections.addAll(mtd.tryCatchBlocks, tryCatchBlockNodes);
+        for (MethodNode methodNode : node.methods) {
+            for (MethodDescription match : methodNames) {
+                if (match == null)
+                    continue;
+                if (methodNode.name.equals(match.getName()) && methodNode.desc.equals(match.getDesc())) {
+                    methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), insns);
+                }
+            }
+        }
     }
 }
