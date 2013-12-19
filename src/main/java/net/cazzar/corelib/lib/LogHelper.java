@@ -22,11 +22,25 @@ import cpw.mods.fml.common.FMLLog;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+@SuppressWarnings("UnusedDeclaration")
 public class LogHelper {
+    public static LogHelper coreLog = new LogHelper();
     private Logger logger;
     private boolean setup;
     private String identifier;
-    public static LogHelper coreLog = new LogHelper();
+
+    private LogHelper() {
+        this(Reference.MOD_ID);
+    }
+
+    /**
+     * Create a LogHelper for the passed logger
+     *
+     * @param identifier the identifier for the Log helper
+     */
+    public LogHelper(String identifier) {
+        this.identifier = identifier;
+    }
 
     /**
      * Log the passed string at level CONFIG
@@ -116,20 +130,6 @@ public class LogHelper {
      */
     public void warning(String string, Object... args) {
         log(Level.WARNING, string, args);
-    }
-
-
-    private LogHelper() {
-        this(Reference.MOD_ID);
-    }
-
-    /**
-     * Create a LogHelper for the passed logger
-     *
-     * @param identifier the identifier for the Log helper
-     */
-    public LogHelper(String identifier) {
-        this.identifier = identifier;
     }
 
     /**

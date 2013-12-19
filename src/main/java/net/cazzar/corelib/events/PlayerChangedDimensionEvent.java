@@ -26,6 +26,7 @@ import net.minecraftforge.event.entity.player.PlayerEvent;
 public class PlayerChangedDimensionEvent extends PlayerEvent {
     /**
      * A basic event for the Player changing dimensions
+     *
      * @param player the player that triggered the event
      */
     public PlayerChangedDimensionEvent(EntityPlayer player) {

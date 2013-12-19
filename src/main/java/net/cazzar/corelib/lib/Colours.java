@@ -19,6 +19,7 @@ package net.cazzar.corelib.lib;
 
 import org.lwjgl.util.Color;
 
+@SuppressWarnings("UnusedDeclaration")
 public enum Colours {
     BLACK('0', 0, 0, 0),
     DARK_BLUE('1', 0, 0, 170),
@@ -42,7 +43,6 @@ public enum Colours {
     STRIKE_THROUGH('m'),
     UNDERLINE('n'),
     RESET('r');
-
     private final char code;
     private final int red, green, blue;
 

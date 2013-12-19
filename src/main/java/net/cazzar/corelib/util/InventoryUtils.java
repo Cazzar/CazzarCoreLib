@@ -41,8 +41,7 @@ public class InventoryUtils {
         return writeItemStacksToTag(items, 64);
     }
 
-    public static NBTTagList writeItemStacksToTag(ItemStack[] items,
-                                                  int maxQuantity) {
+    public static NBTTagList writeItemStacksToTag(ItemStack[] items, @SuppressWarnings("SameParameterValue") int maxQuantity) {
         final NBTTagList tagList = new NBTTagList();
         for (int i = 0; i < items.length; i++)
             if (items[i] != null) {

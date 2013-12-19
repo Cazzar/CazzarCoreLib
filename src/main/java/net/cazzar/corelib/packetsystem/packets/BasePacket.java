@@ -30,28 +30,12 @@ import net.minecraft.network.packet.Packet;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
+@SuppressWarnings("UnusedDeclaration")
 public abstract class BasePacket {
-    public static class ProtocolException extends Exception {
-
-        private static final long serialVersionUID = 4758559873161416283L;
-
-        public ProtocolException() {
-        }
-
-        public ProtocolException(String message) {
-            super(message);
-        }
-
-        public ProtocolException(String message, Throwable cause) {
-            super(message, cause);
-        }
-
-        public ProtocolException(Throwable cause) {
-            super(cause);
-        }
-    }
-
     private static HashMap<Integer, Class<? extends BasePacket>> idMap = new HashMap<Integer, Class<? extends BasePacket>>();
+
+    public BasePacket() {
+    }
 
     private static int getNextPacketID() {
         return idMap.size() - 1;
@@ -116,6 +100,23 @@ public abstract class BasePacket {
 
     public abstract void write(ByteArrayDataOutput out);
 
-    public BasePacket() {
+    public static class ProtocolException extends Exception {
+
+        private static final long serialVersionUID = 4758559873161416283L;
+
+        public ProtocolException() {
+        }
+
+        public ProtocolException(String message) {
+            super(message);
+        }
+
+        public ProtocolException(String message, Throwable cause) {
+            super(message, cause);
+        }
+
+        public ProtocolException(Throwable cause) {
+            super(cause);
+        }
     }
 }

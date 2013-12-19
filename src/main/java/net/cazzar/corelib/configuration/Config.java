@@ -29,7 +29,7 @@ public final class Config {
      * <i>@ConfigurationClass</i>
      *
      * @param instance the instance of the configurations option if it is non static
-     * @param config the instance of the configuration to parse from.
+     * @param config   the instance of the configuration to parse from.
      */
     public static void parse(Object instance, Configuration config) {
         Class clazz = instance.getClass();

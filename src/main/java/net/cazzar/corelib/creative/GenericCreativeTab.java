@@ -30,7 +30,7 @@ import net.minecraft.creativetab.CreativeTabs;
  * A generic and simple creative tab.
  */
 public class GenericCreativeTab extends CreativeTabs {
-    int iconID;
+    final int iconID;
 
     /**
      * A generic and simple creative tab.

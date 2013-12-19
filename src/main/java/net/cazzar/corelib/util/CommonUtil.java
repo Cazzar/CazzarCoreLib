@@ -36,11 +36,12 @@ public class CommonUtil {
         return FMLCommonHandler.instance().getSide();
     }
 
+    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
     public static boolean isServer() {
         return getSide().isServer();
     }
 
-    public static String join(String delim, String... args) {
+    public static String join(@SuppressWarnings("SameParameterValue") String delim, String... args) {
         StringBuilder sb = new StringBuilder(args[0]);
         for (int i = 1; i < args.length; i++) {
             sb.append(delim);
@@ -55,6 +56,7 @@ public class CommonUtil {
         List<T> arr = Lists.newArrayList(array);
         T last = arr.get(arr.size() - 1);
         arr.remove(arr.size() - 1);
+        //noinspection unchecked
         array = (T[]) arr.toArray();
 
         return last;

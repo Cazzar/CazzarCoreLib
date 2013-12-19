@@ -25,6 +25,7 @@ import org.objectweb.asm.tree.*;
 
 import java.util.*;
 
+@SuppressWarnings("UnusedDeclaration")
 public abstract class MethodTransformer extends BasicTransformer {
     private static final Map<String, String> deobfMappings = Maps.newHashMap();
     private static final Map<String, String> srgMappings = Maps.newHashMap();
@@ -44,10 +45,6 @@ public abstract class MethodTransformer extends BasicTransformer {
         } else {
             return deobfMappings.get(deobfName);
         }
-    }
-
-    protected final void replaceMethod(ClassNode node, String name, String desc, InsnList instructions, TryCatchBlockNode... tryCatchBlocks) {
-        replaceMethod(node, Opcodes.ACC_PUBLIC, name, desc, instructions, tryCatchBlocks);
     }
 
     public final void replaceMethod(ClassNode node, int access, String name, String desc, InsnList insns, TryCatchBlockNode... tryCatchBlocks) {
@@ -81,10 +78,6 @@ public abstract class MethodTransformer extends BasicTransformer {
         node.methods.add(method);
     }
 
-    protected final void appendToMethod(ClassNode node, String name, String desc, InsnList insns, TryCatchBlockNode... tryCatchBlockNodes) {
-        appendToMethod(node, Opcodes.ACC_PUBLIC, name, desc, insns, tryCatchBlockNodes);
-    }
-
     public final void appendToMethod(ClassNode node, int access, String name, String desc, InsnList insnList, TryCatchBlockNode... tryCatchBlockNodes) {
         InsnList insns = transformInsns(insnList);
         String srgName = getMapping(name);
@@ -112,6 +105,36 @@ public abstract class MethodTransformer extends BasicTransformer {
                 }
             }
         }
+    }
+
+    public final void prependToMethod(ClassNode node, int access, String name, String desc, InsnList insnList, TryCatchBlockNode... tryCatchBlockNodes) {
+        InsnList insns = transformInsns(insnList);
+        String srgName = getMapping(name);
+        List<MethodDescription> methodNames = Lists.newArrayList(
+                new MethodDescription(name, desc),
+                new MethodDescription(srgName, desc),
+                McpMappings.instance().getMethod(srgName)
+        );
+
+        MethodNode mtd = new MethodNode(access, srgName, desc, null, null);
+        Collections.addAll(mtd.tryCatchBlocks, tryCatchBlockNodes);
+        for (MethodNode methodNode : node.methods) {
+            for (MethodDescription match : methodNames) {
+                if (match == null)
+                    continue;
+                if (methodNode.name.equals(match.getName()) && methodNode.desc.equals(match.getDesc())) {
+                    methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), insns);
+                }
+            }
+        }
+    }
+
+    protected final void replaceMethod(ClassNode node, String name, String desc, InsnList instructions, TryCatchBlockNode... tryCatchBlocks) {
+        replaceMethod(node, Opcodes.ACC_PUBLIC, name, desc, instructions, tryCatchBlocks);
+    }
+
+    protected final void appendToMethod(ClassNode node, String name, String desc, InsnList insns, TryCatchBlockNode... tryCatchBlockNodes) {
+        appendToMethod(node, Opcodes.ACC_PUBLIC, name, desc, insns, tryCatchBlockNodes);
     }
 
     private boolean isReturn(AbstractInsnNode node) {
@@ -153,27 +176,5 @@ public abstract class MethodTransformer extends BasicTransformer {
         }
 
         return insns;
-    }
-
-    public final void prependToMethod(ClassNode node, int access, String name, String desc, InsnList insnList, TryCatchBlockNode... tryCatchBlockNodes) {
-        InsnList insns = transformInsns(insnList);
-        String srgName = getMapping(name);
-        List<MethodDescription> methodNames = Lists.newArrayList(
-                new MethodDescription(name, desc),
-                new MethodDescription(srgName, desc),
-                McpMappings.instance().getMethod(srgName)
-        );
-
-        MethodNode mtd = new MethodNode(access, srgName, desc, null, null);
-        Collections.addAll(mtd.tryCatchBlocks, tryCatchBlockNodes);
-        for (MethodNode methodNode : node.methods) {
-            for (MethodDescription match : methodNames) {
-                if (match == null)
-                    continue;
-                if (methodNode.name.equals(match.getName()) && methodNode.desc.equals(match.getDesc())) {
-                    methodNode.instructions.insertBefore(methodNode.instructions.getFirst(), insns);
-                }
-            }
-        }
     }
 }

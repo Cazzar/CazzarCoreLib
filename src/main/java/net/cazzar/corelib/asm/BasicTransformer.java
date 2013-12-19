@@ -28,7 +28,7 @@ import java.util.Collections;
 import java.util.List;
 
 public abstract class BasicTransformer implements IClassTransformer {
-    protected LogHelper logger = LogHelper.coreLog;
+    final LogHelper logger = LogHelper.coreLog;
     private final List<String> classes = Lists.newArrayList();
 
     protected void addClass(String... names) {

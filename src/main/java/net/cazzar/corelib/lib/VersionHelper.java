@@ -29,37 +29,28 @@ import java.util.logging.Level;
  *
  * @author pahimar, modified by cazzar.
  */
+@SuppressWarnings("UnusedDeclaration")
 public class VersionHelper implements Runnable {
-    // The (publicly available) remote version number authority file
-    private String REMOTE_VERSION_XML_FILE;
-
-    public static Properties remoteVersionProperties = new Properties();
-
-
-    public enum Result {
-        UNINITIALIZED,
-        CURRENT,
-        OUTDATED,
-        ERROR,
-        FINAL_ERROR,
-        MC_VERSION_NOT_FOUND
-    }
-
     public static final int VERSION_CHECK_ATTEMPTS = 3;
-
+    public static Properties remoteVersionProperties = new Properties();
+    public static String remoteVersion = null;
+    public static String remoteUpdateLocation = null;
     // Var to hold the result of the remote version check, initially set to
     // uninitialized
     private static Result result = Result.UNINITIALIZED;
-    public static String remoteVersion = null;
-    public static String remoteUpdateLocation = null;
-
     String modName;
     String modVersion;
-
+    // The (publicly available) remote version number authority file
+    private String REMOTE_VERSION_XML_FILE;
     public VersionHelper(String modName, String modVersion, String versionFile) {
         this.REMOTE_VERSION_XML_FILE = versionFile;
         this.modName = modName;
         this.modVersion = modVersion;
+    }
+
+    public static Result getResult() {
+
+        return result;
     }
 
     /**
@@ -93,25 +84,20 @@ public class VersionHelper implements Runnable {
                     else result = Result.OUTDATED;
 
             } else result = Result.MC_VERSION_NOT_FOUND;
-        } catch (final Exception e) {
+        } catch (final Exception ignored) {
         } finally {
             if (result == Result.UNINITIALIZED) result = Result.ERROR;
 
             try {
                 if (remoteVersionRepoStream != null)
                     remoteVersionRepoStream.close();
-            } catch (final Exception ex) {
+            } catch (final Exception ignored) {
             }
         }
     }
 
     public void execute() {
         new Thread(this).start();
-    }
-
-    public static Result getResult() {
-
-        return result;
     }
 
     public String getResultMessage() {
@@ -123,17 +109,6 @@ public class VersionHelper implements Runnable {
                     remoteVersion);
             returnString = returnString.replace("@MINECRAFT_VERSION@", Loader
                     .instance().getMCVersionString());
-            return returnString;
-        } else if (result == Result.OUTDATED && remoteVersion != null
-                && remoteUpdateLocation != null) {
-            String returnString = "A new @MOD_NAME@ version exists (@REMOTE_MOD_VERSION@) for @MINECRAFT_VERSION@. Get it here: @MOD_UPDATE_LOCATION@";
-            returnString = returnString.replace("@MOD_NAME@", modName);
-            returnString = returnString.replace("@REMOTE_MOD_VERSION@",
-                    remoteVersion);
-            returnString = returnString.replace("@MINECRAFT_VERSION@", Loader
-                    .instance().getMCVersionString());
-            returnString = returnString.replace("@MOD_UPDATE_LOCATION@",
-                    remoteUpdateLocation);
             return returnString;
         } else if (result == Result.OUTDATED && remoteVersion != null
                 && remoteUpdateLocation != null) {
@@ -227,5 +202,14 @@ public class VersionHelper implements Runnable {
             e.printStackTrace();
         }
 
+    }
+
+    public enum Result {
+        UNINITIALIZED,
+        CURRENT,
+        OUTDATED,
+        ERROR,
+        FINAL_ERROR,
+        MC_VERSION_NOT_FOUND
     }
 }

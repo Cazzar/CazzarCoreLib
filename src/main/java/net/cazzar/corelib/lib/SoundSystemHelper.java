@@ -139,6 +139,7 @@ public class SoundSystemHelper {
      * Check if a identifier is playing
      *
      * @param identifier the identifier to check.
+     *
      * @return if the {@link SoundSystem} is playing with that identifier.
      */
     public static boolean isPlaying(String identifier) {

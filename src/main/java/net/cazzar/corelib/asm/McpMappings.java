@@ -31,7 +31,6 @@ import java.util.logging.Level;
 
 public final class McpMappings {
     private static McpMappings instance;
-    private final Map<String, String> packageMap = Maps.newHashMap();
     private final Map<String, String> classMap = Maps.newHashMap();
     private final Map<FieldDescription, FieldDescription> fieldMap = Maps.newHashMap();
     private final Map<String, MethodDescription> methodMap = Maps.newHashMap();
@@ -45,6 +44,7 @@ public final class McpMappings {
                 String[] fields = reader.readLine().split(" ");
 
                 if ("PK:".equals(fields[0])) {
+                    Map<String, String> packageMap = Maps.newHashMap();
                     packageMap.put(fields[2], fields[1]);
                 } else if ("CL:".equals(fields[0])) {
                     classMap.put(fields[2], fields[1]);
