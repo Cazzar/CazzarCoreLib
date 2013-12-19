@@ -37,10 +37,16 @@ import net.minecraftforge.common.MinecraftForge;
 import java.io.IOException;
 import java.util.Arrays;
 
+/**
+ * The basic container for the mod information
+ */
 @SuppressWarnings("UnusedDeclaration")
 public class ModContainer extends DummyModContainer {
     static ModMetadata meta;
 
+    /**
+     * Initialize the mod
+     */
     public ModContainer() {
         super(meta = new ModMetadata());
 
@@ -52,6 +58,10 @@ public class ModContainer extends DummyModContainer {
         meta.version = getVersionFromJar();
     }
 
+    /**
+     * Use the java package information to get the version of the mod
+     * @return the mod's version
+     */
     public String getVersionFromJar() {
         String version = getClass().getPackage().getImplementationVersion();
         if (version == null) return "UNKNOWN";

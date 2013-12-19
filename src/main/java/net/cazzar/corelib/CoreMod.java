@@ -30,6 +30,9 @@ import java.lang.reflect.Field;
 import java.util.Map;
 import java.util.logging.Level;
 
+/**
+ * The FML coremod for the plugin also containing information about Deobf and minecraft's running location
+ */
 @SuppressWarnings("CanBeFinal")
 @IFMLLoadingPlugin.TransformerExclusions("net.cazzar.corelib.asm.*")
 public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
@@ -38,14 +41,27 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
     private static String deobfuscationFileName = null;
     private static File mcLocation = null;
 
+    /**
+     * Get the deobf file name
+     * @return the Deobf data filename
+     */
     public static String getDeobfuscationFileName() {
         return deobfuscationFileName;
     }
 
+    /**
+     * Get if runtime deobfuscation is enabled
+     * @return if runtime deobf is enabled
+     */
     public static boolean getRuntimeDeobfuscationEnabled() {
         return runtimeDeobfuscationEnabled;
     }
 
+    /***
+     * Get the directory Minecraft is in
+     * @return the minecraft directory
+     */
+    @SuppressWarnings("UnusedDeclaration")
     public static File getMcLocation() {
         return mcLocation;
     }

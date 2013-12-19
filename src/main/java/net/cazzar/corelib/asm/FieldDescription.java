@@ -31,22 +31,43 @@ public class FieldDescription {
         this.name = name;
     }
 
+    /**
+     * Get the field name
+     * @return the name of the field
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Get the class name the field resides in
+     * @return the class name
+     */
     public String getClassname() {
         return classname;
     }
 
+    /**
+     * Get the java class name used for the class loader
+     * @return the Canonacal Classname
+     */
     public String getCanonacalClassname() {
         return classname.replace("/", ".");
     }
 
+    /**
+     * Get the name and class name combined
+     * @return the full name of the class with the name concatenated
+     */
+    @SuppressWarnings("UnusedDeclaration")
     public String getFullName() {
         return getCanonacalClassname().concat(name);
     }
 
+    /**
+     *  get the Java {@link java.lang.reflect.Field} for the field reference
+     * @return the Java field
+     */
     public Field getField() {
         try {
             Class<?> cl = Class.forName(getCanonacalClassname());
@@ -71,10 +92,8 @@ public class FieldDescription {
 
     @Override
     public boolean equals(Object o) {
-        if (o == null) return false;
-        if (!(o instanceof FieldDescription)) return false;
+        return o != null && o instanceof FieldDescription && equals((FieldDescription) o);
 
-        return equals((FieldDescription) o);
     }
 
     public boolean equals(FieldDescription fieldDescription) {

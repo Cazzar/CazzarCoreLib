@@ -30,6 +30,11 @@ public abstract class MethodTransformer extends BasicTransformer {
     private static final Map<String, String> deobfMappings = Maps.newHashMap();
     private static final Map<String, String> srgMappings = Maps.newHashMap();
 
+    /**
+     * Add a mapping for the transformations
+     * @param deobfName The domesticated name for the transformations
+     * @param srgName the SRG mapping for the transformation
+     */
     protected static void addMapping(String deobfName, String srgName) {
         if (srgMappings.containsKey(deobfName)) {
             return;
@@ -39,6 +44,12 @@ public abstract class MethodTransformer extends BasicTransformer {
         deobfMappings.put(deobfName, deobfName);
     }
 
+    /**
+     * Get the mapping for the deobf'd name
+     *
+     * @param deobfName the deobfuscated name of the mapping
+     * @return the SRG mapping
+     */
     protected static String getMapping(String deobfName) {
         if (CoreMod.getRuntimeDeobfuscationEnabled()) {
             return srgMappings.get(deobfName);
@@ -47,6 +58,16 @@ public abstract class MethodTransformer extends BasicTransformer {
         }
     }
 
+    /**
+     * Replace the said method with the instructions
+     *
+     * @param node the Class being worked on
+     * @param access the Opcode access to the class
+     * @param name the name of the function
+     * @param desc the method description
+     * @param insns the instructions of the class
+     * @param tryCatchBlocks a
+     */
     public final void replaceMethod(ClassNode node, int access, String name, String desc, InsnList insns, TryCatchBlockNode... tryCatchBlocks) {
         InsnList instructions = transformInsns(insns);
 
@@ -78,6 +99,17 @@ public abstract class MethodTransformer extends BasicTransformer {
         node.methods.add(method);
     }
 
+    /**
+     * Append the instructions to the method
+     *
+     * @param node the Class being worked on
+     * @param access the Opcode access to the class
+     * @param name the name of the function
+     * @param desc the method description
+     * @param insnList the instructions to append
+     * @param tryCatchBlockNodes a
+     */
+
     public final void appendToMethod(ClassNode node, int access, String name, String desc, InsnList insnList, TryCatchBlockNode... tryCatchBlockNodes) {
         InsnList insns = transformInsns(insnList);
         String srgName = getMapping(name);
@@ -106,6 +138,17 @@ public abstract class MethodTransformer extends BasicTransformer {
             }
         }
     }
+
+    /**
+     * Prepend the instructions to the method
+     *
+     * @param node the Class being worked on
+     * @param access the Opcode access to the class
+     * @param name the name of the function
+     * @param desc the method description
+     * @param insnList the instructions to append
+     * @param tryCatchBlockNodes a
+     */
 
     public final void prependToMethod(ClassNode node, int access, String name, String desc, InsnList insnList, TryCatchBlockNode... tryCatchBlockNodes) {
         InsnList insns = transformInsns(insnList);

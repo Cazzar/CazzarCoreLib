@@ -23,15 +23,15 @@ import net.minecraft.command.ICommandSender;
 import java.util.List;
 
 /**
- * User: Cayde
+ * A base class for commands for simple creation of the command.
  */
 public abstract class Command implements ICommand {
     private final String name;
 
     /**
-     * Initializes the {@link Command} class
+     * Initializes the class
      *
-     * @param name
+     * @param name The name of the command
      */
     public Command(String name) {
         this.name = name;
@@ -52,13 +52,21 @@ public abstract class Command implements ICommand {
         return "/" + name;
     }
 
+    /**
+     * Get a list of the aliases to the command
+     *
+     * @return The command Aliases
+     */
+
     @Override
     public List getCommandAliases() {
         return null;
     }
 
     /**
-     * Returns true if the given command sender is allowed to use this command.
+     * Check if the command can be used by the sender
+     *
+     * @return true if the given command sender is allowed to use this command.
      */
     @Override
     public boolean canCommandSenderUseCommand(ICommandSender icommandsender) {
@@ -67,6 +75,11 @@ public abstract class Command implements ICommand {
 
     /**
      * Adds the strings available in this command to the given list of tab completion options.
+     *
+     * @param icommandsender the sender of the command
+     * @param astring        the current params of the command
+     *
+     * @return the tab completion list of the command
      */
     @Override
     public List addTabCompletionOptions(ICommandSender icommandsender, String[] astring) {
@@ -74,7 +87,10 @@ public abstract class Command implements ICommand {
     }
 
     /**
-     * Return whether the specified command parameter index is a username parameter.
+     * @param astring the current params of the command
+     * @param i       the index currently working on
+     *
+     * @return whether the specified command parameter index is a username parameter.
      */
     @Override
     public boolean isUsernameIndex(String[] astring, int i) {

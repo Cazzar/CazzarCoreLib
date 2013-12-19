@@ -32,8 +32,8 @@ public class ClientTickHandler implements ITickHandler {
      * <p/>
      * Multiple ticks may fire simultaneously- you will only be called once with all the firing ticks
      *
-     * @param type
-     * @param tickData
+     * @param type the tick type
+     * @param tickData the associated data with the tick
      */
     @Override
     public void tickStart(EnumSet<TickType> type, Object... tickData) {
@@ -72,8 +72,8 @@ public class ClientTickHandler implements ITickHandler {
      * <p/>
      * Multiple ticks may fire simultaneously- you will only be called once with all the firing ticks
      *
-     * @param type
-     * @param tickData
+     * @param type the tick type
+     * @param tickData          the associated data with the tick
      */
     @Override
     public void tickEnd(EnumSet<TickType> type, Object... tickData) {

@@ -27,10 +27,14 @@ import org.objectweb.asm.tree.ClassNode;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * A basic transformer that is selective to which class it is selecting
+ */
 public abstract class BasicTransformer implements IClassTransformer {
     final LogHelper logger = LogHelper.coreLog;
     private final List<String> classes = Lists.newArrayList();
 
+    @SuppressWarnings("UnusedDeclaration")
     protected void addClass(String... names) {
         Collections.addAll(classes, names);
     }
@@ -54,5 +58,10 @@ public abstract class BasicTransformer implements IClassTransformer {
 
     }
 
+    /**
+     * The stub function called to transform the loading class.
+     *
+     * @param classNode the class it is working on
+     */
     public abstract void transform(ClassNode classNode);
 }

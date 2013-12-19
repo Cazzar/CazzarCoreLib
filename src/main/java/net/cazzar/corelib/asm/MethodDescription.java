@@ -22,15 +22,31 @@ public class MethodDescription {
     private final String name;
     private final String desc;
 
+    /**
+     * A description about a method
+     *
+     * @param left the name
+     * @param right the description
+     */
     public MethodDescription(String left, String right) {
         this.name = left;
         this.desc = right;
     }
 
+    /**
+     * Get the name of the function
+     *
+     * @return The name of the function
+     */
     public String getName() {
         return name;
     }
 
+    /**
+     * Get the description of the function
+     *
+     * @return The function description
+     */
     public String getDesc() {
         return desc;
     }
@@ -52,6 +68,4 @@ public class MethodDescription {
     public String toString() {
         return getName().concat(" ").concat(getDesc());
     }
-
-
 }

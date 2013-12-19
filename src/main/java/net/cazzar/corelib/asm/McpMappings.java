@@ -70,6 +70,11 @@ public final class McpMappings {
         }
     }
 
+    /**
+     * Get the instance of McpMappings
+     *
+     * @return the instance singleton
+     */
     public static synchronized McpMappings instance() {
         if (instance == null) {
             instance = new McpMappings();
@@ -77,14 +82,37 @@ public final class McpMappings {
         return instance;
     }
 
+    /**
+     * Get the actually obf name of the client
+     *
+     * @param name get the class name in the obf mappings
+     *
+     * @return the obf class name
+     */
+    @SuppressWarnings("UnusedDeclaration")
     public String getObfuscatedClassName(String name) {
         return classMap.get(name);
     }
 
+    /**
+     * Get a Method information of the passed SRG name
+     *
+     * @param srgMethod the srgName of the method
+     *
+     * @return the MethodDescription of the obfuscated method
+     */
     public MethodDescription getMethod(String srgMethod) {
         return methodMap.get(srgMethod);
     }
 
+    /**
+     * Get the field information for the obfuscated name description
+     *
+     * @param srgName the SRG name
+     *
+     * @return the field description of the field
+     */
+    @SuppressWarnings("UnusedDeclaration")
     public FieldDescription getField(String srgName) {
         String[] parts = srgName.split(".");
         String last = CommonUtil.arrayPopLast(parts);
