@@ -17,6 +17,7 @@ buildscript {
 }
 
 import org.ajoberstar.gradle.git.tasks.GitTag
+
 apply plugin: 'forge'
 apply plugin: 'grgit'
 apply plugin: 'maven'
