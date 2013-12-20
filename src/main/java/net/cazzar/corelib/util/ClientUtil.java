@@ -48,6 +48,12 @@ public class ClientUtil {
         return FMLCommonHandler.instance().getSide().isClient();
     }
 
+    /**
+     * Get if it is single player or not
+     *
+     * @return true if single player
+     */
+    @SuppressWarnings("UnusedDeclaration")
     @SideOnly(Side.CLIENT)
     public static boolean isSinglePlayer() {
         return mc().isSingleplayer();

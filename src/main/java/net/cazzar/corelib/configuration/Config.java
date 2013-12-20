@@ -22,6 +22,7 @@ import net.minecraftforge.common.Configuration;
 
 import java.lang.reflect.Field;
 
+@SuppressWarnings("UnusedDeclaration")
 public final class Config {
 
     /**
@@ -43,8 +44,7 @@ public final class Config {
         for (Field field : fields) {
             if (!field.isAccessible()) field.setAccessible(true);
 
-            ConfigurationOption annotation = field
-                    .getAnnotation(ConfigurationOption.class);
+            ConfigurationOption annotation = field.getAnnotation(ConfigurationOption.class);
             if (annotation == null) {
                 continue;
             }
@@ -67,9 +67,7 @@ public final class Config {
         }
     }
 
-    private static void parseField(Field field, Object instance,
-                                   String category, String key, String comment, Configuration config)
-            throws IllegalArgumentException, IllegalAccessException {
+    private static void parseField(Field field, Object instance, String category, String key, String comment, Configuration config) throws IllegalArgumentException, IllegalAccessException {
         Class<?> type = field.getType();
         if (comment.isEmpty()) comment = null;
 
@@ -77,24 +75,21 @@ public final class Config {
             Object def = field.get(instance);
 
             Object value;
-            value = config.get(category, key, (Boolean) def, comment)
-                    .getBoolean((Boolean) def);
+            value = config.get(category, key, (Boolean) def, comment).getBoolean((Boolean) def);
 
             field.set(instance, value);
         } else if (type == double.class || type == Double.class) {
             Object def = field.get(instance);
 
             Object value;
-            value = config.get(category, key, (Double) def, comment).getDouble(
-                    (Double) def);
+            value = config.get(category, key, (Double) def, comment).getDouble((Double) def);
 
             field.set(instance, value);
         } else if (type == String.class) {
             Object def = field.get(instance);
 
             Object value;
-            value = config.get(category, key, (String) def, comment)
-                    .getString();
+            value = config.get(category, key, (String) def, comment).getString();
 
             field.set(instance, value);
         } else if (type == Integer.class || type == int.class) {
@@ -102,8 +97,7 @@ public final class Config {
                 Object def = field.get(instance);
 
                 Object value;
-                value = config.getBlock(category, key, (Integer) def, comment)
-                        .getInt();
+                value = config.getBlock(category, key, (Integer) def, comment).getInt();
 
                 field.set(instance, value);
                 return;
@@ -112,8 +106,7 @@ public final class Config {
                 Object def = field.get(instance);
 
                 Object value;
-                value = config.getItem(category, key, (Integer) def, comment)
-                        .getInt();
+                value = config.getItem(category, key, (Integer) def, comment).getInt();
 
                 field.set(instance, value);
                 return;
@@ -122,15 +115,13 @@ public final class Config {
             Object def = field.get(instance);
 
             Object value;
-            value = config.get(category, key, (Integer) def, comment).getInt(
-                    (Integer) def);
+            value = config.get(category, key, (Integer) def, comment).getInt((Integer) def);
 
             field.set(instance, value);
         } else if (type == float.class || type == Float.class) {
             Object def = field.get(instance);
             String value;
-            value = config.get(category, key, String.valueOf(def),
-                    comment).getString();
+            value = config.get(category, key, String.valueOf(def), comment).getString();
 
             Float actual = Float.valueOf(value);
             field.set(instance, actual);
@@ -140,28 +131,23 @@ public final class Config {
     private static void parseClass(Object instance, Configuration config) {
         Class<?> clazz = instance.getClass();
 
-        ConfigurationClass annotation = clazz
-                .getAnnotation(ConfigurationClass.class);
+        ConfigurationClass annotation = clazz.getAnnotation(ConfigurationClass.class);
         if (annotation == null) {
             return;
         }
 
-        String category = (annotation.category().isEmpty()) ? clazz
-                .getSimpleName() : annotation.category();
+        String category = (annotation.category().isEmpty()) ? clazz.getSimpleName() : annotation.category();
 
         if (clazz.isAnnotationPresent(ConfigurationComment.class)) {
-            config.getCategory(category).setComment(
-                    clazz.getAnnotation(ConfigurationComment.class).value());
+            config.getCategory(category).setComment(clazz.getAnnotation(ConfigurationComment.class).value());
         }
 
         Field[] fields = clazz.getDeclaredFields();
 
         for (Field field : fields) {
             if (!field.isAccessible()) field.setAccessible(true);
-            ConfigurationComment commentAnnotation = field
-                    .getAnnotation(ConfigurationComment.class);
-            String comment = (commentAnnotation == null) ? ""
-                    : commentAnnotation.value();
+            ConfigurationComment commentAnnotation = field.getAnnotation(ConfigurationComment.class);
+            String comment = (commentAnnotation == null) ? "" : commentAnnotation.value();
             String key = field.getName();
 
             try {

@@ -32,6 +32,10 @@ import java.util.List;
  * @author Cayde
  */
 public class CommonUtil {
+    /**
+     * Get the side that is currently
+     * @return the effective side
+     */
     public static Side getSide() {
         return FMLCommonHandler.instance().getSide();
     }
@@ -41,6 +45,12 @@ public class CommonUtil {
         return getSide().isServer();
     }
 
+    /**
+     * Join an array of strings with the specified decimeter
+     * @param delim the decimeter
+     * @param args the string to join
+     * @return the joined string
+     */
     public static String join(@SuppressWarnings("SameParameterValue") String delim, String... args) {
         StringBuilder sb = new StringBuilder(args[0]);
         for (int i = 1; i < args.length; i++) {
@@ -51,6 +61,15 @@ public class CommonUtil {
         return sb.toString();
     }
 
+    /**
+     * remove the last element of an array and return it
+     *
+     * Honestly you should use a {@link java.util.Queue}
+     *
+     * @param array the array to manipulate
+     * @param <T> the type of the array
+     * @return the last element of the array
+     */
     @SuppressWarnings("UnusedAssignment")
     public static <T> T arrayPopLast(T[] array) {
         List<T> arr = Lists.newArrayList(array);

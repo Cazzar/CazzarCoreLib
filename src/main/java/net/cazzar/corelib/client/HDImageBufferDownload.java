@@ -24,9 +24,12 @@ import net.minecraft.client.renderer.IImageBuffer;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+/**
+ * A pre 1.6 method of getting HD skins.
+ */
+@SuppressWarnings("UnusedDeclaration")
 @SideOnly(Side.CLIENT)
 public class HDImageBufferDownload implements IImageBuffer {
-
     @Override
     public BufferedImage parseUserSkin(BufferedImage par1BufferedImage) {
         if (par1BufferedImage == null) {

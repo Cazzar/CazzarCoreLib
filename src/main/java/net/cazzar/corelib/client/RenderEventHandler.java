@@ -18,6 +18,7 @@
 package net.cazzar.corelib.client;
 
 /**
+ * Test handler for rendering custom blocks onto a player.
  * @Author: Cayde
  */
 public class RenderEventHandler {

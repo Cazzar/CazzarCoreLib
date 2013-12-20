@@ -22,6 +22,9 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Tags the specific type for parsing all fields as a config item.
+ */
 @Target(value = ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ConfigurationClass {

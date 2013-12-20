@@ -19,6 +19,9 @@ public class ModelCheetah extends ModelBiped {
     final ModelRenderer tailTip;
     final ModelRenderer tailMiddle;
 
+    /**
+     * The main base model for a furry feline
+     */
     public ModelCheetah() {
         textureWidth = 64;
         textureHeight = 32;
@@ -47,6 +50,7 @@ public class ModelCheetah extends ModelBiped {
         tailMiddle.addChild(tailTip);
         setRotation(tailTip, 1.745329F, 0F, 0F);
     }
+
 
     public void render(Entity entity, float f, float f1, float f2, float f3, float f4, float f5) {
 

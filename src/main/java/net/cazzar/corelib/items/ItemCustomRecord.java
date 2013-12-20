@@ -32,13 +32,22 @@ import java.util.List;
 import static java.util.Collections.addAll;
 
 /**
- * A custom
+ * A custom record for simple registration
  */
+@SuppressWarnings("UnusedDeclaration")
 public class ItemCustomRecord extends ItemRecord {
     final String recordInfo;
     final String[] details;
     EnumRarity rarity = null;
 
+    /**
+     * Initialise the ItemCustomRecord class
+     *
+     * @param ID         the ItemID of the record
+     * @param recordFile the <i>domain:file.format</i> format for the record location
+     * @param recordInfo the name of the record
+     * @param details    the extra lore for the record
+     */
     public ItemCustomRecord(int ID, String recordFile, String recordInfo, String... details) {
         super(ID, recordFile.substring(0, recordFile.indexOf('.')));
 
@@ -48,6 +57,15 @@ public class ItemCustomRecord extends ItemRecord {
         if (ClientUtil.isClient()) SoundSystemHelper.registerRecord(recordFile);
     }
 
+    /**
+     * Initalize the ItemCustomRecord class
+     *
+     * @param ID         the ItemID of the record
+     * @param recordFile the <i>domain:file</i> format for the record location
+     * @param ext        the format for the recordFile
+     * @param recordInfo the name of the record
+     * @param details    the extra lore for the record
+     */
     public ItemCustomRecord(int ID, String recordFile, String ext, String recordInfo,
                             String... details) {
         super(ID, recordFile);
@@ -92,7 +110,7 @@ public class ItemCustomRecord extends ItemRecord {
     /**
      * Set the rarity of the
      *
-     * @param rarity
+     * @param rarity the new rarity of the record.
      */
     @SideOnly(Side.CLIENT)
     public void setRarity(EnumRarity rarity) {

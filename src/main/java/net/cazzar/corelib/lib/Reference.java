@@ -24,6 +24,8 @@ package net.cazzar.corelib.lib;
  * @author Cayde
  */
 public class Reference {
-    public static final String CHANNEL_NAME = "CazzarCoreLib";
+    /**
+     * The modid of the coremod
+     */
     public static final String MOD_ID = "CazzarCoreLib";
 }

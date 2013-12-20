@@ -22,12 +22,24 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
+/**
+ * Tags the specific field as a config item
+ */
 @Target(value = ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)
 public @interface ConfigurationOption {
+    /**
+     * The category the field is in
+     */
     String category();
 
+    /**
+     * The comment for the configuration system
+     */
     String comment() default "";
 
+    /**
+     * The key that is used in the configuration
+     */
     String key();
 }

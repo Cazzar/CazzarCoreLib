@@ -166,6 +166,10 @@ public class SoundSystemHelper {
 
     /**
      * Play a record at the Entity
+     *
+     * @param entity     The entity to play it at
+     * @param recordName the record to play
+     * @param volume     the volume to play at
      */
     public static void playRecordAtEntity(Entity entity, String recordName, float volume) {
         //The sound name, the entity, the volume, the pitch, priority
@@ -211,6 +215,9 @@ public class SoundSystemHelper {
         entitiesPlayingMusic.add(entity);
     }
 
+    /**
+     * Update the velocity of the entity sounds
+     */
     public static synchronized void updateEntitySoundVelocities() {
         for (Entity e : entitiesPlayingMusic) {
             //getSoundManager().updateSoundLocation(e);
@@ -225,6 +232,13 @@ public class SoundSystemHelper {
         }
     }
 
+    /**
+     * Get the entity channel for the entity
+     *
+     * @param entity the entity to get the channel from
+     *
+     * @return the entity channel
+     */
     public static String getEntityChannel(Entity entity) {
         return "entity_" + entity.entityId;
     }

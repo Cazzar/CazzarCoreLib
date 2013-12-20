@@ -16,6 +16,7 @@ buildscript {
     }
 }
 
+import org.ajoberstar.gradle.git.tasks.GitTag
 apply plugin: 'forge'
 apply plugin: 'grgit'
 apply plugin: 'maven'
@@ -79,14 +80,16 @@ task sourceJar(type: Jar) {
 }
 
 task javadocJar(type: Jar, dependsOn: javadoc) {
-    appendix = 'javadoc-' + project.minecraft.version
+//    appendix = 'javadoc-' + project.minecraft.version
+    classifier 'javadoc'
     from 'build/docs/javadoc'
 }
 
 // because the normal default jar task has been modified to be obfuscated
 task deobfJar(type: Jar) {
     from sourceSets.main.output
-    classifier = 'deobf'
+    //Since this is now the main version.
+    classifier = ''
 
     manifest {
         attributes FMLCorePlugin: "net.cazzar.corelib.CoreMod",
@@ -96,7 +99,7 @@ task deobfJar(type: Jar) {
 
 artifacts {
     archives deobfJar
-    archives javaDocJar
+    archives javadocJar
 }
 //ENDREGION: artifacts.
 //REGION: Wrapper info

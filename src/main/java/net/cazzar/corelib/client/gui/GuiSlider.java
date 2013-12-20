@@ -23,13 +23,16 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import org.lwjgl.opengl.GL11;
 
+/**
+ * A stub class for a slider in minecraft
+ */
+@SuppressWarnings("UnusedDeclaration")
 @SideOnly(Side.CLIENT)
 public class GuiSlider extends GuiButton {
     /**
      * The value of this slider control.
      */
     public float sliderValue = 1.0F;
-
     /**
      * Is this slider control being dragged.
      */
@@ -41,7 +44,7 @@ public class GuiSlider extends GuiButton {
     }
 
     /**
-     * Returns 0 if the button is disabled, 1 if the mouse is NOT hovering over this button and 2 if it IS hovering over
+     * @return 0 if the button is disabled, 1 if the mouse is NOT hovering over this button and 2 if it IS hovering over
      * this button.
      */
     protected int getHoverState(boolean par1) {
@@ -76,7 +79,7 @@ public class GuiSlider extends GuiButton {
     }
 
     /**
-     * Returns true if the mouse has been pressed on this control. Equivalent of MouseListener.mousePressed(MouseEvent
+     * @return true if the mouse has been pressed on this control. Equivalent of MouseListener.mousePressed(MouseEvent
      * e).
      */
     public boolean mousePressed(Minecraft par1Minecraft, int par2, int par3) {
@@ -101,6 +104,11 @@ public class GuiSlider extends GuiButton {
         }
     }
 
+    /**
+     * Fired when the mouse is released
+     * @param par1 the GUI X coordinate
+     * @param par2 the GUI Y coordinate
+     */
     @Override
     public void mouseReleased(int par1, int par2) {
         this.dragging = false;

@@ -20,8 +20,15 @@ package net.cazzar.corelib.util;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
 
+@SuppressWarnings("UnusedDeclaration")
 public class InventoryUtils {
 
+    /**
+     * Read the Items from the specified NBT data to an array
+     *
+     * @param items   the items to read
+     * @param tagList the tag to read
+     */
     public static void readItemStacksFromTag(ItemStack[] items,
                                              NBTTagList tagList) {
         for (int i = 0; i < tagList.tagCount(); i++) {
@@ -37,10 +44,25 @@ public class InventoryUtils {
         }
     }
 
+    /**
+     * Write the items to a NBTTagList
+     *
+     * @param items the items to write
+     *
+     * @return the generated tag list
+     */
     public static NBTTagList writeItemStacksToTag(ItemStack[] items) {
         return writeItemStacksToTag(items, 64);
     }
 
+    /**
+     * Write the items to a NBTTagList
+     *
+     * @param items       the items to write
+     * @param maxQuantity the max stack size to write
+     *
+     * @return the generated tag list
+     */
     public static NBTTagList writeItemStacksToTag(ItemStack[] items, @SuppressWarnings("SameParameterValue") int maxQuantity) {
         final NBTTagList tagList = new NBTTagList();
         for (int i = 0; i < items.length; i++)
@@ -58,5 +80,4 @@ public class InventoryUtils {
             }
         return tagList;
     }
-
 }
