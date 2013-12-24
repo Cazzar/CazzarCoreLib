@@ -16,7 +16,8 @@ buildscript {
     }
 }
 
-import org.ajoberstar.gradle.git.tasks.GitTag
+import org.ajoberstar.gradle.git.tasks.*
+
 
 apply plugin: 'forge'
 apply plugin: 'grgit'
@@ -28,6 +29,7 @@ configurations {
 repositories { mavenCentral() }
 dependencies {
     deployerJars 'org.springframework.build.aws:org.springframework.build.aws.maven:3.0.0.RELEASE'
+//    compile "org.ajoberstar:gradle-git:0.7.0-SNAPSHOT"
 }
 
 
@@ -38,7 +40,6 @@ archivesBaseName = 'CazzarCoreLib'
 
 minecraft { version = '1.6.4-9.11.1.964' }
 logger.lifecycle "$archivesBaseName-$version"
-
 
 if (new File(projectDir, '.git').exists()) {
     def repo = grgit.repo('.')
@@ -114,8 +115,13 @@ task tag(type: GitTag) {
     message = "Release of ${version}"
 }
 
+task push(type: GitPush) {
+    tags = true;
+}
+
 uploadArchives {
-    dependsOn tag
+    dependsOn tag, push
+
     repositories.mavenDeployer {
         configuration = configurations.deployerJars
 

@@ -1,6 +1,5 @@
 package net.cazzar.corelib.client.rendering;
 
-import net.cazzar.corelib.client.model.ModelCheetah;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
@@ -9,7 +8,7 @@ import net.minecraft.util.ResourceLocation;
  * @Author: Cayde
  */
 public class RenderPlayer extends net.minecraft.client.renderer.entity.RenderPlayer {
-    ModelCheetah cheetah;
+//    ModelCheetah cheetah;
     static ResourceLocation cheetahSkin = new ResourceLocation("cazzarcore", "textures/entity/Cheetah.png");
 
     @Override

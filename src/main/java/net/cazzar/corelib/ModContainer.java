@@ -19,6 +19,7 @@ package net.cazzar.corelib;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.DummyModContainer;
 import cpw.mods.fml.common.LoadController;
 import cpw.mods.fml.common.ModMetadata;
@@ -29,7 +30,10 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 import net.cazzar.corelib.client.ClientTickHandler;
-import net.cazzar.corelib.client.RenderEventHandler;
+import net.cazzar.corelib.client.rendering.ClientRenderTickHandler;
+import net.cazzar.corelib.client.rendering.RenderTail;
+import net.cazzar.corelib.entity.EntityTail;
+import net.cazzar.corelib.events.ClientEvents;
 import net.cazzar.corelib.events.PlayerTracker;
 import net.cazzar.corelib.lib.Reference;
 import net.minecraftforge.common.MinecraftForge;
@@ -78,8 +82,14 @@ public class ModContainer extends DummyModContainer {
     public void preInit(FMLPreInitializationEvent event) throws IOException {
         GameRegistry.registerPlayerTracker(new PlayerTracker());
 
-        MinecraftForge.EVENT_BUS.register(new RenderEventHandler());
-        TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);
+//        MinecraftForge.EVENT_BUS.register(new RenderEventHandler());
+        if (event.getSide().isClient()) {
+            TickRegistry.registerTickHandler(new ClientTickHandler(), Side.CLIENT);
+            TickRegistry.registerTickHandler(new ClientRenderTickHandler(), Side.CLIENT);
+
+            RenderingRegistry.registerEntityRenderingHandler(EntityTail.class, new RenderTail());
+            MinecraftForge.EVENT_BUS.register(new ClientEvents());
+        }
     }
 
     @Subscribe
