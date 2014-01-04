@@ -25,8 +25,10 @@ import static java.lang.annotation.RetentionPolicy.RUNTIME;
 
 /**
  * Tag the Field as a ItemID
+ * @deprecated 1.7 has no item IDs
  */
 @Target(FIELD)
 @Retention(RUNTIME)
+@Deprecated
 public @interface ItemID {
 }

@@ -18,7 +18,7 @@
 package net.cazzar.corelib.configuration;
 
 import net.cazzar.corelib.configuration.annotations.*;
-import net.minecraftforge.common.Configuration;
+import net.minecraftforge.common.config.Configuration;
 
 import java.lang.reflect.Field;
 
@@ -93,24 +93,6 @@ public final class Config {
 
             field.set(instance, value);
         } else if (type == Integer.class || type == int.class) {
-            if (field.isAnnotationPresent(BlockID.class)) {
-                Object def = field.get(instance);
-
-                Object value;
-                value = config.getBlock(category, key, (Integer) def, comment).getInt();
-
-                field.set(instance, value);
-                return;
-            }
-            if (field.isAnnotationPresent(ItemID.class)) {
-                Object def = field.get(instance);
-
-                Object value;
-                value = config.getItem(category, key, (Integer) def, comment).getInt();
-
-                field.set(instance, value);
-                return;
-            }
 
             Object def = field.get(instance);
 

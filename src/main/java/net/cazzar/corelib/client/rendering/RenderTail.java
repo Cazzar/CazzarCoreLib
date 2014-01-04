@@ -18,7 +18,7 @@ public class RenderTail extends RenderEntity {
     IModelCustom modelCustom;
 
     public RenderTail() {
-        modelCustom = AdvancedModelLoader.loadModel("/tail.obj");
+        modelCustom = AdvancedModelLoader.loadModel(new ResourceLocation("cazzarcore:model/tail.obj"));
         shadowSize = 0.0F;
     }
 
@@ -34,7 +34,7 @@ public class RenderTail extends RenderEntity {
 
         if (entity == mc().thePlayer) glTranslatef(0F, -4F, -0.5F); else glTranslatef(0F, 4F, -0.5F);
 
-        mc().renderEngine.bindTexture(new ResourceLocation("cazzarcore:textures/tail-map.png"));
+        mc().renderEngine.bindTexture(new ResourceLocation("cazzarcore:tail-map.png"));
         modelCustom.renderAll();
 
 //        glDisable(GL_BLEND);

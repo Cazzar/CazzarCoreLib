@@ -20,20 +20,17 @@ package net.cazzar.corelib.lib;
 import com.google.common.collect.Lists;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
-import net.cazzar.corelib.util.ClientUtil;
-import net.cazzar.corelib.util.CommonUtil;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.audio.SoundManager;
-import net.minecraft.client.audio.SoundPoolEntry;
+import net.minecraft.client.audio.ISound;
+import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
-import net.minecraft.item.ItemRecord;
-import net.minecraftforge.client.event.sound.PlayStreamingEvent;
-import net.minecraftforge.client.event.sound.PlayStreamingSourceEvent;
-import net.minecraftforge.client.event.sound.SoundEvent;
-import net.minecraftforge.common.MinecraftForge;
+import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.world.World;
 import paulscode.sound.SoundSystem;
 
 import java.util.List;
+
+import static net.cazzar.corelib.util.ClientUtil.mc;
 
 @SuppressWarnings("UnusedDeclaration")
 public class SoundSystemHelper {
@@ -41,117 +38,49 @@ public class SoundSystemHelper {
     private static List<Entity> entitiesPlayingMusic = Lists.newArrayList();
 
     /**
-     * Get the Minecraft sound system manager
+     * Get the Minecraft sound handler
      *
-     * @return the sound manager
+     * @return the SoundHandler instance
      */
-    public static SoundManager getSoundManager() {
-        return Minecraft.getMinecraft().sndManager;
-    }
-
-    /**
-     * get the sound system
-     *
-     * @return the Minecraft sound system
-     */
-    public static SoundSystem getSoundSystem() {
-        return getSoundManager().sndSystem;
-    }
-
-    /**
-     * get if the sound system is enabled or not
-     *
-     * @return if the sound system is enabled.
-     */
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
-    public static boolean isSoundEnabled() {
-        return !CommonUtil.isServer() && getSoundSystem() != null;
+    public static SoundHandler getSoundHandler() {
+        return mc().func_147118_V();
     }
 
     /**
      * play a record at the specific location
      *
-     * @param record     the record name
-     * @param x          the x pos
-     * @param y          the y pos
-     * @param z          the z pos
-     * @param volume     the volume to play at
-     * @param identifier the identifier to play at.
+     * @param record the record name
+     * @param x      the x pos
+     * @param y      the y pos
+     * @param z      the z pos
      */
-    public static void playRecord(String record, float x, float y, float z, float volume, String identifier) {
-        if (!isSoundEnabled()) return;
-
-        SoundSystem sndSystem = getSoundSystem();
-
-        ItemRecord itemrecord = ItemRecord.getRecord(record);
-        if (itemrecord == null) return;
-
-        Minecraft.getMinecraft().ingameGUI.setRecordPlayingMessage(itemrecord.getRecordTitle());
-        if (sndSystem.playing(identifier)) sndSystem.stop(identifier);
-
-        SoundPoolEntry song = getSoundManager().soundPoolStreaming.getRandomSoundFromSoundPool(record);
-        song = SoundEvent.getResult(new PlayStreamingEvent(getSoundManager(), song, identifier, x, y, z));
-
-        if (song == null) return;
-        if (sndSystem.playing("BgMusic")) sndSystem.stop("BgMusic");
-
-        float f3 = 16.0F * volume;
-        sndSystem.newStreamingSource(true, identifier, song.getSoundUrl(), song.getSoundName(), false, x, y, z, 2, f3 * 4.0F);
-
-        sndSystem.setVolume(identifier, volume * Minecraft.getMinecraft().gameSettings.soundVolume);
-
-        MinecraftForge.EVENT_BUS.post(new PlayStreamingSourceEvent(getSoundManager(), identifier, x, y, z));
-        sndSystem.play(identifier);
+    public static void playRecord(World world, String record, int x, int y, int z) {
+        world.playRecord(record, x, y, z);
     }
 
     /**
-     * pause the steaming identifier
+     * stop any sounds playing at the coords.
      *
-     * @param identifier the identifier to pause
+     * @param world       the world that it is playing in
      */
-    public static void pause(String identifier) {
-        if (!isSoundEnabled())
-
-            getSoundSystem().pause(identifier);
+    public static void stop(RenderGlobal world, ChunkCoordinates chunkCoordinates) {
+        ISound sound = getSoundForChunkCoordinates(world, chunkCoordinates);
+        if (sound != null)
+            getSoundHandler().func_147683_b(sound);
     }
 
     /**
-     * Resume the identifier
+     * Check if something is playing at the coords
      *
-     * @param identifier the identifier to resume
-     */
-    public static void resume(String identifier) {
-        if (!isSoundEnabled()) return;
-        getSoundSystem().play(identifier);
-    }
-
-    /**
-     * Stop the identifier playing
      *
-     * @param identifier the identifier to stop
-     */
-    public static void stop(String identifier) {
-        if (!isSoundEnabled()) return;
-        getSoundSystem().stop(identifier);
-    }
-
-    /**
-     * Check if a identifier is playing
+     * @param world       the world that it is playing in
      *
-     * @param identifier the identifier to check.
-     *
+     * @param coordinates the coordinates of the "player"
      * @return if the {@link SoundSystem} is playing with that identifier.
      */
-    public static boolean isPlaying(String identifier) {
-        return isSoundEnabled() && getSoundSystem().playing(identifier);
-    }
-
-    public static boolean isBackgroundMusicPlaying() {
-        return isPlaying("BgMusic");
-    }
-
-    public static void stopBackgroundMusicIfPlaying() {
-        if (isBackgroundMusicPlaying()) stop("BgMusic");
+    public static boolean isPlaying(RenderGlobal world, ChunkCoordinates coordinates) {
+        ISound sound = getSoundForChunkCoordinates(world, coordinates);
+        return sound != null && getSoundHandler().func_147692_c(sound);
     }
 
     /**
@@ -161,85 +90,11 @@ public class SoundSystemHelper {
      */
     @SideOnly(Side.CLIENT)
     public static void registerRecord(String s) {
-        getSoundManager().soundPoolStreaming.addSound(s);
+        //    getSoundManager().soundPoolStreaming.addSound(s);
     }
 
-    /**
-     * Play a record at the Entity
-     *
-     * @param entity     The entity to play it at
-     * @param recordName the record to play
-     * @param volume     the volume to play at
-     */
-    public static void playRecordAtEntity(Entity entity, String recordName, float volume) {
-        //The sound name, the entity, the volume, the pitch, priority
-        //getSoundManager().playEntitySound("streaming." + recordName, entity, 0.5F * ClientUtil.mc().gameSettings.soundVolume, 0, true);
-        if (!isSoundEnabled()) {
-            return;
-        }
-        String s1 = getEntityChannel(entity);
-
-        if (getSoundSystem().playing(s1)) {
-            getSoundManager().updateSoundLocation(entity);
-        } else {
-            if (getSoundSystem().playing(s1)) {
-                getSoundSystem().stop(s1);
-            }
-
-            if (recordName != null) {
-                SoundPoolEntry soundpoolentry = getSoundManager().soundPoolStreaming.getRandomSoundFromSoundPool(recordName);
-
-                if (soundpoolentry != null && volume > 0.0F) {
-                    float f2 = 16.0F;
-
-                    if (volume > 1.0F) {
-                        f2 *= volume;
-                    }
-
-                    getSoundSystem().newSource(true, s1, soundpoolentry.getSoundUrl(), soundpoolentry.getSoundName(), false, (float) entity.posX, (float) entity.posY, (float) entity.posZ, 2, f2);
-                    //getSoundSystem().setLooping(s1, true);
-                    //getSoundSystem().setPitch(s1, 0);
-
-                    if (volume > 1.0F) {
-                        volume = 1.0F;
-                    }
-
-                    getSoundSystem().setVolume(s1, volume * ClientUtil.mc().gameSettings.soundVolume);
-                    getSoundSystem().setVelocity(s1, (float) entity.motionX, (float) entity.motionY, (float) entity.motionZ);
-                    getSoundSystem().play(s1);
-                }
-            }
-        }
-
-
-        entitiesPlayingMusic.add(entity);
-    }
-
-    /**
-     * Update the velocity of the entity sounds
-     */
-    public static synchronized void updateEntitySoundVelocities() {
-        for (Entity e : entitiesPlayingMusic) {
-            //getSoundManager().updateSoundLocation(e);
-            String s = getEntityChannel(e);
-
-            if (getSoundSystem().playing(s)) {
-                getSoundSystem().setPosition(s, (float) e.posX, (float) e.posY, (float) e.posZ);
-                getSoundSystem().setVelocity(s, (float) e.motionX, (float) e.motionY, (float) e.motionZ);
-            } else {
-                entitiesPlayingMusic.remove(e);
-            }
-        }
-    }
-
-    /**
-     * Get the entity channel for the entity
-     *
-     * @param entity the entity to get the channel from
-     *
-     * @return the entity channel
-     */
-    public static String getEntityChannel(Entity entity) {
-        return "entity_" + entity.entityId;
+    @SideOnly(Side.CLIENT)
+    public static ISound getSoundForChunkCoordinates(RenderGlobal world, ChunkCoordinates coords) {
+        return (ISound) world.field_147593_P.get(coords);
     }
 }

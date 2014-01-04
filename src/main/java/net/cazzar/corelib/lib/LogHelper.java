@@ -17,12 +17,14 @@
 
 package net.cazzar.corelib.lib;
 
-import cpw.mods.fml.common.FMLLog;
-
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+/**
+ * @deprecated use Log4j
+ */
 @SuppressWarnings("UnusedDeclaration")
+@Deprecated
 public class LogHelper {
     public static LogHelper coreLog = new LogHelper();
     private Logger logger;
@@ -142,7 +144,7 @@ public class LogHelper {
      */
     public void log(Level logLevel, Throwable e, String message, Object... params) {
         Logger old = logger.getParent();
-        logger.setParent(FMLLog.getLogger());
+//        logger.setParent(FMLLog.getLogger());
         logger.log(logLevel, String.format(message, params), e);
         logger.setParent(old);
     }

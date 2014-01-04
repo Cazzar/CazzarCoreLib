@@ -21,26 +21,25 @@
 package net.cazzar.corelib.creative;
 
 import cpw.mods.fml.common.registry.LanguageRegistry;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.cazzar.corelib.util.ClientUtil;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.item.Item;
 
 /**
  * A generic and simple creative tab.
  */
 public class GenericCreativeTab extends CreativeTabs {
-    final int iconID;
+    final Item icon;
 
     /**
      * A generic and simple creative tab.
      *
      * @param label  the label for the itemGroup.<i>label</i>
-     * @param iconID the Item/Block ID for
+     * @param icon the Item/Block ID for
      */
-    public GenericCreativeTab(String label, int iconID) {
+    public GenericCreativeTab(String label, Item icon) {
         super(label);
-        this.iconID = iconID;
+        this.icon = icon;
     }
 
     /**
@@ -56,8 +55,8 @@ public class GenericCreativeTab extends CreativeTabs {
         return this;
     }
 
-    @SideOnly(Side.CLIENT)
-    public int getTabIconItemIndex() {
-        return iconID;
+    @Override
+    public Item getTabIconItem() {
+        return icon;
     }
 }

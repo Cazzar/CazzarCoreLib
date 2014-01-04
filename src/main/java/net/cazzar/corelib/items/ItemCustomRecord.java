@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.cazzar.corelib.lib.SoundSystemHelper;
 import net.cazzar.corelib.util.ClientUtil;
-import net.minecraft.client.renderer.texture.IconRegister;
+import net.minecraft.client.renderer.texture.IIconRegister;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemRecord;
@@ -37,27 +37,36 @@ import static java.util.Collections.addAll;
 @SuppressWarnings("UnusedDeclaration")
 public class ItemCustomRecord extends ItemRecord {
     final String recordInfo;
-    final String[] details;
-    EnumRarity rarity = null;
 
+    final String[] details;
+
+    EnumRarity rarity = null;
     /**
      * Initialise the ItemCustomRecord class
      *
-     * @param ID         the ItemID of the record
+//     * @param ID         the ItemID of the record
      * @param recordFile the <i>domain:file.format</i> format for the record location
      * @param recordInfo the name of the record
      * @param details    the extra lore for the record
      */
-    public ItemCustomRecord(int ID, String recordFile, String recordInfo, String... details) {
-        super(ID, recordFile.substring(0, recordFile.indexOf('.')));
+//    public ItemCustomRecord(string ID, String recordFile, String recordInfo, String... details) {
+//        super(ID, recordFile.substring(0, recordFile.indexOf('.')));
+//
+//        this.recordInfo = recordInfo;
+//        this.details = details;
+//        this.setUnlocalizedName("record");
+//        if (ClientUtil.isClient()) SoundSystemHelper.registerRecord(recordFile);
+//    }
 
+    public ItemCustomRecord(String recordFile, String ext, String recordInfo, String... details) {
+        super(recordFile);
+        setUnlocalizedName("record");
         this.recordInfo = recordInfo;
         this.details = details;
-        this.setUnlocalizedName("record");
-        if (ClientUtil.isClient()) SoundSystemHelper.registerRecord(recordFile);
+        if (ClientUtil.isClient()) SoundSystemHelper.registerRecord(recordFile + '.' + ext);
     }
 
-    /**
+    /*
      * Initalize the ItemCustomRecord class
      *
      * @param ID         the ItemID of the record
@@ -65,7 +74,7 @@ public class ItemCustomRecord extends ItemRecord {
      * @param ext        the format for the recordFile
      * @param recordInfo the name of the record
      * @param details    the extra lore for the record
-     */
+     * /
     public ItemCustomRecord(int ID, String recordFile, String ext, String recordInfo,
                             String... details) {
         super(ID, recordFile);
@@ -75,14 +84,15 @@ public class ItemCustomRecord extends ItemRecord {
         setUnlocalizedName("record");
         if (ClientUtil.isClient())
             SoundSystemHelper.registerRecord(recordFile + "." + ext);
-    }
+    } */
+
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack is, EntityPlayer par2EntityPlayer,
                                List list, boolean par4) {
-        list.add(getRecordTitle());
+        list.add(func_150927_i());
         addAll(list, details);
     }
 
@@ -97,14 +107,8 @@ public class ItemCustomRecord extends ItemRecord {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public String getRecordTitle() {
+    public String func_150927_i() {
         return recordInfo;
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void registerIcons(IconRegister register) {
-        itemIcon = register.registerIcon(recordName);
     }
 
     /**
@@ -115,5 +119,11 @@ public class ItemCustomRecord extends ItemRecord {
     @SideOnly(Side.CLIENT)
     public void setRarity(EnumRarity rarity) {
         this.rarity = rarity;
+    }
+
+    @Override
+    public void registerIcons(IIconRegister par1IconRegister) {
+//        super.registerIcons(par1IconRegister);
+        itemIcon = par1IconRegister.registerIcon(field_150929_a);
     }
 }

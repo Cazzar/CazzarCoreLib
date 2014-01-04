@@ -1,4 +1,4 @@
-package net.cazzar.corelib.client.rendering;
+/*package net.cazzar.corelib.client.rendering;
 
 import com.google.common.collect.Maps;
 import cpw.mods.fml.common.ITickHandler;
@@ -16,7 +16,7 @@ import static net.cazzar.corelib.util.ClientUtil.mc;
 
 /**
  * @Author: Cayde
- */
+ *
 public class ClientRenderTickHandler implements ITickHandler {
     public static HashMap<EntityPlayer, EntityTail> tails = Maps.newHashMap();
 
@@ -58,3 +58,4 @@ public class ClientRenderTickHandler implements ITickHandler {
         return null;
     }
 }
+     */

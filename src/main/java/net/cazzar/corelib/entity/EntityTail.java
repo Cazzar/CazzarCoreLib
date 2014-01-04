@@ -1,6 +1,5 @@
 package net.cazzar.corelib.entity;
 
-import net.cazzar.corelib.client.rendering.ClientRenderTickHandler;
 import net.cazzar.corelib.lib.LogHelper;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
@@ -66,6 +65,6 @@ public class EntityTail extends Entity {
     public void setDead() {
         LogHelper.coreLog.info("Entity dead!");
         super.setDead();
-        ClientRenderTickHandler.tails.remove(owner);
+//        ClientRenderTickHandler.tails.remove(owner);
     }
 }

@@ -99,6 +99,11 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
     }
 
     @Override
+    public String getAccessTransformerClass() {
+        return "net.cazzar.corelib.asm.CoreAccessTransformer";
+    }
+
+    @Override
     public Void call() throws Exception {
         McpMappings.instance();
         return null;

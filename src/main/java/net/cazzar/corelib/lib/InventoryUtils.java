@@ -31,14 +31,14 @@ public class InventoryUtils {
     public static void readItemStacksFromTag(ItemStack[] items,
                                              NBTTagList tagList) {
         for (int i = 0; i < tagList.tagCount(); i++) {
-            final NBTTagCompound tag = (NBTTagCompound) tagList.tagAt(i);
+            final NBTTagCompound tag = (NBTTagCompound) tagList.func_150305_b(i);
             final int b = tag.getShort("Slot");
             items[b] = ItemStack.loadItemStackFromNBT(tag);
             if (tag.hasKey("Quantity")) {
                 final NBTBase qtag = tag.getTag("Quantity");
-                if (qtag instanceof NBTTagInt) items[b].stackSize = ((NBTTagInt) qtag).data;
+                if (qtag instanceof NBTTagInt) items[b].stackSize = ((NBTTagInt) qtag).func_150287_d();
                 else if (qtag instanceof NBTTagShort)
-                    items[b].stackSize = ((NBTTagShort) qtag).data;
+                    items[b].stackSize = ((NBTTagShort) qtag).func_150289_e();
             }
         }
     }
