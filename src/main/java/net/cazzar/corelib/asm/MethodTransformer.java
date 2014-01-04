@@ -133,7 +133,7 @@ public abstract class MethodTransformer extends BasicTransformer {
                     if (isReturn(lastInsn))
                         methodNode.instructions.insertBefore(lastInsn, insns);
                     else
-                        methodNode.instructions.insert(insns);
+                        methodNode.instructions.add(insns);
                 }
             }
         }
