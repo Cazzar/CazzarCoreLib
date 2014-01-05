@@ -21,17 +21,7 @@ import org.ajoberstar.gradle.git.tasks.*
 
 apply plugin: 'forge'
 apply plugin: 'grgit'
-apply plugin: 'maven'
-
-configurations {
-    deployerJars
-}
-repositories { mavenCentral() }
-dependencies {
-    deployerJars 'org.springframework.build.aws:org.springframework.build.aws.maven:3.0.0.RELEASE'
-//    compile "org.ajoberstar:gradle-git:0.7.0-SNAPSHOT"
-}
-
+apply plugin: 'maven-publish'
 
 group = 'net.cazzar.corelib'
 version = '1.1.0'
@@ -119,60 +109,16 @@ task push(type: GitPush) {
     tags = true;
 }
 
-uploadArchives {
-    dependsOn tag, push
-
-    repositories.mavenDeployer {
-        configuration = configurations.deployerJars
-
-        repository(url: 's3://CazzarMods/repo/') {
-            authentication([userName: project.awsUserID, passphrase: project.awsSecretKey])
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact javadocJar
+            artifact deobfJar
         }
-        pom {
-            groupId = project.group
-            version = project.version
-            artifactId = project.archivesBaseName
-
-            project {
-                //noinspection GrUnresolvedAccess
-                //noinspection GroovyAssignabilityCheck
-                name project.archivesBaseName
-//                packaging 'jar'
-                //noinspection GroovyAssignabilityCheck
-                description 'Cazzar\'s Core Library for mods'
-//                url ''
-
-                scm {
-                    url 'https://bitbucket.org/cazzar/cazzarcorelib'
-                    connection 'scm:git:https://bitbucket.org/cazzar/cazzarcorelib.git'
-                    developerConnection 'scm:git:git@bitbucket.org:cazzar/cazzarcorelib.git'
-                }
-                issueManagement {
-                    system 'bitbucket'
-                    url 'https://bitbucket.org/cazzar/cazzarcorelib/issues'
-                }
-
-                licenses {
-                    license {
-                        //noinspection GroovyAssignabilityCheck
-                        name 'GNU GENERAL PUBLIC LICENSE Version 3'
-                        url 'https://www.gnu.org/licenses/gpl-3.0.txt'
-                        distribution 'repo'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'cazzar'
-                        //noinspection GroovyAssignabilityCheck
-                        name 'Cayde Dixon'
-                        roles {
-                            role 'packager'
-                            role 'developer'
-                        }
-                    }
-                }
-            }
+    }
+    repositories {
+        maven {
+            url "file://home/cayde/www-data/cazzar.net/maven"
         }
     }
 }
