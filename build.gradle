@@ -11,7 +11,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
         classpath 'org.ajoberstar:gradle-git:0.7.0-SNAPSHOT'
     }
 }
@@ -38,7 +38,7 @@ version = '1.1.0'
 def actualVersion = version
 archivesBaseName = 'CazzarCoreLib'
 
-minecraft { version = '1.7.2-10.12.0.989' }
+minecraft { version = '1.6.4-9.11.1.964' }
 logger.lifecycle "$archivesBaseName-$version"
 
 if (new File(projectDir, '.git').exists()) {
@@ -72,7 +72,6 @@ jar {
     classifier = 'universal'
     manifest {
         attributes FMLCorePlugin: "net.cazzar.corelib.CoreMod",
-                FMLCorePluginContainsFMLMod: "true",
                 "Implementation-Version": actualVersion
     }
 }
@@ -118,10 +117,6 @@ task tag(type: GitTag) {
 
 task push(type: GitPush) {
     tags = true;
-}
-
-reobf {
-    deobfFile = new net.minecraftforge.gradle.delayed.DelayedFile(project, "build/tmp/deobfBinJar/deobfed.jar")
 }
 
 uploadArchives {
