@@ -20,6 +20,7 @@ package net.cazzar.corelib.asm;
 import com.google.common.collect.Lists;
 import net.cazzar.corelib.lib.LogHelper;
 import net.minecraft.launchwrapper.IClassTransformer;
+import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
@@ -31,7 +32,7 @@ import java.util.List;
  * A basic transformer that is selective to which class it is selecting
  */
 public abstract class BasicTransformer implements IClassTransformer {
-    final LogHelper logger = LogHelper.coreLog;
+    final Logger logger = LogHelper.coreLog;
     private final List<String> classes = Lists.newArrayList();
 
     @SuppressWarnings("UnusedDeclaration")

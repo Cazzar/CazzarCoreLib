@@ -27,7 +27,6 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.util.Map;
-import java.util.logging.Level;
 
 public final class McpMappings {
     private static McpMappings instance;
@@ -66,7 +65,8 @@ public final class McpMappings {
                 }
             }
         } catch (IOException e) {
-            LogHelper.coreLog.log(Level.WARNING, e, "Unable to read obfuscation data successfully.");
+            LogHelper.coreLog.catching(e);
+            LogHelper.coreLog.warn("Unable to read obfuscation data successfully.");
         }
     }
 

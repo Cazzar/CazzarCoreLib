@@ -20,6 +20,7 @@
  */
 package net.cazzar.corelib;
 
+import cpw.mods.fml.common.CertificateHelper;
 import cpw.mods.fml.relauncher.IFMLCallHook;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 import net.cazzar.corelib.asm.McpMappings;
@@ -27,8 +28,9 @@ import net.cazzar.corelib.lib.LogHelper;
 
 import java.io.File;
 import java.lang.reflect.Field;
+import java.security.CodeSource;
+import java.security.cert.Certificate;
 import java.util.Map;
-import java.util.logging.Level;
 
 /**
  * The FML coremod for the plugin also containing information about Deobf and minecraft's running location
@@ -40,6 +42,8 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
     private static boolean runtimeDeobfuscationEnabled = true;
     private static String deobfuscationFileName = null;
     private static File mcLocation = null;
+    private static final String FINGERPRINT = "B6:9D:73:36:FB:E4:C3:E9:72:79:EB:3E:E3:19:9F:00:9A:90:34:75".toLowerCase().replace(":", "");
+    private static File coremodLocation = null;
 
     /**
      * Get the deobf file name
@@ -64,6 +68,10 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
     @SuppressWarnings("UnusedDeclaration")
     public static File getMcLocation() {
         return mcLocation;
+    }
+
+    public static File getCoremodLocation() {
+        return coremodLocation;
     }
 
     @Override
@@ -93,7 +101,8 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
                 f.set(null, data.get(key));
             } catch (NoSuchFieldException ignored) {
             } catch (IllegalAccessException e) {
-                LogHelper.coreLog.log(Level.WARNING, e, "Unable to set field: %s", key);
+                LogHelper.coreLog.catching(e);
+                LogHelper.coreLog.warn("Unable to set field: %s", key);
             }
         }
     }
@@ -105,7 +114,24 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
 
     @Override
     public Void call() throws Exception {
+        CodeSource source = getClass().getProtectionDomain().getCodeSource();
+
+        if (source.getLocation().getProtocol().equals("jar")) {
+            Certificate[] certificates = source.getCertificates();
+            if (certificates == null) throw new RuntimeException("CazzarCoreLib is not signed and has been compromised, please get it from http://www.cazzar.net/");
+
+            for (Certificate certificate : certificates) {
+                String fingerprint = CertificateHelper.getFingerprint(certificate);
+                if (fingerprint.equals(FINGERPRINT)) {
+                    LogHelper.coreLog.info("Found a valid CazzarCoreLib fingerprint");
+                }
+                else
+                    throw new RuntimeException("CazzarCoreLib has been compromised, please get a new version from http://www.cazzar.net/");
+            }
+        }
+
         McpMappings.instance();
         return null;
     }
+
 }

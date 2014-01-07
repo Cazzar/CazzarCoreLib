@@ -19,6 +19,8 @@ public class RenderTail extends RenderEntity {
     //    ModelTail model = new ModelTail();
     IModelCustom modelCustom;
 
+    static ResourceLocation tex = new ResourceLocation("cazzarcore:textures/tail-map.png");
+
     public RenderTail() {
         ResourceLocation location= new ResourceLocation("cazzarcore:model/tail.obj");
         IResource resource = Minecraft.getMinecraft().getResourceManager().getResource(location);
@@ -36,7 +38,13 @@ public class RenderTail extends RenderEntity {
 
         if (entity == mc().thePlayer) glTranslatef(0F, -4F, -0.5F); else glTranslatef(0F, 4F, -0.5F);
 
-        mc().renderEngine.bindTexture(new ResourceLocation("cazzarcore:tail-map.png"));
+        if (entity.isSneaking()) {
+            float f = (entity == mc().thePlayer) ? -1 : 1;
+            glTranslatef(0, 0, -1F);
+            glRotatef(30F, 1, 0, 0);
+        }
+
+        mc().renderEngine.bindTexture(tex);
         modelCustom.renderAll();
 
         glPopMatrix();

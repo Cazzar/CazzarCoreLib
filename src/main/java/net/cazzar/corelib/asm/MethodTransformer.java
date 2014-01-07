@@ -89,7 +89,7 @@ public abstract class MethodTransformer extends BasicTransformer {
                     continue;
                 }
                 if (m.name.equals(match.getName()) && m.desc.equals(match.getDesc())) {
-                    logger.fine("Removed %s%s for %s.%s%s", m.name, m.desc, node.name, name, desc);
+                    logger.debug("Removed %s%s for %s.%s%s", m.name, m.desc, node.name, name, desc);
                     i.remove();
                     break;
                 }
