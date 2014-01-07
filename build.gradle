@@ -72,6 +72,7 @@ jar {
     classifier = 'universal'
     manifest {
         attributes FMLCorePlugin: "net.cazzar.corelib.CoreMod",
+                FMLCorePluginContainsFMLMod: "true",
                 "Implementation-Version": actualVersion
     }
 }

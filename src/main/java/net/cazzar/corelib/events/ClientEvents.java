@@ -32,8 +32,4 @@ public class ClientEvents {
             tail.doRender(player, player.posX - mcPlayer.posX, player.posY - mcPlayer.posY, player.posZ - mcPlayer.posZ, event.partialRenderTick, 1);
         }
     }
-
-    private double getDist(double b, double a) {
-        return b-a;
-    }
 }
