@@ -41,7 +41,10 @@ archivesBaseName = 'CazzarCoreLib'
 minecraft { version = '1.7.2-10.12.0.996' }
 logger.lifecycle "$archivesBaseName-$version"
 
-if (new File(projectDir, '.git').exists()) {
+if (System.getenv("BUILD_NUMBER") != null) {
+    version = "MC${minecraft.version}-$version." + System.getenv("BUILD_NUMBER");
+    actualVersion += "." + System.getenv("BUILD_NUMBER");
+} else if (new File(projectDir, '.git').exists()) {
     def repo = grgit.repo('.')
     version = "MC${minecraft.version}-$version-${repo.history.log().find().abbreviatedId}"
     actualVersion += "-${repo.history.log().find().abbreviatedId}"
@@ -49,6 +52,8 @@ if (new File(projectDir, '.git').exists()) {
     version = "MC${minecraft.version}-$version-DEV"
     actualVersion += "-DEV"
 }
+
+
 
 processResources {
     // replace stuff in text files, not binary ones.
