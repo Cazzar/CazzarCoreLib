@@ -15,6 +15,7 @@ import static org.lwjgl.opengl.GL11.*;
  */
 public class RenderTail extends RenderEntity {
     //    ModelTail model = new ModelTail();
+    static ResourceLocation map = new ResourceLocation("cazzarcore:textures/tail-map.png");
     IModelCustom modelCustom;
 
     public RenderTail() {
@@ -34,7 +35,7 @@ public class RenderTail extends RenderEntity {
 
         if (entity == mc().thePlayer) glTranslatef(0F, -4F, -0.5F); else glTranslatef(0F, 4F, -0.5F);
 
-        mc().renderEngine.bindTexture(new ResourceLocation("cazzarcore:textures/tail-map.png"));
+        mc().renderEngine.bindTexture(map);
         modelCustom.renderAll();
 
 //        glDisable(GL_BLEND);

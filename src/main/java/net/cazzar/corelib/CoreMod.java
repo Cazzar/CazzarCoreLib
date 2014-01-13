@@ -40,6 +40,7 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
     private static boolean runtimeDeobfuscationEnabled = true;
     private static String deobfuscationFileName = null;
     private static File mcLocation = null;
+    private static File coremodLocation = null;
 
     /**
      * Get the deobf file name
@@ -64,6 +65,10 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
     @SuppressWarnings("UnusedDeclaration")
     public static File getMcLocation() {
         return mcLocation;
+    }
+
+    public static File getCoremodLocation() {
+        return coremodLocation;
     }
 
     @Override

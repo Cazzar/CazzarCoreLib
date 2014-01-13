@@ -28,7 +28,6 @@ public class ClientEvents {
         EntityPlayer mcPlayer = ClientUtil.mc().thePlayer;
         if (tails.containsKey(player.username)) {
             RenderTail tail = tails.get(player.username);
-//            LogHelper.coreLog.info("%s    %s", getDist(player.posX, mcPlayer.posX), player.posX - mcPlayer.posX);
             tail.doRender(player, player.posX - mcPlayer.posX, player.posY - mcPlayer.posY, player.posZ - mcPlayer.posZ, event.partialRenderTick, 1);
         }
     }

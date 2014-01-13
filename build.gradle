@@ -88,7 +88,7 @@ task deobfJar(type: Jar) {
     classifier = ''
 
     manifest {
-        attributes FMLCorePlugin: "net.cazzar.corelib.CoreMod",
+         attributes FMLCorePlugin: "net.cazzar.corelib.CoreMod",
                 "Implementation-Version": actualVersion
     }
 }

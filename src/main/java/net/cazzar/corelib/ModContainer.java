@@ -19,6 +19,8 @@ package net.cazzar.corelib;
 
 import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
+import cpw.mods.fml.client.FMLFileResourcePack;
+import cpw.mods.fml.client.FMLFolderResourcePack;
 import cpw.mods.fml.client.registry.RenderingRegistry;
 import cpw.mods.fml.common.DummyModContainer;
 import cpw.mods.fml.common.LoadController;
@@ -38,7 +40,9 @@ import net.cazzar.corelib.events.PlayerTracker;
 import net.cazzar.corelib.lib.Reference;
 import net.minecraftforge.common.MinecraftForge;
 
+import java.io.File;
 import java.io.IOException;
+import java.net.URISyntaxException;
 import java.util.Arrays;
 
 /**
@@ -100,5 +104,27 @@ public class ModContainer extends DummyModContainer {
     @Subscribe
     public void postInit(FMLPostInitializationEvent event) {
 
+    }
+
+    @Override
+    public File getSource() {
+        if (CoreMod.getCoremodLocation() == null) {
+            File f;
+            try {
+                f = new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
+            } catch (URISyntaxException e) {
+                f = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+            }
+
+            f = f.getParentFile().getParentFile().getParentFile().getParentFile();
+            return f;
+        }
+        return CoreMod.getCoremodLocation();
+    }
+
+    @Override
+    public Class<?> getCustomResourcePackClass() {
+        if (getSource() == null) return FMLFolderResourcePack.class;
+        return !getSource().isDirectory() ? FMLFileResourcePack.class : FMLFolderResourcePack.class;
     }
 }
