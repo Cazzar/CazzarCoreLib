@@ -38,8 +38,17 @@ version = '1.1.0'
 def actualVersion = version
 archivesBaseName = 'CazzarCoreLib'
 
-minecraft { version = '1.7.2-10.12.0.996' }
-logger.lifecycle "$archivesBaseName-$version"
+if (!hasProperty('forgeVersion'))
+    ext.set('forgeVersion', '1.7.2-10.12.0.996')
+if (!hasProperty("assetsDir"))
+    ext.set('assetsDir', 'run/assets')
+
+minecraft {
+    version = project.forgeVersion
+    assetDir = project.assetsDir
+}
+
+//logger.lifecycle "$archivesBaseName-$version"
 
 if (System.getenv("BUILD_NUMBER") != null) {
     version = "MC${minecraft.version}-$version." + System.getenv("BUILD_NUMBER");
@@ -109,11 +118,6 @@ artifacts {
     archives javadocJar
 }
 //ENDREGION: artifacts.
-//REGION: Wrapper info
-wrapper {
-    version = "1.8"
-}
-//ENDREGION: Wrapper info
 
 task tag(type: GitTag) {
     tagName = actualVersion
