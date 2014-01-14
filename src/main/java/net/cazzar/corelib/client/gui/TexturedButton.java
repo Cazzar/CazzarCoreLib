@@ -22,6 +22,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
+import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
@@ -103,7 +104,7 @@ public class TexturedButton extends GuiButton {
      */
     public void drawToolTip(int x, int y) {
         try {
-            ReflectionHelper.findMethod(GuiContainer.class, gui, new String[]{"drawCreativeTabHoveringText", "func_74190_a"}, String.class, int.class, int.class).invoke(gui, tooltip, x, y);
+            ReflectionHelper.findMethod(GuiScreen.class, gui, new String[]{"drawCreativeTabHoveringText", "func_146279_a"}, String.class, int.class, int.class).invoke(gui, tooltip, x, y);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
