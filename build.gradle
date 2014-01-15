@@ -39,7 +39,7 @@ def actualVersion = version
 archivesBaseName = 'CazzarCoreLib'
 
 if (!hasProperty('forgeVersion'))
-    ext.set('forgeVersion', '1.7.2-10.12.0.996')
+    ext.set('forgeVersion', '1.7.2-10.12.0.999')
 if (!hasProperty("assetsDir"))
     ext.set('assetsDir', 'run/assets')
 
