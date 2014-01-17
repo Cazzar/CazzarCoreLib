@@ -30,8 +30,6 @@ import paulscode.sound.SoundSystem;
 
 import java.util.List;
 
-import static net.cazzar.corelib.util.ClientUtil.mc;
-
 @SuppressWarnings("UnusedDeclaration")
 public class SoundSystemHelper {
 
