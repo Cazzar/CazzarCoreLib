@@ -71,8 +71,7 @@ public class ModContainer extends DummyModContainer {
      */
     public String getVersionFromJar() {
         String version = getClass().getPackage().getImplementationVersion();
-        if (version == null) return "UNKNOWN";
-        return version.isEmpty() ? "UNKNOWN" : version;
+        return version == null || version.isEmpty() ? "UNKNOWN" : version;
     }
 
     @Override
