@@ -88,6 +88,7 @@ jar {
         attributes FMLCorePlugin: "net.cazzar.corelib.CoreMod",
                 "Implementation-Version": actualVersion
     }
+    from 'build/unpacked/conf/mcp-srg.srg' into '/'
 }
 
 task sourceJar(type: Jar) {

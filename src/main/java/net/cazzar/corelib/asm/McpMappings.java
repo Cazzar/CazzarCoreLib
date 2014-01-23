@@ -33,6 +33,9 @@ public final class McpMappings {
     private final Map<String, String> classMap = Maps.newHashMap();
     private final Map<FieldDescription, FieldDescription> fieldMap = Maps.newHashMap();
     private final Map<String, MethodDescription> methodMap = Maps.newHashMap();
+    private final Map<FieldDescription, FieldDescription> deobfFieldMap = Maps.newHashMap();
+    private final Map<String, MethodDescription> deobfMethodMap = Maps.newHashMap();
+
 
     private McpMappings() {
         try {
@@ -54,16 +57,38 @@ public final class McpMappings {
                     String[] srgPart = fields[2].split("/");
                     String srgName = CommonUtil.arrayPopLast(srgPart);
 
-                    fieldMap.put(new FieldDescription(CommonUtil.join("/", srgPart), srgName),
-                            new FieldDescription(CommonUtil.join("/", obfPart), obfName));
+                    fieldMap.put(new FieldDescription(CommonUtil.join("/", srgPart), srgName), new FieldDescription(CommonUtil.join("/", obfPart), obfName));
                 } else if ("MD:".equals(fields[0])) {
                     String[] obfParts = fields[1].split("/");
                     String[] srgParts = fields[3].split("/");
 
-                    methodMap.put(srgParts[srgParts.length - 1],
-                            new MethodDescription(obfParts[obfParts.length - 1], fields[2]));
+                    methodMap.put(srgParts[srgParts.length - 1], new MethodDescription(obfParts[obfParts.length - 1], fields[2]));
                 }
             }
+             /*
+            if (getClass().getResource("mcp-srg.srg") != null) {
+                reader = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("mcp-srg.srg")));
+                while (reader.ready()) {
+                    String[] fields = reader.readLine().split(" ");
+
+                    if ("FD:".equals(fields[0])) {
+                        String[] srgPart = fields[1].split("/");
+                        String srgName = CommonUtil.arrayPopLast(srgPart);
+
+                        String[] obfPart = fields[2].split("/");
+                        String obfName = CommonUtil.arrayPopLast(obfPart);
+
+                        deobfFieldMap.put(new FieldDescription(CommonUtil.join("/", srgPart), srgName), new FieldDescription(CommonUtil.join("/", obfPart), obfName));
+                    } else if ("MD:".equals(fields[0])) {
+                        String[] srgParts = fields[1].split("/");
+                        String[] obfParts = fields[3].split("/");
+
+                        deobfMethodMap.put(srgParts[srgParts.length - 1], new MethodDescription(obfParts[obfParts.length - 1], fields[2]));
+                    }
+                }
+            }
+            */
+
         } catch (IOException e) {
             LogHelper.coreLog.catching(e);
             LogHelper.coreLog.warn("Unable to read obfuscation data successfully.");

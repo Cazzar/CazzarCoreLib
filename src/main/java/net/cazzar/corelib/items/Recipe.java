@@ -194,8 +194,15 @@ public class Recipe {
         int col = ((pos - 1) % 3);
 
         recipe[row][col] = ' ';
-        characterMap.put(' ', null);
+        if (!characterMap.containsKey(' '))
+            characterMap.put(' ', null);
 
+        return this;
+    }
+
+    public Recipe dot(int pos, Item item) {
+        int row = (int) floor((pos - 1) / 3);
+        int col = ((pos - 1) % 3);
         return this;
     }
 
