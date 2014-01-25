@@ -22,7 +22,6 @@ import org.ajoberstar.gradle.git.tasks.*
 apply plugin: 'forge'
 apply plugin: 'grgit'
 apply plugin: 'maven-publish'
-
 configurations {
     deployerJars
 }
@@ -38,14 +37,9 @@ version = '1.1.0'
 def actualVersion = version
 archivesBaseName = 'CazzarCoreLib'
 
-if (!hasProperty('forgeVersion'))
-    ext.set('forgeVersion', '1.7.2-10.12.0.999')
-if (!hasProperty("assetsDir"))
-    ext.set('assetsDir', 'run/assets')
-
 minecraft {
-    version = project.forgeVersion
-    assetDir = project.assetsDir
+    version = '1.7.2-10.12.0.1014'
+    assetDir = '../run/assets'
 }
 
 //logger.lifecycle "$archivesBaseName-$version"

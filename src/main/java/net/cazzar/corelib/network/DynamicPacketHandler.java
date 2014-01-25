@@ -15,11 +15,11 @@ public class DynamicPacketHandler extends FMLIndexedMessageToMessageCodec<IPacke
 
     @Override
     public void encodeInto(ChannelHandlerContext ctx, IPacket packet, ByteBuf bytes) throws Exception {
-        packet.read(bytes);
+        packet.write(bytes);
     }
 
     @Override
     public void decodeInto(ChannelHandlerContext ctx, ByteBuf bytes, IPacket packet) {
-        packet.write(bytes);
+        packet.read(bytes);
     }
 }
