@@ -27,6 +27,8 @@ import org.ajoberstar.gradle.git.tasks.*
 apply plugin: 'forge'
 apply plugin: 'grgit'
 apply plugin: 'maven-publish'
+apply plugin: 'curseforge'
+
 configurations {
     deployerJars
 }
