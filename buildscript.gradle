@@ -1,6 +1,3 @@
-import org.ajoberstar.gradle.git.tasks.GitPush
-import org.ajoberstar.gradle.git.tasks.GitTag
-
 buildscript {
     repositories {
         mavenCentral()
@@ -22,24 +19,4 @@ buildscript {
         classpath 'org.ajoberstar:gradle-git:0.7.0-SNAPSHOT'
         classpath 'net.cazzar:CurseForgeUploader:1.0'
     }
-}
-
-group = 'net.cazzar.corelib'
-version = '1.1.0'
-project.ext.set('actualVersion', version)
-//noinspection GroovyUnusedAssignment
-archivesBaseName = 'CazzarCoreLib'
-
-apply from: 'forge.gradle'
-apply from: 'artifacts.gradle'
-apply from: 'release.gradle'
-apply plugin: 'grgit'
-
-task tag(type: GitTag) {
-    setTagName actualVersion
-    setMessage "Release of ${version}"
-}
-
-task push(type: GitPush) {
-    setPushTags true
 }

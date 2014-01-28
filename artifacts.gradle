@@ -1,0 +1,36 @@
+jar {
+    classifier = 'universal'
+    manifest {
+        attributes FMLCorePlugin: "net.cazzar.corelib.CoreMod",
+                "Implementation-Version": actualVersion
+    }
+    from 'build/unpacked/conf/mcp-srg.srg' into '/'
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+    classifier = 'src'
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+//    appendix = 'javadoc-' + project.minecraft.version
+    classifier 'javadoc'
+    from 'build/docs/javadoc'
+}
+
+// because the normal default jar task has been modified to be obfuscated
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    //Since this is now the main version.
+    classifier = ''
+
+    manifest {
+        attributes FMLCorePlugin: "net.cazzar.corelib.CoreMod",
+                "Implementation-Version": actualVersion
+    }
+}
+
+artifacts {
+    archives deobfJar
+    archives javadocJar
+}
