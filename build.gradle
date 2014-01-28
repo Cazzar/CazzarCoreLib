@@ -8,11 +8,16 @@ buildscript {
             name 'forge'
             url 'http://files.minecraftforge.net/maven'
         }
+        maven {
+            name 'Cazzar\'s Maven repo'
+            url 'http://maven.cazzar.net/'
+        }
     }
 
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
         classpath 'org.ajoberstar:gradle-git:0.7.0-SNAPSHOT'
+        classpath 'net.cazzar:CurseForgeUploader:1.0'
     }
 }
 
@@ -38,7 +43,7 @@ def actualVersion = version
 archivesBaseName = 'CazzarCoreLib'
 
 minecraft {
-    version = '1.7.2-10.12.0.1014'
+    version = '1.7.2-10.12.0.1019'
     assetDir = '../run/assets'
 }
 
@@ -135,4 +140,41 @@ publishing {
             url "file://home/cayde/www-data/cazzar.net/maven"
         }
     }
+}
+
+import groovy.json.JsonSlurper
+def getJenkinsChanges() {
+	def jsonSlurper = new JsonSlurper();
+    def url = new URL('http://direct.cazzar.net:8080/job/CazzarCore-1.7/lastBuild/api/json')
+    def connection = url.openConnection();
+
+    def reader = new BufferedReader(new InputStreamReader(connection.getInputStream()))
+
+    def result = jsonSlurper.parse(reader)
+
+//    println result.changeSet.items
+
+
+    def data = new ArrayList<Object>()
+
+    for (obj in result.changeSet.items) {
+        data.add(obj.author.fullName + ": " + obj.msg)
+    }
+
+    def iter = data.iterator()
+    StringBuilder val = new StringBuilder()
+    while (iter.hasNext()) {
+        val.append(iter.next()).append((iter.hasNext()) ? '\n' : '')
+    }
+
+    return val.toString()
+}
+
+uploadToCurseForge {
+    api_key project.curseAPI
+    stub 'cazzarcorelib'
+    artifact_name 'Version ' + actualVersion
+    game_version minecraft.version
+    artifact tasks.reobf.outputs.getFiles().getSingleFile()
+    change_log getJenkinsChanges()
 }

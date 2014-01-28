@@ -84,6 +84,7 @@ public class ModContainer extends DummyModContainer {
     public void preInit(FMLPreInitializationEvent event) throws IOException {
         if (event.getSide().isClient()) {
             MinecraftForge.EVENT_BUS.register(new ClientEvents());
+
         }
     }
 
@@ -94,7 +95,6 @@ public class ModContainer extends DummyModContainer {
 
     @Subscribe
     public void postInit(FMLPostInitializationEvent event) {
-
     }
 
     @Override
@@ -110,6 +110,7 @@ public class ModContainer extends DummyModContainer {
             f = f.getParentFile().getParentFile().getParentFile().getParentFile();
             return f;
         }
+
         return CoreMod.getCoremodLocation();
     }
 

@@ -1,9 +1,7 @@
 package net.cazzar.corelib.client.rendering;
 
-import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.AbstractClientPlayer;
 import net.minecraft.client.renderer.entity.RenderEntity;
-import net.minecraft.client.resources.IResource;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.model.AdvancedModelLoader;
@@ -23,7 +21,7 @@ public class RenderTail extends RenderEntity {
 
     public RenderTail() {
         ResourceLocation location= new ResourceLocation("cazzarcore:model/tail.obj");
-        IResource resource = Minecraft.getMinecraft().getResourceManager().getResource(location);
+//        IResource resource = Minecraft.getMinecraft().getResourceManager().getResource(location);
         modelCustom = AdvancedModelLoader.loadModel(location);
         shadowSize = 0.0F;
     }
