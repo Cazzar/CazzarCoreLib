@@ -31,7 +31,7 @@ public class InventoryUtils {
     public static void readItemStacksFromTag(ItemStack[] items,
                                              NBTTagList tagList) {
         for (int i = 0; i < tagList.tagCount(); i++) {
-            final NBTTagCompound tag = (NBTTagCompound) tagList.func_150305_b(i);
+            final NBTTagCompound tag = tagList.getCompoundTagAt(i);
             final int b = tag.getShort("Slot");
             items[b] = ItemStack.loadItemStackFromNBT(tag);
             if (tag.hasKey("Quantity")) {

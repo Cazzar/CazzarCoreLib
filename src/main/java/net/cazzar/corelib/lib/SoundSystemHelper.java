@@ -43,7 +43,7 @@ public class SoundSystemHelper {
      * @return the SoundHandler instance
      */
     public static SoundHandler getSoundHandler() {
-        return mc().func_147118_V();
+        return mc().getSoundHandler();
     }
 
     /**
@@ -66,7 +66,7 @@ public class SoundSystemHelper {
     public static void stop(RenderGlobal world, ChunkCoordinates chunkCoordinates) {
         ISound sound = getSoundForChunkCoordinates(world, chunkCoordinates);
         if (sound != null)
-            getSoundHandler().func_147683_b(sound);
+            getSoundHandler().stopSound(sound);
     }
 
     /**
@@ -80,7 +80,7 @@ public class SoundSystemHelper {
      */
     public static boolean isPlaying(RenderGlobal world, ChunkCoordinates coordinates) {
         ISound sound = getSoundForChunkCoordinates(world, coordinates);
-        return sound != null && getSoundHandler().func_147692_c(sound);
+        return sound != null && getSoundHandler().isSoundPlaying(sound);
     }
 
     /**
@@ -95,6 +95,6 @@ public class SoundSystemHelper {
 
     @SideOnly(Side.CLIENT)
     public static ISound getSoundForChunkCoordinates(RenderGlobal world, ChunkCoordinates coords) {
-        return (ISound) world.field_147593_P.get(coords);
+        return (ISound) world.mapSoundPositions.get(coords);
     }
 }

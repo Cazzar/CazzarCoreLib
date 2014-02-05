@@ -92,7 +92,7 @@ public class ItemCustomRecord extends ItemRecord {
     @SideOnly(Side.CLIENT)
     public void addInformation(ItemStack is, EntityPlayer par2EntityPlayer,
                                List list, boolean par4) {
-        list.add(func_150927_i());
+        list.add(getRecordNameLocal());
         addAll(list, details);
     }
 
@@ -107,7 +107,7 @@ public class ItemCustomRecord extends ItemRecord {
 
     @Override
     @SideOnly(Side.CLIENT)
-    public String func_150927_i() {
+    public String getRecordNameLocal() {
         return recordInfo;
     }
 
@@ -124,6 +124,6 @@ public class ItemCustomRecord extends ItemRecord {
     @Override
     public void registerIcons(IIconRegister par1IconRegister) {
 //        super.registerIcons(par1IconRegister);
-        itemIcon = par1IconRegister.registerIcon(field_150929_a);
+        itemIcon = par1IconRegister.registerIcon(recordName);
     }
 }

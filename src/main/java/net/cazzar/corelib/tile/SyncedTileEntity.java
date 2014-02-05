@@ -8,16 +8,16 @@ import net.minecraft.tileentity.TileEntity;
 
 public abstract class SyncedTileEntity extends TileEntity {
     @Override
-    public Packet func_145844_m() {
+    public Packet getDescriptionPacket() {
         NBTTagCompound tag = new NBTTagCompound();
-        func_145841_b(tag);
+        writeToNBT(tag);
         addExtraNBTToPacket(tag);
-        return new S35PacketUpdateTileEntity(field_145851_c, field_145848_d, field_145849_e, 1, tag);
+        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, tag);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-        func_145839_a(pkt.func_148857_g());
+        readFromNBT(pkt.func_148857_g());
         readExtraNBTFromPacket(pkt.func_148857_g());
     }
 

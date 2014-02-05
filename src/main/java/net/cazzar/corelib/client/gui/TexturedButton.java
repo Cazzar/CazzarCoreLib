@@ -69,28 +69,28 @@ public class TexturedButton extends GuiButton {
 
     @Override
     //drawButton
-    public void func_146112_a(Minecraft mc, int x, int y) {
-        if (field_146125_m) {
+    public void drawButton(Minecraft mc, int x, int y) {
+        if (enabled) {
             mc.renderEngine.bindTexture(textureFile);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             //field_146128_h = xPos
             //field_146129_i = yPos
             //field_146120_f = width
             //field_146121_g = height
-            field_146123_n = x >= field_146128_h && y >= field_146129_i && x < field_146128_h + field_146120_f && y < field_146129_i + field_146121_g;
+//            field_146123_n = x >= xPosition && y >= yPosition && x < xPosition + width && y < yPosition + height;
 
-            switch (func_146114_a(field_146123_n)) {
+            switch (getHoverState(field_146123_n)) {
                 case 0:
                     // Disabled
-                    drawTexturedModalRect(field_146128_h, field_146129_i, xOffsetForDisabled, yOffsetForDisabled, field_146120_f, field_146121_g);
+                    drawTexturedModalRect(xPosition, yPosition, xOffsetForDisabled, yOffsetForDisabled, width, height);
                     break;
                 case 1:
                     // not hovering
-                    drawTexturedModalRect(field_146128_h, field_146129_i, xOffset, yOffset, field_146120_f, field_146121_g);
+                    drawTexturedModalRect(xPosition, yPosition, xOffset, yOffset, width, height);
                     break;
                 case 2:
                     // hovering
-                    drawTexturedModalRect(field_146128_h, field_146129_i, xOffsetForHovered, yOffsetForHovered, field_146120_f, field_146121_g);
+                    drawTexturedModalRect(xPosition, yPosition, xOffsetForHovered, yOffsetForHovered, width, height);
                     break;
             }
         }
@@ -116,7 +116,7 @@ public class TexturedButton extends GuiButton {
      * @return The width
      */
     public int getWidth() {
-        return field_146120_f;
+        return width;
     }
 
     /**
@@ -125,7 +125,7 @@ public class TexturedButton extends GuiButton {
      * @return the height
      */
     public int getHeight() {
-        return field_146121_g;
+        return height;
     }
 
     /**

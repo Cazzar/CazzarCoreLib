@@ -13,7 +13,7 @@ public class RenderPlayer extends net.minecraft.client.renderer.entity.RenderPla
 
     @Override
     protected ResourceLocation getEntityTexture(Entity par1Entity) {
-        if (((EntityPlayer) par1Entity).func_146103_bH().getName().equals("cazzar")) {
+        if (((EntityPlayer) par1Entity).getGameProfile().getName().equals("cazzar")) {
             //return cheetahSkin;
         }
         return super.getEntityTexture(par1Entity);

@@ -30,9 +30,10 @@ project.ext.set('actualVersion', version)
 //noinspection GroovyUnusedAssignment
 archivesBaseName = 'CazzarCoreLib'
 
-apply from: 'forge.gradle'
-apply from: 'artifacts.gradle'
-apply from: 'release.gradle'
+apply from: 'extra/forge.gradle'
+apply from: 'extra/artifacts.gradle'
+apply from: 'extra/release.gradle'
+apply from: 'extra/signing.gradle'
 apply plugin: 'grgit'
 
 task tag(type: GitTag) {

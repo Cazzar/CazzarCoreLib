@@ -26,8 +26,8 @@ public class ClientEvents {
     public void playerRenderEvent(RenderPlayerEvent.Post event) {
         EntityPlayer player = event.entityPlayer;
         EntityPlayer mcPlayer = ClientUtil.mc().thePlayer;
-        if (tails.containsKey(player.func_146103_bH().getName())) {
-            RenderTail tail = tails.get(player.func_146103_bH().getName());
+        if (tails.containsKey(player.getGameProfile().getName())) {
+            RenderTail tail = tails.get(player.getGameProfile().getName());
 //            LogHelper.coreLog.info("%s    %s", getDist(player.posX, mcPlayer.posX), player.posX - mcPlayer.posX);
             tail.doRender(player, player.posX - mcPlayer.posX, player.posY - mcPlayer.posY, player.posZ - mcPlayer.posZ, event.partialRenderTick, 1);
         }

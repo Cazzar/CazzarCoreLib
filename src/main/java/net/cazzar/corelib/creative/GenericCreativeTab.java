@@ -20,8 +20,6 @@
  */
 package net.cazzar.corelib.creative;
 
-import cpw.mods.fml.common.registry.LanguageRegistry;
-import net.cazzar.corelib.util.ClientUtil;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
 
@@ -40,19 +38,6 @@ public class GenericCreativeTab extends CreativeTabs {
     public GenericCreativeTab(String label, Item icon) {
         super(label);
         this.icon = icon;
-    }
-
-    /**
-     * Set a simple translation for the {@link GenericCreativeTab}
-     *
-     * @param trans the translation
-     *
-     * @return the tab for easy chaining setup.
-     */
-    public GenericCreativeTab setTranslation(String trans) {
-        if (ClientUtil.isClient())
-            LanguageRegistry.instance().addStringLocalization("itemGroup." + getTabLabel(), trans);
-        return this;
     }
 
     @Override

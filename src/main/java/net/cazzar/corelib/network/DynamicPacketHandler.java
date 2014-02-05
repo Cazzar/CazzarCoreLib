@@ -20,6 +20,7 @@ public class DynamicPacketHandler extends FMLIndexedMessageToMessageCodec<IPacke
 
     @Override
     public void decodeInto(ChannelHandlerContext ctx, ByteBuf bytes, IPacket packet) {
+
         packet.read(bytes);
     }
 }
