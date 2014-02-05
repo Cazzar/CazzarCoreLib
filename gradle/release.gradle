@@ -60,6 +60,7 @@ def getJenkinsChanges() {
 }
 
 uploadToCurseForge {
+    dependsOn "signJar"
     if (project.ext.has('curseAPI'))
         api_key project.ext['curseAPI']
     else
