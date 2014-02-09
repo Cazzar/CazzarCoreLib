@@ -28,7 +28,7 @@ group = 'net.cazzar.corelib'
 version = '1.1.0'
 project.ext.set('actualVersion', version)
 //noinspection GroovyUnusedAssignment
-archivesBaseName = 'CazzarCoreLib'
+//archivesBaseName = 'CazzarCoreLib'
 
 apply from: 'gradle/forge.gradle'
 apply from: 'gradle/artifacts.gradle'

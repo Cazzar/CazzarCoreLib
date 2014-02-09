@@ -1,6 +1,5 @@
 /**
- * Clientside only classes
- * @Author: Cayde
+ * Client-side only classes
  */
 package net.cazzar.corelib.client;
 
