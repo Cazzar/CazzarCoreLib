@@ -26,14 +26,15 @@ import net.minecraft.item.Item;
 /**
  * A generic and simple creative tab.
  */
+@SuppressWarnings("UnusedDeclaration")
 public class GenericCreativeTab extends CreativeTabs {
     final Item icon;
 
     /**
      * A generic and simple creative tab.
      *
-     * @param label  the label for the itemGroup.<i>label</i>
-     * @param icon the Item/Block ID for
+     * @param label the label for the itemGroup.<i>label</i>
+     * @param icon  the Item/Block ID for
      */
     public GenericCreativeTab(String label, Item icon) {
         super(label);

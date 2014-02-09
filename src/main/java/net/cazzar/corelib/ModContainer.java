@@ -27,6 +27,8 @@ import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.versioning.ArtifactVersion;
+import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
 import net.cazzar.corelib.events.ClientEvents;
 import net.cazzar.corelib.lib.Reference;
 import net.minecraftforge.common.MinecraftForge;
@@ -54,6 +56,7 @@ public class ModContainer extends DummyModContainer {
         meta.description = "The core library for cazzar's mods";
         meta.modId = Reference.MOD_ID;
         meta.name = "Cazzar Core Lib";
+        meta.dependants = Arrays.asList((ArtifactVersion) new DefaultArtifactVersion("jukeboxreloaded"));
         meta.url = "http://www.cazzar.net/";
         meta.version = getVersionFromJar();
     }

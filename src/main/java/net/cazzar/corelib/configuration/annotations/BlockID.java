@@ -24,9 +24,11 @@ import java.lang.annotation.Target;
 
 /**
  * Tags the specified field as a Block ID
+ *
  * @deprecated 1.7 has no block IDs
  */
 
+@SuppressWarnings("UnusedDeclaration")
 @Deprecated
 @Target(value = ElementType.FIELD)
 @Retention(RetentionPolicy.RUNTIME)

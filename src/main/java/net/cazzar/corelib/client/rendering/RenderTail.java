@@ -11,17 +11,15 @@ import static net.cazzar.corelib.util.ClientUtil.mc;
 import static org.lwjgl.opengl.GL11.*;
 
 /**
- * @Author: Cayde
+ * The remderer for the tail entity on certain players
  */
 public class RenderTail extends RenderEntity {
-    //    ModelTail model = new ModelTail();
     IModelCustom modelCustom;
 
     static ResourceLocation tex = new ResourceLocation("cazzarcore:textures/tail-map.png");
 
     public RenderTail() {
-        ResourceLocation location= new ResourceLocation("cazzarcore:model/tail.obj");
-//        IResource resource = Minecraft.getMinecraft().getResourceManager().getResource(location);
+        ResourceLocation location = new ResourceLocation("cazzarcore:model/tail.obj");
         modelCustom = AdvancedModelLoader.loadModel(location);
         shadowSize = 0.0F;
     }
@@ -30,14 +28,14 @@ public class RenderTail extends RenderEntity {
     public void doRender(Entity entity, double x, double y, double z, float par8, float scale) {
         glPushMatrix();
 
-        glTranslatef((float)x, (float)y, (float)z);
+        glTranslatef((float) x, (float) y, (float) z);
         glScalef(0.15F, 0.15F, 0.15F);
         glRotated(-entity.rotationYaw, 0, 1, 0);
 
-        if (entity == mc().thePlayer) glTranslatef(0F, -4F, -0.5F); else glTranslatef(0F, 4F, -0.5F);
+        if (entity == mc().thePlayer) glTranslatef(0F, -4F, -0.5F);
+        else glTranslatef(0F, 4F, -0.5F);
 
         if (entity.isSneaking()) {
-            float f = (entity == mc().thePlayer) ? -1 : 1;
             glTranslatef(0, 0, -1F);
             glRotatef(30F, 1, 0, 0);
         }

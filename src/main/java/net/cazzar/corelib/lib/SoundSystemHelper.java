@@ -61,7 +61,7 @@ public class SoundSystemHelper {
     /**
      * stop any sounds playing at the coords.
      *
-     * @param world       the world that it is playing in
+     * @param world the world that it is playing in
      */
     public static void stop(RenderGlobal world, ChunkCoordinates chunkCoordinates) {
         ISound sound = getSoundForChunkCoordinates(world, chunkCoordinates);
@@ -72,10 +72,9 @@ public class SoundSystemHelper {
     /**
      * Check if something is playing at the coords
      *
-     *
      * @param world       the world that it is playing in
-     *
      * @param coordinates the coordinates of the "player"
+     *
      * @return if the {@link SoundSystem} is playing with that identifier.
      */
     public static boolean isPlaying(RenderGlobal world, ChunkCoordinates coordinates) {

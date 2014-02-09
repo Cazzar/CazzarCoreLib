@@ -6,6 +6,10 @@ import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 
+/**
+ * A automatically syncing tile entity class using NBT Data allowing you to add extra
+ */
+@SuppressWarnings("UnusedDeclaration")
 public abstract class SyncedTileEntity extends TileEntity {
     @Override
     public Packet getDescriptionPacket() {
@@ -21,6 +25,15 @@ public abstract class SyncedTileEntity extends TileEntity {
         readExtraNBTFromPacket(pkt.func_148857_g());
     }
 
+    /**
+     * Add extra information to the Packet before it is sent
+     * @param tag the tag to write to
+     */
     public abstract void addExtraNBTToPacket(NBTTagCompound tag);
+
+    /**
+     * Read the extra information off the packet when it is received from the server.
+     * @param tag the tag to read from
+     */
     public abstract void readExtraNBTFromPacket(NBTTagCompound tag);
 }

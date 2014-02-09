@@ -47,6 +47,7 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
 
     /**
      * Get the deobf file name
+     *
      * @return the Deobf data filename
      */
     public static String getDeobfuscationFileName() {
@@ -55,14 +56,16 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
 
     /**
      * Get if runtime deobfuscation is enabled
+     *
      * @return if runtime deobf is enabled
      */
     public static boolean getRuntimeDeobfuscationEnabled() {
         return runtimeDeobfuscationEnabled;
     }
 
-    /***
+    /**
      * Get the directory Minecraft is in
+     *
      * @return the minecraft directory
      */
     @SuppressWarnings("UnusedDeclaration")
@@ -115,14 +118,14 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
 
         if (source.getLocation().getProtocol().equals("jar")) {
             Certificate[] certificates = source.getCertificates();
-            if (certificates == null) throw new RuntimeException("CazzarCoreLib is not signed and has been compromised, please get it from http://www.cazzar.net/");
+            if (certificates == null)
+                throw new RuntimeException("CazzarCoreLib is not signed and has been compromised, please get it from http://www.cazzar.net/");
 
             for (Certificate certificate : certificates) {
                 String fingerprint = CertificateHelper.getFingerprint(certificate);
                 if (fingerprint.equals(FINGERPRINT)) {
                     LogHelper.coreLog.info("Found a valid CazzarCoreLib fingerprint");
-                }
-                else
+                } else
                     throw new RuntimeException("CazzarCoreLib has been compromised, please get a new version from http://www.cazzar.net/");
             }
         }

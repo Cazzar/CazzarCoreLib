@@ -11,10 +11,11 @@ import net.minecraftforge.client.event.RenderPlayerEvent;
 import java.util.HashMap;
 
 /**
- * @Author: Cayde
+ * The event handler for Clientside events
  */
 public class ClientEvents {
     static ImmutableBiMap<String, RenderTail> tails;
+
     static {
         HashMap<String, RenderTail> tailHashMap = Maps.newHashMap();
         tailHashMap.put("cazzar", new RenderTail());
@@ -22,6 +23,7 @@ public class ClientEvents {
 
         tails = ImmutableBiMap.copyOf(tailHashMap);
     }
+
     @SubscribeEvent
     public void playerRenderEvent(RenderPlayerEvent.Post event) {
         EntityPlayer player = event.entityPlayer;

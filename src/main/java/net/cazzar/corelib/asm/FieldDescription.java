@@ -20,7 +20,7 @@ package net.cazzar.corelib.asm;
 import java.lang.reflect.Field;
 
 /**
- * @Author: Cayde
+ * A description of a java field for use in the Transformers
  */
 public class FieldDescription {
     private final String classname;
@@ -33,6 +33,7 @@ public class FieldDescription {
 
     /**
      * Get the field name
+     *
      * @return the name of the field
      */
     public String getName() {
@@ -41,6 +42,7 @@ public class FieldDescription {
 
     /**
      * Get the class name the field resides in
+     *
      * @return the class name
      */
     public String getClassname() {
@@ -49,6 +51,7 @@ public class FieldDescription {
 
     /**
      * Get the java class name used for the class loader
+     *
      * @return the Canonacal Classname
      */
     public String getCanonacalClassname() {
@@ -57,6 +60,7 @@ public class FieldDescription {
 
     /**
      * Get the name and class name combined
+     *
      * @return the full name of the class with the name concatenated
      */
     @SuppressWarnings("UnusedDeclaration")
@@ -65,9 +69,11 @@ public class FieldDescription {
     }
 
     /**
-     *  get the Java {@link java.lang.reflect.Field} for the field reference
+     * get the Java {@link java.lang.reflect.Field} for the field reference
+     *
      * @return the Java field
      */
+    @SuppressWarnings("UnusedDeclaration")
     public Field getField() {
         try {
             Class<?> cl = Class.forName(getCanonacalClassname());

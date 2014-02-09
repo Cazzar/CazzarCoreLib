@@ -23,6 +23,7 @@ import org.apache.logging.log4j.Logger;
 @SuppressWarnings("UnusedDeclaration")
 public class LogHelper {
     public static Logger coreLog = getLogger(Reference.MOD_ID);
+
     public static Logger getLogger(String identifier) {
         return LogManager.getLogger(identifier);
     }

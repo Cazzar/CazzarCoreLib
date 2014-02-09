@@ -25,7 +25,7 @@ public class MethodDescription {
     /**
      * A description about a method
      *
-     * @param left the name
+     * @param left  the name
      * @param right the description
      */
     public MethodDescription(String left, String right) {

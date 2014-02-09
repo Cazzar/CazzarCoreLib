@@ -32,8 +32,9 @@ public abstract class MethodTransformer extends BasicTransformer {
 
     /**
      * Add a mapping for the transformations
+     *
      * @param deobfName The domesticated name for the transformations
-     * @param srgName the SRG mapping for the transformation
+     * @param srgName   the SRG mapping for the transformation
      */
     protected static void addMapping(String deobfName, String srgName) {
         if (srgMappings.containsKey(deobfName)) {
@@ -48,6 +49,7 @@ public abstract class MethodTransformer extends BasicTransformer {
      * Get the mapping for the deobf'd name
      *
      * @param deobfName the deobfuscated name of the mapping
+     *
      * @return the SRG mapping
      */
     protected static String getMapping(String deobfName) {
@@ -61,11 +63,11 @@ public abstract class MethodTransformer extends BasicTransformer {
     /**
      * Replace the said method with the instructions
      *
-     * @param node the Class being worked on
-     * @param access the Opcode access to the class
-     * @param name the name of the function
-     * @param desc the method description
-     * @param insns the instructions of the class
+     * @param node           the Class being worked on
+     * @param access         the Opcode access to the class
+     * @param name           the name of the function
+     * @param desc           the method description
+     * @param insns          the instructions of the class
      * @param tryCatchBlocks a
      */
     public final void replaceMethod(ClassNode node, int access, String name, String desc, InsnList insns, TryCatchBlockNode... tryCatchBlocks) {
@@ -102,11 +104,11 @@ public abstract class MethodTransformer extends BasicTransformer {
     /**
      * Append the instructions to the method
      *
-     * @param node the Class being worked on
-     * @param access the Opcode access to the class
-     * @param name the name of the function
-     * @param desc the method description
-     * @param insnList the instructions to append
+     * @param node               the Class being worked on
+     * @param access             the Opcode access to the class
+     * @param name               the name of the function
+     * @param desc               the method description
+     * @param insnList           the instructions to append
      * @param tryCatchBlockNodes a
      */
 
@@ -142,11 +144,11 @@ public abstract class MethodTransformer extends BasicTransformer {
     /**
      * Prepend the instructions to the method
      *
-     * @param node the Class being worked on
-     * @param access the Opcode access to the class
-     * @param name the name of the function
-     * @param desc the method description
-     * @param insnList the instructions to append
+     * @param node               the Class being worked on
+     * @param access             the Opcode access to the class
+     * @param name               the name of the function
+     * @param desc               the method description
+     * @param insnList           the instructions to append
      * @param tryCatchBlockNodes a
      */
 

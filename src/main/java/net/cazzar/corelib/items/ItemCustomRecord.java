@@ -41,10 +41,12 @@ public class ItemCustomRecord extends ItemRecord {
     final String[] details;
 
     EnumRarity rarity = null;
+
     /**
      * Initialise the ItemCustomRecord class
+     * <p/>
+     * //     * @param ID         the ItemID of the record
      *
-//     * @param ID         the ItemID of the record
      * @param recordFile the <i>domain:file.format</i> format for the record location
      * @param recordInfo the name of the record
      * @param details    the extra lore for the record
@@ -57,7 +59,6 @@ public class ItemCustomRecord extends ItemRecord {
 //        this.setUnlocalizedName("record");
 //        if (ClientUtil.isClient()) SoundSystemHelper.registerRecord(recordFile);
 //    }
-
     public ItemCustomRecord(String recordFile, String ext, String recordInfo, String... details) {
         super(recordFile);
         setUnlocalizedName("record");

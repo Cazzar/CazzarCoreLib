@@ -17,7 +17,9 @@
 
 package net.cazzar.corelib.configuration;
 
-import net.cazzar.corelib.configuration.annotations.*;
+import net.cazzar.corelib.configuration.annotations.ConfigurationClass;
+import net.cazzar.corelib.configuration.annotations.ConfigurationComment;
+import net.cazzar.corelib.configuration.annotations.ConfigurationOption;
 import net.minecraftforge.common.config.Configuration;
 
 import java.lang.reflect.Field;

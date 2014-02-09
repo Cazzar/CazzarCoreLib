@@ -34,21 +34,24 @@ import java.util.List;
 public class CommonUtil {
     /**
      * Get the side that is currently
+     *
      * @return the effective side
      */
     public static Side getSide() {
         return FMLCommonHandler.instance().getSide();
     }
 
-    @SuppressWarnings("BooleanMethodIsAlwaysInverted")
+    @SuppressWarnings({"BooleanMethodIsAlwaysInverted", "UnusedDeclaration"})
     public static boolean isServer() {
         return getSide().isServer();
     }
 
     /**
      * Join an array of strings with the specified decimeter
+     *
      * @param delim the decimeter
-     * @param args the string to join
+     * @param args  the string to join
+     *
      * @return the joined string
      */
     public static String join(@SuppressWarnings("SameParameterValue") String delim, String... args) {
@@ -63,11 +66,12 @@ public class CommonUtil {
 
     /**
      * remove the last element of an array and return it
-     *
+     * <p/>
      * Honestly you should use a {@link java.util.Queue}
      *
      * @param array the array to manipulate
-     * @param <T> the type of the array
+     * @param <T>   the type of the array
+     *
      * @return the last element of the array
      */
     @SuppressWarnings("UnusedAssignment")
