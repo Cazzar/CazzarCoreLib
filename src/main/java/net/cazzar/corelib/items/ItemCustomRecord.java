@@ -44,21 +44,12 @@ public class ItemCustomRecord extends ItemRecord {
 
     /**
      * Initialise the ItemCustomRecord class
-     * <p/>
-     * //     * @param ID         the ItemID of the record
      *
      * @param recordFile the <i>domain:file.format</i> format for the record location
      * @param recordInfo the name of the record
+     * @param ext the file extension
      * @param details    the extra lore for the record
      */
-//    public ItemCustomRecord(string ID, String recordFile, String recordInfo, String... details) {
-//        super(ID, recordFile.substring(0, recordFile.indexOf('.')));
-//
-//        this.recordInfo = recordInfo;
-//        this.details = details;
-//        this.setUnlocalizedName("record");
-//        if (ClientUtil.isClient()) SoundSystemHelper.registerRecord(recordFile);
-//    }
     public ItemCustomRecord(String recordFile, String ext, String recordInfo, String... details) {
         super(recordFile);
         setUnlocalizedName("record");
@@ -66,27 +57,6 @@ public class ItemCustomRecord extends ItemRecord {
         this.details = details;
         if (ClientUtil.isClient()) SoundSystemHelper.registerRecord(recordFile + '.' + ext);
     }
-
-    /*
-     * Initalize the ItemCustomRecord class
-     *
-     * @param ID         the ItemID of the record
-     * @param recordFile the <i>domain:file</i> format for the record location
-     * @param ext        the format for the recordFile
-     * @param recordInfo the name of the record
-     * @param details    the extra lore for the record
-     * /
-    public ItemCustomRecord(int ID, String recordFile, String ext, String recordInfo,
-                            String... details) {
-        super(ID, recordFile);
-
-        this.recordInfo = recordInfo;
-        this.details = details;
-        setUnlocalizedName("record");
-        if (ClientUtil.isClient())
-            SoundSystemHelper.registerRecord(recordFile + "." + ext);
-    } */
-
 
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override

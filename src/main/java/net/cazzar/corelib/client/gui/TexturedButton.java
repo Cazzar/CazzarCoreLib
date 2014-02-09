@@ -40,13 +40,13 @@ public class TexturedButton extends GuiButton {
     /**
      * A simple textured button for GUIs
      *
-     * @param gui                the GUI that the button is on, normally {@link this}
+     * @param gui                the GUI that the button is on, normally <i>this</i>
      * @param id                 the button ID
      * @param xPosition          the X position on the GUI
      * @param yPosition          The Y position on the GUI
      * @param width              The button's width
      * @param height             The button's height
-     * @param textureFile        The Button's texture file {@link ResourceLocation}
+     * @param textureFile        The Button's texture file {@link net.minecraft.util.ResourceLocation}
      * @param xOffset            the X offset for enabled
      * @param yOffset            the Y offset for enabled
      * @param xOffsetForDisabled the X offset for Disabled

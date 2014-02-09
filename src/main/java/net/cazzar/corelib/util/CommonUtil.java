@@ -65,8 +65,7 @@ public class CommonUtil {
     }
 
     /**
-     * remove the last element of an array and return it
-     * <p/>
+     * <p>Remove the last element of an array and return it</p>
      * Honestly you should use a {@link java.util.Queue}
      *
      * @param array the array to manipulate

@@ -15,12 +15,8 @@ import java.util.Map;
 import static java.lang.Math.floor;
 
 /**
- * A recipe helper class for FML
- * <p/>
- * <p/>
- * For the centre points reference:
- * <p/>
- * [1, 2, 3] <br/> [4, 5, 6] <br/> [7, 8, 9]
+ * <p>A recipe helper class for FML </p> <p> For the centre points reference: <br></br> [1, 2, 3] <br></br> [4, 5, 6] <br></br>
+ * [7, 8, 9] </p>
  */
 @SuppressWarnings("UnusedDeclaration")
 public class Recipe {
@@ -82,7 +78,7 @@ public class Recipe {
      *
      * @param item the item to generate the cross at
      *
-     * @return {@link this} for easy chaining
+     * @return <i>this</i> for easy chaining
      */
     public Recipe cross(Item item) {
         return cross(5, item);
@@ -94,7 +90,7 @@ public class Recipe {
      * @param item   the item to generate the cross at
      * @param center the centre point for the cross
      *
-     * @return {@link this} for easy chaining
+     * @return <i>this</i> for easy chaining
      */
     public Recipe cross(int center, Item item) {
         int row = (int) floor((center - 1) / 3);
@@ -119,7 +115,7 @@ public class Recipe {
      *
      * @param block the block to generate the cross at
      *
-     * @return {@link this} for easy chaining
+     * @return <i>this</i> for easy chaining
      */
     public Recipe cross(Block block) {
         return cross(5, block);
@@ -131,7 +127,7 @@ public class Recipe {
      * @param block  the block to generate the cross at
      * @param center the centre point for the cross
      *
-     * @return {@link this} for easy chaining
+     * @return <i>this</i> for easy chaining
      */
     public Recipe cross(int center, Block block) {
         int row = (int) floor((center - 1) / 3);
@@ -153,7 +149,7 @@ public class Recipe {
      *
      * @param oreDict the OreDictionary item to generate the cross at
      *
-     * @return {@link this} for easy chaining
+     * @return <i>this</i> for easy chaining
      */
     public Recipe cross(String oreDict) {
         return cross(5, oreDict);
@@ -165,7 +161,7 @@ public class Recipe {
      * @param oreDict the OreDictionary item to generate the cross at
      * @param center  the centre point for the cross
      *
-     * @return {@link this} for easy chaining
+     * @return <i>this</i> for easy chaining
      */
     public Recipe cross(int center, String oreDict) {
         int row = (int) floor((center - 1) / 3);
@@ -187,7 +183,7 @@ public class Recipe {
      *
      * @param pos the position to remove
      *
-     * @return {@link this} for easy chaining
+     * @return <i>this</i> for easy chaining
      */
     public Recipe blank(int pos) {
         int row = (int) floor((pos - 1) / 3);
@@ -213,7 +209,7 @@ public class Recipe {
      * @param item the item to generate the line at
      * @param idx  the index to generate at it is in the range [0, 2]
      *
-     * @return {@link this} for easy chaining
+     * @return <i>this</i> for easy chaining
      */
     public Recipe line(LineMode mode, Item item, int idx) {
         switch (mode) {
@@ -239,7 +235,7 @@ public class Recipe {
      * @param block the block to generate the line at
      * @param idx   the index to generate at it is in the range [0, 2]
      *
-     * @return {@link this} for easy chaining
+     * @return <i>this</i> for easy chaining
      */
     public Recipe line(LineMode mode, Block block, int idx) {
         switch (mode) {
@@ -265,7 +261,7 @@ public class Recipe {
      * @param oreDict the OreDictionary item to generate the line at
      * @param idx     the index to generate at it is in the range [0, 2]
      *
-     * @return {@link this} for easy chaining
+     * @return <i>this</i> for easy chaining
      */
     public Recipe line(LineMode mode, String oreDict, int idx) {
         switch (mode) {
@@ -289,7 +285,7 @@ public class Recipe {
      *
      * @param result the result of the recipe
      *
-     * @return {@link this} for easy chaining
+     * @return <i>this</i> for easy chaining
      */
     public Recipe setProduces(ItemStack result) {
         produces = result;
@@ -301,7 +297,7 @@ public class Recipe {
      *
      * @param result the result of the recipe
      *
-     * @return {@link this} for easy chaining
+     * @return <i>this</i> for easy chaining
      */
     public Recipe produces(ItemStack result) {
         return setProduces(result);
@@ -312,7 +308,7 @@ public class Recipe {
      *
      * @param item the result of the recipe
      *
-     * @return {@link this} for easy chaining
+     * @return <i>this</i> for easy chaining
      */
     public Recipe produces(Item item) {
         return produces(new ItemStack(item));
@@ -323,7 +319,7 @@ public class Recipe {
      *
      * @param result the result of the recipe
      *
-     * @return {@link this} for easy chaining
+     * @return <i>this</i> for easy chaining
      */
     public Recipe produces(Block result) {
         return produces(new ItemStack(result));

@@ -30,16 +30,19 @@ import java.lang.annotation.Target;
 public @interface ConfigurationOption {
     /**
      * The category the field is in
+     * @return the category
      */
     String category();
 
     /**
      * The comment for the configuration system
+     * @return the comment
      */
     String comment() default "";
 
     /**
      * The key that is used in the configuration
+     * @return the key
      */
     String key();
 }
