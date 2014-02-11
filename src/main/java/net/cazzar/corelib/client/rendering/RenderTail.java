@@ -14,9 +14,8 @@ import static org.lwjgl.opengl.GL11.*;
  * The remderer for the tail entity on certain players
  */
 public class RenderTail extends RenderEntity {
-    IModelCustom modelCustom;
-
     static ResourceLocation tex = new ResourceLocation("cazzarcore:textures/tail-map.png");
+    IModelCustom modelCustom;
 
     public RenderTail() {
         ResourceLocation location = new ResourceLocation("cazzarcore:model/tail.obj");

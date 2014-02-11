@@ -36,7 +36,6 @@ import net.minecraftforge.common.MinecraftForge;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import java.security.cert.Certificate;
 import java.util.Arrays;
 
 /**
@@ -121,5 +120,27 @@ public class ModContainer extends DummyModContainer {
     public Class<?> getCustomResourcePackClass() {
         if (getSource() == null) return FMLFolderResourcePack.class;
         return getSource().isDirectory() ? FMLFolderResourcePack.class : FMLFileResourcePack.class;
+    }
+
+    @Override
+    public File getSource() {
+        if (CoreMod.getCoremodLocation() == null) {
+            File f;
+            try {
+                f = new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
+            } catch (URISyntaxException e) {
+                f = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
+            }
+
+            f = f.getParentFile().getParentFile().getParentFile().getParentFile();
+            return f;
+        }
+        return CoreMod.getCoremodLocation();
+    }
+
+    @Override
+    public Class<?> getCustomResourcePackClass() {
+        if (getSource() == null) return FMLFolderResourcePack.class;
+        return !getSource().isDirectory() ? FMLFileResourcePack.class : FMLFolderResourcePack.class;
     }
 }
