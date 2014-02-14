@@ -15,7 +15,7 @@ import java.util.Map;
 import static java.lang.Math.floor;
 
 /**
- * <p>A recipe helper class for FML </p> <p> For the centre points reference: <br></br> [1, 2, 3] <br></br> [4, 5, 6] <br></br>
+ * <p>A recipe helper class for FML </p> <p> For the centre points reference: <br> [1, 2, 3] <br> [4, 5, 6] <br>
  * [7, 8, 9] </p>
  */
 @SuppressWarnings("UnusedDeclaration")
