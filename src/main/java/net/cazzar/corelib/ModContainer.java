@@ -27,15 +27,17 @@ import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
 import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
+import net.cazzar.corelib.commands.PlayCommand;
 import net.cazzar.corelib.events.ClientEvents;
 import net.cazzar.corelib.lib.Reference;
 import net.minecraftforge.common.MinecraftForge;
 
 import java.io.File;
-import java.io.IOException;
 import java.net.URISyntaxException;
+import java.security.cert.Certificate;
 import java.util.Arrays;
 
 /**
@@ -83,11 +85,15 @@ public class ModContainer extends DummyModContainer {
     }
 
     @Subscribe
-    public void preInit(FMLPreInitializationEvent event) throws IOException {
+    public void preInit(FMLPreInitializationEvent event) {
         if (event.getSide().isClient()) {
             MinecraftForge.EVENT_BUS.register(new ClientEvents());
-
         }
+    }
+
+    @Subscribe
+    public void serverStartup(FMLServerStartingEvent event) {
+        event.registerServerCommand(new PlayCommand());
     }
 
     @Subscribe
@@ -97,29 +103,6 @@ public class ModContainer extends DummyModContainer {
 
     @Subscribe
     public void postInit(FMLPostInitializationEvent event) {
-    }
-
-    @Override
-    public File getSource() {
-        if (CoreMod.getCoremodLocation() == null) {
-            File f;
-            try {
-                f = new File(getClass().getProtectionDomain().getCodeSource().getLocation().toURI());
-            } catch (URISyntaxException e) {
-                f = new File(getClass().getProtectionDomain().getCodeSource().getLocation().getPath());
-            }
-
-            f = f.getParentFile().getParentFile().getParentFile().getParentFile();
-            return f;
-        }
-
-        return CoreMod.getCoremodLocation();
-    }
-
-    @Override
-    public Class<?> getCustomResourcePackClass() {
-        if (getSource() == null) return FMLFolderResourcePack.class;
-        return getSource().isDirectory() ? FMLFolderResourcePack.class : FMLFileResourcePack.class;
     }
 
     @Override

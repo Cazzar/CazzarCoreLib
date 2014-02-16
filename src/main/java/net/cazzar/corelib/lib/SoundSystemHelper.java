@@ -18,10 +18,12 @@
 package net.cazzar.corelib.lib;
 
 import com.google.common.collect.Lists;
+import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.client.audio.SoundHandler;
+import net.minecraft.client.audio.SoundManager;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
 import net.minecraft.util.ChunkCoordinates;
@@ -44,6 +46,14 @@ public class SoundSystemHelper {
      */
     public static SoundHandler getSoundHandler() {
         return mc().getSoundHandler();
+    }
+
+    public static SoundManager getSoundManager() {
+        return ObfuscationReflectionHelper.getPrivateValue(SoundHandler.class, getSoundHandler(), "sndManager", "field_147694_f");
+    }
+
+    public static SoundSystem getSoundSystem() {
+       return ObfuscationReflectionHelper.getPrivateValue(SoundManager.class, getSoundManager(), "sndSystem", "field_148620_e");
     }
 
     /**
