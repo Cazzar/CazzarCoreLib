@@ -26,6 +26,7 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.ResourceLocation;
 
 import java.util.List;
 
@@ -36,6 +37,8 @@ import static java.util.Collections.addAll;
  */
 @SuppressWarnings("UnusedDeclaration")
 public class ItemCustomRecord extends ItemRecord {
+    String domain = "minecraft";
+
     final String recordInfo;
 
     final String[] details;
@@ -76,6 +79,18 @@ public class ItemCustomRecord extends ItemRecord {
         return rarity;
     }
 
+    /**
+     * Retrieves the resource location of the sound to play for this record.
+     *
+     * @param name The name of the record to play
+     *
+     * @return The resource location for the audio, null to use default.
+     */
+    @Override
+    public ResourceLocation getRecordResource(String name) {
+        return super.getRecordResource(name);
+    }
+
     @Override
     @SideOnly(Side.CLIENT)
     public String getRecordNameLocal() {
@@ -96,5 +111,12 @@ public class ItemCustomRecord extends ItemRecord {
     public void registerIcons(IIconRegister par1IconRegister) {
 //        super.registerIcons(par1IconRegister);
         itemIcon = par1IconRegister.registerIcon(recordName);
+    }
+
+    public ItemRecord setDomain(String domain) {
+        if (domain.indexOf(':') == -1) this.domain = domain;
+        else this.domain = domain.substring(0, domain.indexOf(':'));
+
+        return this;
     }
 }
