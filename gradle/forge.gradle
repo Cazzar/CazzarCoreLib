@@ -19,7 +19,7 @@ apply plugin: 'forge'
 apply plugin: 'grgit'
 
 minecraft {
-    version = '1.7.2-10.12.0.1025'
+    version = '1.7.2-10.12.0.1046'
     assetDir = '../run/assets'
 }
 

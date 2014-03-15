@@ -27,10 +27,8 @@ import cpw.mods.fml.common.ModMetadata;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.event.FMLServerStartingEvent;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
 import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
-import net.cazzar.corelib.commands.PlayCommand;
 import net.cazzar.corelib.events.ClientEvents;
 import net.cazzar.corelib.lib.Reference;
 import net.minecraftforge.common.MinecraftForge;
@@ -57,7 +55,7 @@ public class ModContainer extends DummyModContainer {
         meta.description = "The core library for cazzar's mods";
         meta.modId = Reference.MOD_ID;
         meta.name = "Cazzar Core Lib";
-        meta.dependants = Arrays.asList((ArtifactVersion) new DefaultArtifactVersion("jukeboxreloaded"));
+        meta.dependants = Arrays.asList((ArtifactVersion) new DefaultArtifactVersion("jukeboxreloaded", true));
         meta.url = "http://www.cazzar.net/";
         meta.version = getVersionFromJar();
     }
@@ -89,11 +87,6 @@ public class ModContainer extends DummyModContainer {
         if (event.getSide().isClient()) {
             MinecraftForge.EVENT_BUS.register(new ClientEvents());
         }
-    }
-
-    @Subscribe
-    public void serverStartup(FMLServerStartingEvent event) {
-        event.registerServerCommand(new PlayCommand());
     }
 
     @Subscribe
