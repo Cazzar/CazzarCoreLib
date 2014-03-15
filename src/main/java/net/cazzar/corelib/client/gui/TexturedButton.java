@@ -70,7 +70,7 @@ public class TexturedButton extends GuiButton {
     @Override
     //drawButton
     public void drawButton(Minecraft mc, int x, int y) {
-        if (enabled) {
+        if (visible) {
             mc.renderEngine.bindTexture(textureFile);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
             //field_146128_h = xPos
