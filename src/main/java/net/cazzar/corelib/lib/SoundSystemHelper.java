@@ -31,6 +31,7 @@ import net.minecraft.world.World;
 import paulscode.sound.SoundSystem;
 
 import java.util.List;
+import java.util.Map;
 
 import static net.cazzar.corelib.util.ClientUtil.mc;
 
@@ -104,6 +105,7 @@ public class SoundSystemHelper {
 
     @SideOnly(Side.CLIENT)
     public static ISound getSoundForChunkCoordinates(RenderGlobal world, ChunkCoordinates coords) {
-        return (ISound) world.mapSoundPositions.get(coords);
+        Map<ChunkCoordinates, ISound> mapSoundPositions = ObfuscationReflectionHelper.getPrivateValue(RenderGlobal.class, world, "field_147593_P", "mapSoundPositions");
+        return mapSoundPositions.get(coords);
     }
 }

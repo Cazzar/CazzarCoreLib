@@ -79,7 +79,7 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
 
     @Override
     public String[] getASMTransformerClass() {
-        return new String[]{};
+        return new String[] {};
     }
 
     @Override
