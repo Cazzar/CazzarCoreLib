@@ -4,7 +4,7 @@ jar {
         attributes FMLCorePlugin: "net.cazzar.corelib.CoreMod",
                 "Implementation-Version": actualVersion
     }
-    from 'build/unpacked/conf/mcp-srg.srg' into '/'
+//    from 'build/unpacked/conf/mcp-srg.srg' into '/'
 }
 
 task sourceJar(type: Jar) {
@@ -33,4 +33,5 @@ task deobfJar(type: Jar) {
 artifacts {
     archives deobfJar
     archives javadocJar
+    archives sourceJar
 }
