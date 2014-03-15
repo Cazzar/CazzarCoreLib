@@ -25,6 +25,7 @@ publishing {
         mavenJava(MavenPublication) {
             artifact javadocJar
             artifact deobfJar
+            artifact sourceJar
         }
     }
     repositories {
