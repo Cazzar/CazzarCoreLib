@@ -43,4 +43,25 @@ public class RenderHelper {
             }
         }
     }
+
+    public static void scaleModel(WavefrontObject model, double x, double y, double z) {
+        for (GroupObject go : model.groupObjects) {
+            for (Face f : go.faces) {
+                Vertex n = f.faceNormal;
+                Vertex n1 = new Vertex(n.x, n.y, n.z);
+
+                n.x = (float) (x * n1.x);
+                n.y = (float) (y * n1.y);
+                n.z = (float) (z * n1.z);
+
+                for (Vertex v : f.vertices) {
+                    Vertex v1 = new Vertex(v.x, v.y, v.z);
+
+                    v.x = (float) (x * v1.x);
+                    v.y = (float) (y * v1.y);
+                    v.z = (float) (z * v1.z);
+                }
+            }
+        }
+    }
 }
