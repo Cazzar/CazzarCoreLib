@@ -36,7 +36,7 @@ public abstract class MethodTransformer extends BasicTransformer {
      * @param deobfName The domesticated name for the transformations
      * @param srgName   the SRG mapping for the transformation
      */
-    protected static void addMapping(String deobfName, String srgName) {
+    public static void addMapping(String deobfName, String srgName) {
         if (srgMappings.containsKey(deobfName)) {
             return;
         }
@@ -198,7 +198,12 @@ public abstract class MethodTransformer extends BasicTransformer {
         }
     }
 
-    private InsnList transformInsns(InsnList insnList) {
+    /**
+     * Transform the insn list for use in a obf environment
+     * @param insnList the instructions to fiddle with
+     * @return the new insnList
+     */
+    public InsnList transformInsns(InsnList insnList) {
         if (!CoreMod.getRuntimeDeobfuscationEnabled())
             return insnList;
 
