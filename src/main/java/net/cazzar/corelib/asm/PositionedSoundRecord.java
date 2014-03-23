@@ -3,8 +3,6 @@ package net.cazzar.corelib.asm;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.tree.*;
 
-import java.util.ArrayList;
-
 import static org.objectweb.asm.Opcodes.*;
 
 @SuppressWarnings("UnusedDeclaration")
@@ -25,35 +23,26 @@ public class PositionedSoundRecord extends MethodTransformer {
 
     @Override
     public void transform(ClassNode node) {
-        MethodNode mtd = new MethodNode(ACC_PUBLIC, "hashCode", "()I", null, null);
+        MethodNode mtd = new MethodNode(ACC_PUBLIC, "hashCode", "()I", null, new String[0]);
 //        mtd.name = "hashCode";
 //        mtd.desc = "()I";
 
         InsnList insns = new InsnList();
         insns.add(new VarInsnNode(ALOAD, 0));
-        insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "field_147664_a", "Lnet/minecraft/util/ResourceLocation;"));
-        insns.add(new MethodInsnNode(INVOKEVIRTUAL, "net/minecraft/util/ResourceLocation", "hashCode", "()I"));
-        insns.add(new VarInsnNode(ISTORE, 1));
-        insns.add(new IntInsnNode(BIPUSH, 31));
-        insns.add(new VarInsnNode(ILOAD, 1));
-        insns.add(new InsnNode(IMUL));
-        insns.add(new VarInsnNode(ALOAD, 0));
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "volume", "F"));
         insns.add(new InsnNode(FCONST_0));
         insns.add(new InsnNode(FCMPL));
-        LabelNode l2 = new LabelNode(new Label());
-        insns.add(new JumpInsnNode(IFEQ, l2));
+        LabelNode l1 = new LabelNode(new Label());
+        insns.add(new JumpInsnNode(IFEQ, l1));
         insns.add(new VarInsnNode(ALOAD, 0));
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "volume", "F"));
         insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "floatToIntBits", "(F)I"));
-        LabelNode l3 = new LabelNode(new Label());
-        insns.add(new JumpInsnNode(GOTO, l3));
-        insns.add(l2);
-        insns.add(new FrameNode(F_FULL, 2, new Object[]{"net/minecraft/client/audio/PositionedSound", INTEGER}, 1, new Object[]{INTEGER}));
+        LabelNode l2 = new LabelNode(new Label());
+        insns.add(new JumpInsnNode(GOTO, l2));
+        insns.add(l1);
+        insns.add(new FrameNode(F_SAME, 0, null, 0, null));
         insns.add(new InsnNode(ICONST_0));
-        insns.add(l3);
-        insns.add(new FrameNode(F_FULL, 2, new Object[]{"net/minecraft/client/audio/PositionedSound", INTEGER}, 2, new Object[]{INTEGER, INTEGER}));
-        insns.add(new InsnNode(IADD));
+        insns.add(l2);
         insns.add(new VarInsnNode(ISTORE, 1));
         insns.add(new IntInsnNode(BIPUSH, 31));
         insns.add(new VarInsnNode(ILOAD, 1));
@@ -174,7 +163,6 @@ public class PositionedSoundRecord extends MethodTransformer {
         insns.add(new VarInsnNode(ILOAD, 1));
         insns.add(new InsnNode(IRETURN));
         mtd.instructions.add(transformInsns(insns));
-        mtd.exceptions = new ArrayList<String>();
 
         node.methods.add(mtd);
 
@@ -183,7 +171,7 @@ public class PositionedSoundRecord extends MethodTransformer {
         insns = new InsnList();
         insns.add(new VarInsnNode(ALOAD, 0));
         insns.add(new VarInsnNode(ALOAD, 1));
-        LabelNode l1 = new LabelNode(new Label());
+        l1 = new LabelNode(new Label());
         insns.add(new JumpInsnNode(IF_ACMPNE, l1));
         insns.add(new InsnNode(ICONST_1));
         insns.add(new InsnNode(IRETURN));
@@ -264,17 +252,17 @@ public class PositionedSoundRecord extends MethodTransformer {
         insns.add(new InsnNode(IRETURN));
         insns.add(l7);
 
-        insns.add(new FrameNode(F_SAME, 0, null, 0, null));
-        insns.add(new VarInsnNode(ALOAD, 0));
-        insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "field_147664_a", "Lnet/minecraft/util/ResourceLocation;"));
-        insns.add(new VarInsnNode(ALOAD, 2));
-        insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "field_147664_a", "Lnet/minecraft/util/ResourceLocation;"));
-        insns.add(new MethodInsnNode(INVOKEVIRTUAL, "net/minecraft/util/ResourceLocation", "equals", "(Ljava/lang/Object;)Z"));
-        l7 = new LabelNode(new Label());
-        insns.add(new JumpInsnNode(IFNE, l7));
-        insns.add(new InsnNode(ICONST_0));
-        insns.add(new InsnNode(IRETURN));
-        insns.add(l7);
+//        insns.add(new FrameNode(F_SAME, 0, null, 0, null));
+//        insns.add(new VarInsnNode(ALOAD, 0));
+//        insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "field_147664_a", "Lnet/minecraft/util/ResourceLocation;"));
+//        insns.add(new VarInsnNode(ALOAD, 2));
+//        insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "field_147664_a", "Lnet/minecraft/util/ResourceLocation;"));
+//        insns.add(new MethodInsnNode(INVOKEVIRTUAL, "net/minecraft/util/ResourceLocation", "equals", "(Ljava/lang/Object;)Z"));
+//        l7 = new LabelNode(new Label());
+//        insns.add(new JumpInsnNode(IFNE, l7));
+//        insns.add(new InsnNode(ICONST_0));
+//        insns.add(new InsnNode(IRETURN));
+//        insns.add(l7 );
 
         insns.add(new FrameNode(F_SAME, 0, null, 0, null));
         insns.add(new VarInsnNode(ALOAD, 0));
