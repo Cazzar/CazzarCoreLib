@@ -86,8 +86,8 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
     public String[] getASMTransformerClass() {
         List<String> transformers = Lists.newArrayList();
         for (String mod : new String[]{"jukeboxreloaded", "voxelplayer", "locksplus", "openprinter"}) {
-            if (getClass().getClassLoader().getResourceAsStream("assets/" + mod + "/asm.properties") != null) {
-                BufferedReader in = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("assets/" + mod + "/asm.properties")));
+            if (getClass().getClassLoader().getResourceAsStream("/assets/" + mod + "/asm.properties") != null) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("/assets/" + mod + "/asm.properties")));
                 String s;
                 try {
                     while ((s = in.readLine()) != null) {
