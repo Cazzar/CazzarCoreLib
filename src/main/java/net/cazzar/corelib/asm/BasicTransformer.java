@@ -24,7 +24,9 @@ import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
+import org.objectweb.asm.util.CheckClassAdapter;
 
+import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.List;
 
@@ -55,6 +57,7 @@ public abstract class BasicTransformer implements IClassTransformer {
 
         ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         classNode.accept(writer);
+        CheckClassAdapter.verify(new ClassReader(writer.toByteArray()), false, new PrintWriter(System.err));
         return writer.toByteArray();
 
     }
