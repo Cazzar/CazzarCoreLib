@@ -32,6 +32,7 @@ public abstract class SyncedTileEntity extends TileEntity {
         try {
             for (Field f : getClass().getDeclaredFields()) {
                 if (f.getAnnotation(Sync.class) != null) {
+                    f.setAccessible(true);
                     Class<?> t = f.getType();
                     if (t == Boolean.class || t == boolean.class) tag.setBoolean(f.getName(), f.getBoolean(this));
                     else if (t == String.class) tag.setString(f.getName(), (String) f.get(this));
@@ -51,8 +52,8 @@ public abstract class SyncedTileEntity extends TileEntity {
                     else if (t == Long.class || t == long.class) tag.setLong(f.getName(), f.getLong(this));
                 }
             }
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
+        } catch (IllegalAccessException ignored) {
+//            e.printStackTrace();
         }
         addExtraNBTToPacket(tag);
         return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, tag);
@@ -68,10 +69,8 @@ public abstract class SyncedTileEntity extends TileEntity {
             try {
                 Field f = this.getClass().getDeclaredField(key);
                 f.set(tagMap.get(key), this);
-            } catch (NoSuchFieldException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
-                e.printStackTrace();
+            } catch (Exception ignored) {
+//                e.printStackTrace();
             }
         }
         readExtraNBTFromPacket(pkt.func_148857_g());
