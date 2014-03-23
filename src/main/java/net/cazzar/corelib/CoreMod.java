@@ -20,16 +20,21 @@
  */
 package net.cazzar.corelib;
 
+import com.google.common.collect.Lists;
 import cpw.mods.fml.common.CertificateHelper;
 import cpw.mods.fml.relauncher.IFMLCallHook;
 import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
 import net.cazzar.corelib.asm.McpMappings;
 import net.cazzar.corelib.lib.LogHelper;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.lang.reflect.Field;
 import java.security.CodeSource;
 import java.security.cert.Certificate;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -79,7 +84,23 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
 
     @Override
     public String[] getASMTransformerClass() {
-        return new String[] {};
+        List<String> transformers = Lists.newArrayList();
+        for (String mod : new String[]{"jukeboxreloaded", "voxelplayer", "locksplus", "openprinter"}) {
+            if (getClass().getClassLoader().getResourceAsStream("assets/" + mod + "/asm.properties") != null) {
+                BufferedReader in = new BufferedReader(new InputStreamReader(getClass().getClassLoader().getResourceAsStream("assets/" + mod + "/asm.properties")));
+                String s;
+                try {
+                    while ((s = in.readLine()) != null) {
+                        transformers.add(s);
+                    }
+                    in.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        return transformers.toArray(new String[transformers.size()]);
     }
 
     @Override
