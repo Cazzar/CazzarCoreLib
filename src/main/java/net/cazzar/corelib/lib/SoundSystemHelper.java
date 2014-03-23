@@ -17,6 +17,7 @@
 
 package net.cazzar.corelib.lib;
 
+import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Lists;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
@@ -74,10 +75,30 @@ public class SoundSystemHelper {
      *
      * @param world the world that it is playing in
      */
+    public static void stop(ChunkCoordinates coordinates) {
+       stop(mc().renderGlobal, coordinates);
+    }
+    /**
+     * stop any sounds playing at the coords.
+     *
+     * @param world the world that it is playing in
+     */
     public static void stop(RenderGlobal world, ChunkCoordinates chunkCoordinates) {
         ISound sound = getSoundForChunkCoordinates(world, chunkCoordinates);
         if (sound != null)
-            getSoundHandler().stopSound(sound);
+            getSoundSystem().stop(getChannel(sound));
+//            getSoundHandler().stopSound(sound);
+    }
+
+    /**
+     * Check if something is playing at the coords
+     *
+     * @param coordinates the coordinates of the "player"
+     *
+     * @return if the {@link SoundSystem} is playing with that identifier.
+     */
+    public static boolean isPlaying(ChunkCoordinates coordinates) {
+        return isPlaying(mc().renderGlobal, coordinates);
     }
 
     /**
@@ -90,7 +111,13 @@ public class SoundSystemHelper {
      */
     public static boolean isPlaying(RenderGlobal world, ChunkCoordinates coordinates) {
         ISound sound = getSoundForChunkCoordinates(world, coordinates);
-        return sound != null && getSoundHandler().isSoundPlaying(sound);
+        return sound != null && getSoundSystem().playing(getChannel(sound));
+        //        return sound != null && getSoundHandler().isSoundPlaying(sound);
+    }
+
+    public static String getChannel(ISound sound) {
+        HashBiMap<String, ISound> playingSounds =  ObfuscationReflectionHelper.getPrivateValue(SoundManager.class, getSoundManager(), "playingSounds", "field_148629_h");
+        return playingSounds.inverse().get(sound);
     }
 
     /**
