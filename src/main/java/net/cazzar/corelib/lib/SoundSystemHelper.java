@@ -71,16 +71,16 @@ public class SoundSystemHelper {
      * @param y      the y pos
      * @param z      the z pos
      */
-    public static void playRecord(World world, String record, int x, int y, int z, String identifier) {
-        ItemRecord itemrecord = ItemRecord.getRecord(record);
+    public static void playRecord(World world, ItemRecord record, int x, int y, int z, String identifier) {
 
         ResourceLocation resource;
-        if (itemrecord == null) {
+        if (record == null) {
+            stop(identifier);
             return;
         }
 
-        mc().ingameGUI.setRecordPlayingMessage(itemrecord.getRecordNameLocal());
-        resource = itemrecord.getRecordResource(record);
+        mc().ingameGUI.setRecordPlayingMessage(record.getRecordNameLocal());
+        resource = record.getRecordResource(record.recordName);
         if (resource == null) return;
 
         if (getSoundSystem().playing(identifier))
