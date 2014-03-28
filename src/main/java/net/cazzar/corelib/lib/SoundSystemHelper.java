@@ -80,7 +80,7 @@ public class SoundSystemHelper {
         }
 
         mc().ingameGUI.setRecordPlayingMessage(record.getRecordNameLocal());
-        resource = record.getRecordResource(record.recordName);
+        resource = record.getRecordResource("records." + record.recordName);
         if (resource == null) return;
 
         if (getSoundSystem().playing(identifier))
