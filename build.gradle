@@ -5,18 +5,13 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-import org.ajoberstar.gradle.git.tasks.GitPush
-import org.ajoberstar.gradle.git.tasks.GitTag
 
 buildscript {
     repositories {
@@ -35,8 +30,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.1-SNAPSHOT'
-        classpath 'org.ajoberstar:gradle-git:0.7.0-SNAPSHOT'
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
         classpath 'net.cazzar:CurseForgeUploader:1.0'
     }
 }
@@ -51,13 +45,3 @@ apply from: 'gradle/forge.gradle'
 apply from: 'gradle/artifacts.gradle'
 apply from: 'gradle/release.gradle'
 apply from: 'gradle/signing.gradle'
-apply plugin: 'grgit'
-
-task tag(type: GitTag) {
-    setTagName actualVersion
-    setMessage "Release of ${version}"
-}
-
-task push(type: GitPush) {
-    setPushTags true
-}

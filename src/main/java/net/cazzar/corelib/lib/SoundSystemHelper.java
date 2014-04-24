@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -23,6 +21,7 @@ import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.*;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
@@ -30,7 +29,6 @@ import net.minecraft.item.ItemRecord;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.world.World;
 import paulscode.sound.SoundSystem;
 
 import java.lang.reflect.InvocationTargetException;
@@ -71,7 +69,7 @@ public class SoundSystemHelper {
      * @param y      the y pos
      * @param z      the z pos
      */
-    public static void playRecord(World world, ItemRecord record, int x, int y, int z, String identifier) {
+    public static void playRecord(ItemRecord record, int x, int y, int z, String identifier) {
 
         ResourceLocation resource;
         if (record == null) {
@@ -93,11 +91,11 @@ public class SoundSystemHelper {
         SoundPoolEntry soundpoolentry = sound.func_148720_g();
 
         SoundCategory soundcategory = sound.getSoundCategory();
-        float volume = (float) MathHelper.clamp_double((double)f1 * soundpoolentry.getVolume() * (double)mc().gameSettings.getSoundLevel(soundcategory), 0.0D, 1.0D);
-        float pitch = (float) MathHelper.clamp_double((double)f1 * soundpoolentry.getVolume() * (double)mc().gameSettings.getSoundLevel(soundcategory), 0.0D, 1.0D);
+        float volume = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, 1.0D);
+        float pitch = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, 1.0D);
         ResourceLocation resourcelocation = soundpoolentry.getSoundPoolEntryLocation();
 
-        getSoundSystem().newStreamingSource(false, identifier, getURLForSoundResource(resourcelocation), resourcelocation.toString(),false, x, y, z, ISound.AttenuationType.LINEAR.getTypeInt(), f1);
+        getSoundSystem().newStreamingSource(false, identifier, getURLForSoundResource(resourcelocation), resourcelocation.toString(), false, x, y, z, ISound.AttenuationType.LINEAR.getTypeInt(), f1);
         getSoundSystem().setPitch(identifier, pitch);
         getSoundSystem().setVolume(identifier, volume);
         getSoundSystem().play(identifier);
@@ -128,6 +126,7 @@ public class SoundSystemHelper {
      * Check if something is playing at the coords
      *
      * @param identifier the identifier of the playing sound
+     *
      * @return if the {@link SoundSystem} is playing with that identifier.
      */
     public static boolean isPlaying(String identifier) {
@@ -139,6 +138,7 @@ public class SoundSystemHelper {
      *
      * @param world       the world that it is playing in
      * @param coordinates the coordinates of the "player"
+     *
      * @return if the {@link SoundSystem} is playing with that identifier.
      */
     public static boolean isPlaying(RenderGlobal world, ChunkCoordinates coordinates) {
@@ -162,7 +162,7 @@ public class SoundSystemHelper {
         //    getSoundManager().soundPoolStreaming.addSound(s);
     }
 
-    public static URL getURLForSoundResource(ResourceLocation location){
+    public static URL getURLForSoundResource(ResourceLocation location) {
         Method m = ReflectionHelper.findMethod(SoundManager.class, getSoundManager(), new String[]{"getURLForSoundResource", "func_148612_a"}, ResourceLocation.class);
         try {
             return (URL) m.invoke(getSoundManager(), location);
@@ -178,5 +178,9 @@ public class SoundSystemHelper {
     public static ISound getSoundForChunkCoordinates(RenderGlobal world, ChunkCoordinates coords) {
         Map<ChunkCoordinates, ISound> mapSoundPositions = ObfuscationReflectionHelper.getPrivateValue(RenderGlobal.class, world, "field_147593_P", "mapSoundPositions");
         return mapSoundPositions.get(coords);
+    }
+
+    public static boolean isSoundEnabled() {
+        return Minecraft.getMinecraft().gameSettings.getSoundLevel(SoundCategory.RECORDS) == 0 || getSoundSystem() != null || getSoundManager() != null;
     }
 }
