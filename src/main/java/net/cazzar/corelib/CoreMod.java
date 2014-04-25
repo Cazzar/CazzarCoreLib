@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -38,11 +36,11 @@ import java.util.Map;
 @SuppressWarnings("CanBeFinal")
 @IFMLLoadingPlugin.TransformerExclusions("net.cazzar.corelib.asm.*")
 public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
+    private static final String FINGERPRINT = "B6:9D:73:36:FB:E4:C3:E9:72:79:EB:3E:E3:19:9F:00:9A:90:34:75".toLowerCase().replace(":", "");
     @SuppressWarnings("FieldCanBeLocal")
     private static boolean runtimeDeobfuscationEnabled = true;
     private static String deobfuscationFileName = null;
     private static File mcLocation = null;
-    private static final String FINGERPRINT = "B6:9D:73:36:FB:E4:C3:E9:72:79:EB:3E:E3:19:9F:00:9A:90:34:75".toLowerCase().replace(":", "");
     private static File coremodLocation = null;
 
     /**
@@ -79,7 +77,7 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
 
     @Override
     public String[] getASMTransformerClass() {
-        return new String[] {"net.cazzar.corelib.asm.PositionedSoundRecord"};
+        return new String[]{"net.cazzar.corelib.asm.PositionedSoundRecord"};
     }
 
     @Override
@@ -102,7 +100,7 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
             } catch (NoSuchFieldException ignored) {
             } catch (IllegalAccessException e) {
                 LogHelper.coreLog.catching(e);
-                LogHelper.coreLog.warn("Unable to set field: %s", key);
+                LogHelper.coreLog.warn("Unable to set field: {}", key);
             }
         }
     }

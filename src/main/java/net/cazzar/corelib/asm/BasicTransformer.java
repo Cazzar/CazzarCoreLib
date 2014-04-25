@@ -5,12 +5,10 @@
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation, either version 3 of the License, or
  * (at your option) any later version.
- *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- *
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
@@ -48,7 +46,7 @@ public abstract class BasicTransformer implements IClassTransformer {
             return bytes;
         }
 
-        logger.info("Inserting hooks into %s (%s) for %s", name, transformedName, this.getClass().getCanonicalName());
+        logger.info("Inserting hooks into {} ({}) for {}", name, transformedName, this.getClass().getCanonicalName());
         ClassNode classNode = new ClassNode();
         ClassReader classReader = new ClassReader(bytes);
         classReader.accept(classNode, 0);

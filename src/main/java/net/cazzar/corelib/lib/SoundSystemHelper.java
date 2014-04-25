@@ -15,12 +15,14 @@
 
 package net.cazzar.corelib.lib;
 
+import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Lists;
 import cpw.mods.fml.common.ObfuscationReflectionHelper;
 import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.cazzar.corelib.client.sound.CustomSound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.*;
 import net.minecraft.client.renderer.RenderGlobal;
@@ -35,7 +37,6 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.net.URL;
 import java.util.List;
-import java.util.Map;
 
 import static net.cazzar.corelib.util.ClientUtil.mc;
 
@@ -99,12 +100,41 @@ public class SoundSystemHelper {
         SoundCategory soundcategory = sound.getSoundCategory();
         float volume = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, 1.0D);
         float pitch = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, 1.0D);
-        ResourceLocation resourcelocation = soundpoolentry.getSoundPoolEntryLocation();
+//        ResourceLocation resourcelocation = soundpoolentry.getSoundPoolEntryLocation();
 
-        getSoundSystem().newStreamingSource(false, identifier, getURLForSoundResource(resourcelocation), resourcelocation.toString(), false, x, y, z, ISound.AttenuationType.LINEAR.getTypeInt(), f1);
+        /*getSoundSystem().newStreamingSource(false, identifier, getURLForSoundResource(resourcelocation), resourcelocation.toString(), false, x, y, z, ISound.AttenuationType.LINEAR.getTypeInt(), f1);
         getSoundSystem().setPitch(identifier, pitch);
         getSoundSystem().setVolume(identifier, volume);
-        getSoundSystem().play(identifier);
+        getSoundSystem().play(identifier);*/
+
+        //noinspection unchecked
+        getSoundManager().addDelayedSound(new CustomSound(volume, resource, false, 0, pitch, x, y, z), 3);
+    }
+
+    public static String getIdentifierForRecord(ItemRecord record, int x, int y, int z) {
+        ResourceLocation resource = record.getRecordResource("records." + record.recordName);
+        if (resource == null) return null;
+
+        SoundEventAccessorComposite sound = getSoundHandler().getSound(resource);
+        float f1 = 16F;
+
+        if (sound == null) {
+            return null;
+        }
+
+        SoundPoolEntry soundpoolentry = sound.func_148720_g();
+
+        SoundCategory soundcategory = sound.getSoundCategory();
+        float volume = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, 1.0D);
+        float pitch = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, 1.0D);
+//        ResourceLocation resourcelocation = soundpoolentry.getSoundPoolEntryLocation();
+
+        // I know the type.
+        //noinspection unchecked
+        HashBiMap<String, ISound> playingSounds = (HashBiMap<String, ISound>) getSoundManager().playingSounds;
+        BiMap<ISound, String> inverse = playingSounds.inverse();
+
+        return inverse.get(new CustomSound(volume, resource, false, 0, pitch, x, y, z));
     }
 
     /**
@@ -114,6 +144,7 @@ public class SoundSystemHelper {
      */
     public static void stop(String identifier) {
         getSoundSystem().stop(identifier);
+        getSoundManager().playingSounds.remove(identifier);
     }
 
     /**
@@ -136,7 +167,7 @@ public class SoundSystemHelper {
      * @return if the {@link SoundSystem} is playing with that identifier.
      */
     public static boolean isPlaying(String identifier) {
-        return getSoundSystem().playing(identifier);
+        return getSoundSystem() != null && getSoundSystem().playing(identifier);
     }
 
     /**
@@ -182,8 +213,8 @@ public class SoundSystemHelper {
 
     @SideOnly(Side.CLIENT)
     public static ISound getSoundForChunkCoordinates(RenderGlobal world, ChunkCoordinates coords) {
-        Map<ChunkCoordinates, ISound> mapSoundPositions = ObfuscationReflectionHelper.getPrivateValue(RenderGlobal.class, world, "field_147593_P", "mapSoundPositions");
-        return mapSoundPositions.get(coords);
+//        Map<ChunkCoordinates, ISound> mapSoundPositions = ObfuscationReflectionHelper.getPrivateValue(RenderGlobal.class, world, "field_147593_P", "mapSoundPositions");
+        return (ISound) world.mapSoundPositions.get(coords);
     }
 
     public static boolean isSoundEnabled() {
