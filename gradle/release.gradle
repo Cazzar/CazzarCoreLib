@@ -13,6 +13,8 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+
+
 import groovy.json.JsonSlurper
 
 buildscript {
@@ -76,6 +78,7 @@ def getJenkinsChanges() {
 }
 
 uploadToCurseForge {
+    //noinspection GrDeprecatedAPIUsage
     dependsOn "signJar"
     if (project.ext.has('curseAPI'))
         api_key project.ext['curseAPI']
@@ -85,5 +88,5 @@ uploadToCurseForge {
     artifact_name 'Version ' + actualVersion
     game_version minecraft.version
     artifact tasks.reobf.outputs.getFiles().getSingleFile()
-    change_log getJenkinsChanges()
+    change_log "Rework for Minecraft 1.7"
 }
