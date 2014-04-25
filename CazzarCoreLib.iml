@@ -47,7 +47,7 @@
     <orderEntry type="library" exported="" name="Gradle: jinput-platform-2.0.5-natives-osx" level="project" />
     <orderEntry type="library" exported="" name="Gradle: jinput-platform-2.0.5-natives-windows" level="project" />
     <orderEntry type="library" exported="" name="Gradle: scala-reflect-2.10.2" level="project" />
-    <orderEntry type="library" exported="" name="Gradle: forgeSrc-1.7.2-10.12.0.1052" level="project" />
+    <orderEntry type="library" exported="" name="Gradle: forgeSrc-1.7.2-10.12.1.1061" level="project" />
   </component>
 </module>
 

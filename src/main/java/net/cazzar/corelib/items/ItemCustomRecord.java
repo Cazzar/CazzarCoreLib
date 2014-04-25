@@ -85,7 +85,7 @@ public class ItemCustomRecord extends ItemRecord {
      */
     @Override
     public ResourceLocation getRecordResource(String name) {
-        return new ResourceLocation(domain, recordName);
+        return new ResourceLocation(domain, "records." + recordName);
     }
 
     @Override
@@ -107,7 +107,7 @@ public class ItemCustomRecord extends ItemRecord {
     @Override
     public void registerIcons(IIconRegister par1IconRegister) {
 //        super.registerIcons(par1IconRegister);
-        itemIcon = par1IconRegister.registerIcon(recordName);
+        itemIcon = par1IconRegister.registerIcon(domain + ":records." + recordName);
     }
 
     public ItemCustomRecord setDomain(String domain) {

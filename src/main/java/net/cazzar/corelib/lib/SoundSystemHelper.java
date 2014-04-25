@@ -54,11 +54,13 @@ public class SoundSystemHelper {
     }
 
     public static SoundManager getSoundManager() {
-        return ObfuscationReflectionHelper.getPrivateValue(SoundHandler.class, getSoundHandler(), "sndManager", "field_147694_f");
+        return getSoundHandler().sndManager;
+//        return ObfuscationReflectionHelper.getPrivateValue(SoundHandler.class, getSoundHandler(), "sndManager", "field_147694_f");
     }
 
     public static SoundSystem getSoundSystem() {
-        return ObfuscationReflectionHelper.getPrivateValue(SoundManager.class, getSoundManager(), "sndSystem", "field_148620_e");
+        return getSoundManager().sndSystem;
+//        return ObfuscationReflectionHelper.getPrivateValue(SoundManager.class, getSoundManager(), "sndSystem", "field_148620_e");
     }
 
     /**
@@ -87,6 +89,10 @@ public class SoundSystemHelper {
 
         SoundEventAccessorComposite sound = getSoundHandler().getSound(resource);
         float f1 = 16F;
+
+        if (sound == null) {
+            return;
+        }
 
         SoundPoolEntry soundpoolentry = sound.func_148720_g();
 
