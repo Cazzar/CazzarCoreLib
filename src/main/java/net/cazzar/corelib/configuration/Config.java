@@ -66,10 +66,10 @@ public class Config {
         LogHelper.coreLog.info(marker, "Parsing Object {}", o);
         for (Field field : o.getClass().getDeclaredFields()) {
             field.setAccessible(true);
-            LogHelper.coreLog.info(marker, "Parsing field {}.{} of type {}", field.getDeclaringClass().getName(), field.getName(), field.getType());
+            LogHelper.coreLog.debug(marker, "Parsing field {}.{} of type {}", field.getDeclaringClass().getName(), field.getName(), field.getType());
 
             if (field.getAnnotation(Config.Exclude.class) != null) {
-                LogHelper.coreLog.info(marker, "Skipping...");
+                LogHelper.coreLog.debug(marker, "Skipping...");
                 continue;
             }
 
