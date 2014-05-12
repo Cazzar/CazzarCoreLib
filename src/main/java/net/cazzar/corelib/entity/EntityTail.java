@@ -31,7 +31,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.world.World;
 
 /**
- * @Author: Cayde
+ * @author Cayde
  */
 public class EntityTail extends Entity {
     public EntityPlayer owner;
