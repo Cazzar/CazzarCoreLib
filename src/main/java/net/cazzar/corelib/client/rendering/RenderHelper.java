@@ -1,18 +1,25 @@
 /*
- * Copyright (C) 2014 Cayde Dixon
+ * The MIT License (MIT)
  *
- * This program is free software: you can redistribute it and/or modify
- * it under the terms of the GNU General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * Copyright (c) 2014 Cayde Dixon
  *
- * This program is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
- * GNU General Public License for more details.
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
  *
- * You should have received a copy of the GNU General Public License
- * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ * The above copyright notice and this permission notice shall be included in all
+ * copies or substantial portions of the Software.
+ *
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+ * SOFTWARE.
  */
 
 package net.cazzar.corelib.client.rendering;
@@ -31,8 +38,8 @@ public class RenderHelper {
      * Render a model using an {@link net.minecraft.util.IIcon}
      *
      * @param model the model to use
-     * @param icon the Icon that contains the UV map
-     * @param tes the {@link net.minecraft.client.renderer.Tessellator} instance to use
+     * @param icon  the Icon that contains the UV map
+     * @param tes   the {@link net.minecraft.client.renderer.Tessellator} instance to use
      */
     public static void renderWithIcon(WavefrontObject model, IIcon icon, Tessellator tes) {
         for (GroupObject go : model.groupObjects) {
@@ -53,11 +60,11 @@ public class RenderHelper {
     /**
      * Rotate the model along the specified axis
      *
-     * @param model the model to use
+     * @param model   the model to use
      * @param degrees the angle in degrees to rotate
-     * @param x rotate along the x
-     * @param y rotate along the y
-     * @param z rotate along the z
+     * @param x       rotate along the x
+     * @param y       rotate along the y
+     * @param z       rotate along the z
      */
     public static void rotateModel(WavefrontObject model, double degrees, double x, double y, double z) {
         double c = cos(toRadians(degrees));
@@ -84,9 +91,9 @@ public class RenderHelper {
      * Scale the model along the x, y and z with the specified scales.
      *
      * @param model the model to use
-     * @param x the scale of the x
-     * @param y the scale of the y
-     * @param z the scale of the z
+     * @param x     the scale of the x
+     * @param y     the scale of the y
+     * @param z     the scale of the z
      */
     public static void scaleModel(WavefrontObject model, double x, double y, double z) {
         for (GroupObject go : model.groupObjects) {
