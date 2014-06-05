@@ -22,12 +22,6 @@
  * SOFTWARE.
  */
 
-
-
-
-
-
-
 buildscript {
     repositories {
         mavenCentral()
@@ -48,13 +42,16 @@ buildscript {
 
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-        classpath 'net.cazzar:CurseForgeUploader:1.0'
+        classpath 'me.tatarka:gradle-retrolambda:1.3.2'
     }
 }
+
+apply plugin: 'retrolambda'
 
 group = 'net.cazzar.corelib'
 version = '1.2.0'
 project.ext.set('actualVersion', version)
+javaVersion = 1.8
 //noinspection GroovyUnusedAssignment
 //archivesBaseName = 'CazzarCoreLib'
 
@@ -62,3 +59,13 @@ apply from: 'gradle/forge.gradle'
 apply from: 'gradle/artifacts.gradle'
 apply from: 'gradle/release.gradle'
 apply from: 'gradle/signing.gradle'
+
+retrolambda {
+    jdk System.getenv("JAVA8_HOME")
+    oldJdk System.getenv("JAVA6_HOME")
+    javaVersion JavaVersion.VERSION_1_7
+}
+
+afterEvaluate {
+    tasks.reobf.dependsOn tasks.compileRetrolambda
+}
