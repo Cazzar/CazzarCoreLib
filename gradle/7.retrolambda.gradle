@@ -1,3 +1,5 @@
+import me.tatarka.RetrolambdaTask
+
 /*
  * The MIT License (MIT)
  *
@@ -25,37 +27,26 @@
 buildscript {
     repositories {
         mavenCentral()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
-        maven {
-            name 'Cazzar\'s Maven repo'
-            url 'http://maven.cazzar.net/'
-        }
     }
-
-
     dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
         classpath 'me.tatarka:gradle-retrolambda:2.2.0'
     }
 }
 
-group = 'net.cazzar.corelib'
-version = '1.2.0'
-project.ext.set('actualVersion', version)
-//noinspection GroovyUnusedAssignment
-//archivesBaseName = 'CazzarCoreLib'
+apply plugin: 'retrolambda'
 
-fileTree('gradle').include('*.gradle').collect().sort().each { apply from: it }
+retrolambda {
+    jdk System.getenv("JAVA8_HOME")
+    oldJdk System.getenv("JAVA7_HOME")
+    javaVersion JavaVersion.VERSION_1_7
+}
+
+dependencies {
+    compile 'org.ow2.asm:asm-debug-all:5.0.3'
+}
 
 tasks.withType(JavaCompile) {
-    sourceCompatibility = "1.7"
-    targetCompatibility = "1.7"
+    sourceCompatibility = "1.8"
+    targetCompatibility = "1.8"
     options.encoding = 'UTF-8'
 }

@@ -22,40 +22,11 @@
  * SOFTWARE.
  */
 
-buildscript {
-    repositories {
-        mavenCentral()
-        maven {
-            name = "forge"
-            url = "http://files.minecraftforge.net/maven"
-        }
-        maven {
-            name = "sonatype"
-            url = "https://oss.sonatype.org/content/repositories/snapshots/"
-        }
-        maven {
-            name 'Cazzar\'s Maven repo'
-            url 'http://maven.cazzar.net/'
-        }
-    }
+package net.cazzar.corelib.client.gui.handler;
 
-
-    dependencies {
-        classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-        classpath 'me.tatarka:gradle-retrolambda:2.2.0'
-    }
-}
-
-group = 'net.cazzar.corelib'
-version = '1.2.0'
-project.ext.set('actualVersion', version)
-//noinspection GroovyUnusedAssignment
-//archivesBaseName = 'CazzarCoreLib'
-
-fileTree('gradle').include('*.gradle').collect().sort().each { apply from: it }
-
-tasks.withType(JavaCompile) {
-    sourceCompatibility = "1.7"
-    targetCompatibility = "1.7"
-    options.encoding = 'UTF-8'
+/**
+ * @author Cayde
+ */
+public interface IGUIAdvancedAction {
+    public void click(int x, int y);
 }

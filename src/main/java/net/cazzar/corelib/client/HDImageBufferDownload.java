@@ -54,4 +54,7 @@ public class HDImageBufferDownload implements IImageBuffer {
             return capeImage;
         }
     }
+
+    @Override
+    public void func_152634_a() {}
 }

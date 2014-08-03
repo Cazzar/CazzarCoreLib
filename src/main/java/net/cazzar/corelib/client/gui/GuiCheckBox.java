@@ -25,7 +25,6 @@
 package net.cazzar.corelib.client.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
 
@@ -34,6 +33,9 @@ public class GuiCheckBox extends GuiButton {
 
     boolean checked;
 
+    public GuiCheckBox() {
+        super();
+    }
 
     public GuiCheckBox(int id, int xPosition, int yPosition, String display) {
         this(id, xPosition, yPosition, display, false);

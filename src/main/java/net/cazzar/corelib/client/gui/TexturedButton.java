@@ -28,7 +28,7 @@ import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
+//import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
@@ -38,11 +38,15 @@ import org.lwjgl.opengl.GL11;
 @SideOnly(Side.CLIENT)
 public class TexturedButton extends GuiButton {
 
-    private final ResourceLocation textureFile;
-    private final int xOffset, yOffset, yOffsetForDisabled,
+    private ResourceLocation textureFile;
+    private int xOffset, yOffset, yOffsetForDisabled,
             xOffsetForDisabled, xOffsetForHovered, yOffsetForHovered;
-    private final GuiContainer gui;
+//    private final GuiContainer gui;
     private String tooltip;
+
+    public TexturedButton() {
+        super();
+    }
 
     /**
      * A simple textured button for GUIs
@@ -63,7 +67,8 @@ public class TexturedButton extends GuiButton {
      */
     public TexturedButton(GuiContainer gui, int id, int xPosition, int yPosition, int width, int height, ResourceLocation textureFile, int xOffset, int yOffset, int xOffsetForDisabled, int yOffsetForDisabled, int xOffsetForHovered, int yOffsetForHovered) {
         super(id, xPosition, yPosition, width, height, "");
-        this.gui = gui;
+//        this.gui = gui;
+        setOwner(gui);
         this.textureFile = textureFile;
         this.xOffset = xOffset;
         this.yOffset = yOffset;
@@ -111,7 +116,7 @@ public class TexturedButton extends GuiButton {
      */
     public void drawToolTip(int x, int y) {
         try {
-            ReflectionHelper.findMethod(GuiScreen.class, gui, new String[]{"drawCreativeTabHoveringText", "func_146279_a"}, String.class, int.class, int.class).invoke(gui, tooltip, x, y);
+            ReflectionHelper.findMethod(GuiScreen.class, getOwner(), new String[]{"drawCreativeTabHoveringText", "func_146279_a"}, String.class, int.class, int.class).invoke(getOwner(), tooltip, x, y);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -151,5 +156,28 @@ public class TexturedButton extends GuiButton {
      */
     public void setTooltip(String tooltip) {
         this.tooltip = tooltip;
+    }
+
+    public TexturedButton setDisabledOffsets(int x, int y) {
+        xOffsetForDisabled = x;
+        yOffsetForDisabled = y;
+        return this;
+    }
+
+    public TexturedButton setHoveredOffsets(int x, int y) {
+        xOffsetForHovered = x;
+        yOffsetForHovered = y;
+        return this;
+    }
+
+    public TexturedButton setOffsets(int x, int y) {
+        xOffset = x;
+        yOffset = y;
+        return this;
+    }
+
+    public TexturedButton setTexture(ResourceLocation newTex) {
+        this.textureFile = newTex;
+        return this;
     }
 }

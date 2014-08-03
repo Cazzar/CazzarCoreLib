@@ -22,13 +22,7 @@
  * SOFTWARE.
  */
 
-
-
-
-
-
-
-buildscript {
+/*buildscript {
     repositories {
         mavenCentral()
         maven {
@@ -44,12 +38,12 @@ buildscript {
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
     }
-}
+}*/
 
 apply plugin: 'forge'
 
 minecraft {
-    version = '1.7.2-10.12.1.1111'
+    version = '1.7.10-10.13.0.1190'
     assetDir = '../run/assets'
 }
 
