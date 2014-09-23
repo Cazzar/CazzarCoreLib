@@ -66,8 +66,11 @@ public class TexturedButton extends GuiButton {
      * @param xOffsetForDisabled the X offset for Disabled
      * @param yOffsetForDisabled the Y offset for disabled
      * @param xOffsetForHovered  the X offset for when the button is hovered over
-     * @param yOffsetForHovered  the Y offset for when the button is hovered over.
+     * @param yOffsetForHovered  the Y offset for when the button is hovered over.'
+     *
+     * @deprecated Use the new system, setters.
      */
+    @Deprecated
     public TexturedButton(GuiContainer gui, int id, int xPosition, int yPosition, int width, int height, ResourceLocation textureFile, int xOffset, int yOffset, int xOffsetForDisabled, int yOffsetForDisabled, int xOffsetForHovered, int yOffsetForHovered) {
         super(id, xPosition, yPosition, width, height, "");
 //        this.gui = gui;
