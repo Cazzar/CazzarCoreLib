@@ -34,6 +34,8 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 
+import java.lang.reflect.Method;
+
 @SuppressWarnings("UnusedDeclaration")
 @SideOnly(Side.CLIENT)
 public class TexturedButton extends GuiButton {
@@ -43,6 +45,7 @@ public class TexturedButton extends GuiButton {
             xOffsetForDisabled, xOffsetForHovered, yOffsetForHovered;
 //    private final GuiContainer gui;
     private String tooltip;
+    private static Method drawCreativeTabText;
 
     public TexturedButton() {
         super();
@@ -116,7 +119,12 @@ public class TexturedButton extends GuiButton {
      */
     public void drawToolTip(int x, int y) {
         try {
-            ReflectionHelper.findMethod(GuiScreen.class, getOwner(), new String[]{"drawCreativeTabHoveringText", "func_146279_a"}, String.class, int.class, int.class).invoke(getOwner(), tooltip, x, y);
+            if (drawCreativeTabText == null)
+                drawCreativeTabText = ReflectionHelper.findMethod(GuiScreen.class, getOwner(),
+                        new String[]{"drawCreativeTabHoveringText", "func_146279_a"},
+                        String.class, int.class, int.class);
+
+            drawCreativeTabText.invoke(getOwner(), tooltip, x, y);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
