@@ -47,12 +47,12 @@ minecraft {
     assetDir = '../run/assets'
 }
 
-if (System.getenv("BUILD_NUMBER") != null) {
+/**if (System.getenv("BUILD_NUMBER") != null) {
     version = "${minecraft.version}-$version." + System.getenv("BUILD_NUMBER");
     project.actualVersion += "." + System.getenv("BUILD_NUMBER");
 } else {
     version = "${minecraft.version}-$version"
-}
+}**/
 
 processResources {
     // replace stuff in text files, not binary ones.
