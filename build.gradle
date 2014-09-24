@@ -42,12 +42,12 @@ buildscript {
 
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-        classpath 'me.tatarka:gradle-retrolambda:2.2.0'
+        classpath 'me.tatarka:gradle-retrolambda:2.2.1'
     }
 }
 
 group = 'net.cazzar.corelib'
-version = '1.2.0'
+version = '1.2.0-SNAPSHOT'
 project.ext.set('actualVersion', version)
 //noinspection GroovyUnusedAssignment
 //archivesBaseName = 'CazzarCoreLib'
