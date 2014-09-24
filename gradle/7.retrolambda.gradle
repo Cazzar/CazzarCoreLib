@@ -29,7 +29,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:2.2.0'
+        classpath 'me.tatarka:gradle-retrolambda:2.2.1'
     }
 }
 
