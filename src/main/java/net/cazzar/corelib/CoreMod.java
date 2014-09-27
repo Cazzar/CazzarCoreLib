@@ -86,7 +86,7 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
 
     @Override
     public String[] getASMTransformerClass() {
-        return new String[]{"net.cazzar.corelib.asm.PositionedSoundRecord"};
+        return new String[0];
     }
 
     @Override
