@@ -2,4 +2,3 @@ language: java
 script: gradle clean setupCIWorkspace build uploadArchives
 jdk:
   - oraclejdk8
-  - oraclejdk7
