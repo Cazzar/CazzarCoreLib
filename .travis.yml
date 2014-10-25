@@ -1,4 +1,4 @@
 language: java
-script: gradle clean setupCIWorkspace build uploadArchives
+script: "gradle clean setupCIWorkspace build uploadArchives"
 jdk:
   - oraclejdk8
