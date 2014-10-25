@@ -22,8 +22,9 @@
  * SOFTWARE.
  */
 
-package net.cazzar.corelib.asm;
+package net.cazzar.corelib.asm.transformers;
 
+import net.cazzar.corelib.asm.MethodTransformer;
 import org.objectweb.asm.Label;
 import org.objectweb.asm.tree.*;
 

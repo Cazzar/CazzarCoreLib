@@ -43,7 +43,7 @@
 apply plugin: 'forge'
 
 minecraft {
-    version = '1.7.10-10.13.0.1190'
+    version = '1.7.10-10.13.1.1224'
     assetDir = '../run/assets'
 }
 

@@ -23,19 +23,15 @@
  */
 
 
-apply plugin: 'maven-publish'
+apply plugin: 'maven'
 
-publishing {
-    publications {
-        mavenJava(MavenPublication) {
-            artifact javadocJar
-            artifact deobfJar
-            artifact sourceJar
-        }
-    }
+uploadArchives {
+    dependsOn "reobf"
     repositories {
-        maven {
-            url "file://home/cayde/public_html/cazzar.net/maven"
+        mavenDeployer {
+            repository(url: "http://files.minecraftforge.net/maven/manage/upload") {
+                authentication(userName: System.getenv("forgeMavenUsername"), password: System.getenv("forgeMavenPassword"))
+            }
         }
     }
 }
