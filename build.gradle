@@ -42,7 +42,7 @@ buildscript {
 
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:1.2-SNAPSHOT'
-        classpath 'me.tatarka:gradle-retrolambda:2.2.1'
+        classpath 'me.tatarka:gradle-retrolambda:2.4.0'
     }
 }
 
