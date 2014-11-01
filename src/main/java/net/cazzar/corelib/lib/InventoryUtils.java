@@ -43,9 +43,9 @@ public class InventoryUtils {
             items[b] = ItemStack.loadItemStackFromNBT(tag);
             if (tag.hasKey("Quantity")) {
                 final NBTBase qtag = tag.getTag("Quantity");
-                if (qtag instanceof NBTTagInt) items[b].stackSize = ((NBTTagInt) qtag).func_150287_d();
+                if (qtag instanceof NBTTagInt) items[b].stackSize = ((NBTTagInt) qtag).getInt();
                 else if (qtag instanceof NBTTagShort)
-                    items[b].stackSize = ((NBTTagShort) qtag).func_150289_e();
+                    items[b].stackSize = ((NBTTagShort) qtag).getShort();
             }
         }
     }

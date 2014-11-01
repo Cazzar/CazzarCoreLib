@@ -109,15 +109,16 @@ public class SoundSystemHelper {
         SoundCategory soundcategory = sound.getSoundCategory();
         float volume = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, 1.0D);
         float pitch = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, 1.0D);
-//        ResourceLocation resourcelocation = soundpoolentry.getSoundPoolEntryLocation();
 
-        /*getSoundSystem().newStreamingSource(false, identifier, getURLForSoundResource(resourcelocation), resourcelocation.toString(), false, x, y, z, ISound.AttenuationType.LINEAR.getTypeInt(), f1);
-        getSoundSystem().setPitch(identifier, pitch);
-        getSoundSystem().setVolume(identifier, volume);
-        getSoundSystem().play(identifier);*/
 
         //noinspection unchecked
-        getSoundManager().addDelayedSound(new CustomSound(volume, resource, false, 0, pitch, x, y, z), 3);
+        CustomSound customSound = new CustomSound(volume, resource, false, 0, pitch, x, y, z);
+        //Do not break the game
+        if (getSoundManager().delayedSounds.containsKey(customSound)) {
+            getSoundManager().delayedSounds.remove(customSound); // do not break the game, just trod along all twe want.
+        }
+
+        getSoundManager().playDelayedSound(customSound, 1);
     }
 
     public static String getIdentifierForRecord(ItemRecord record, int x, int y, int z) {
@@ -172,7 +173,6 @@ public class SoundSystemHelper {
      * Check if something is playing at the coords
      *
      * @param identifier the identifier of the playing sound
-     *
      * @return if the {@link SoundSystem} is playing with that identifier.
      */
     public static boolean isPlaying(String identifier) {
@@ -184,7 +184,6 @@ public class SoundSystemHelper {
      *
      * @param world       the world that it is playing in
      * @param coordinates the coordinates of the "player"
-     *
      * @return if the {@link SoundSystem} is playing with that identifier.
      */
     public static boolean isPlaying(RenderGlobal world, ChunkCoordinates coordinates) {

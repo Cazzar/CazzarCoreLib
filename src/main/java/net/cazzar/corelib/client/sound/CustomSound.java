@@ -35,19 +35,20 @@ public class CustomSound implements ISound {
     private float pitch;
     private float xPos, yPos, zPos;
 
-    public CustomSound(float volume, ResourceLocation resource, boolean repeat, int repratDelay, float pitch, float xPos, float yPos, float zPos) {
+    public CustomSound(float volume, ResourceLocation resource, boolean repeat, int repeatDelay, float pitch, float xPos, float yPos, float zPos) {
         this.volume = volume;
         this.resource = resource;
         this.repeat = repeat;
-        this.repeatDelay = repratDelay;
+        this.repeatDelay = repeatDelay;
         this.pitch = pitch;
         this.xPos = xPos;
         this.yPos = yPos;
         this.zPos = zPos;
     }
 
+
     @Override
-    public ResourceLocation getPositionedSoundLocation() {
+    public ResourceLocation getSoundLocation() {
         return resource;
     }
 
