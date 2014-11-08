@@ -80,10 +80,10 @@ public abstract class SyncedTileEntity extends TileEntity {
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-        readFromNBT(pkt.func_148857_g());
+        readFromNBT(pkt.getNbtCompound());
         //noinspection unchecked
-        Set<String> keys = pkt.func_148857_g().func_150296_c();
-        Map tagMap = ObfuscationReflectionHelper.getPrivateValue(NBTTagCompound.class, pkt.func_148857_g(), "tagMap", "field_74784_a");
+        Set<String> keys = pkt.getNbtCompound().getKeySet();
+        Map tagMap = ObfuscationReflectionHelper.getPrivateValue(NBTTagCompound.class, pkt.getNbtCompound(), "tagMap", "field_74784_a");
         for (String key : keys) {
             try {
                 Field f = this.getClass().getDeclaredField(key);
@@ -92,7 +92,7 @@ public abstract class SyncedTileEntity extends TileEntity {
 //                e.printStackTrace();
             }
         }
-        readExtraNBTFromPacket(pkt.func_148857_g());
+        readExtraNBTFromPacket(pkt.getNbtCompound());
     }
 
     /**

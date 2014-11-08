@@ -47,7 +47,7 @@ public class CustomSound implements ISound {
     }
 
     @Override
-    public ResourceLocation getPositionedSoundLocation() {
+    public ResourceLocation getSoundLocation() {
         return resource;
     }
 

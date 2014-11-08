@@ -97,7 +97,7 @@ public class TexturedButton extends GuiButton {
             //field_146121_g = height
 //            field_146123_n = x >= xPosition && y >= yPosition && x < xPosition + width && y < yPosition + height;
 
-            switch (getHoverState(field_146123_n)) {
+            switch (getHoverState(hovered)) {
                 case 0:
                     // Disabled
                     drawTexturedModalRect(xPosition, yPosition, xOffsetForDisabled, yOffsetForDisabled, width, height);

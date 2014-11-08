@@ -117,7 +117,7 @@ public class SoundSystemHelper {
         getSoundSystem().play(identifier);*/
 
         //noinspection unchecked
-        getSoundManager().addDelayedSound(new CustomSound(volume, resource, false, 0, pitch, x, y, z), 3);
+        getSoundManager().playDelayedSound(new CustomSound(volume, resource, false, 0, pitch, x, y, z), 3);
     }
 
     public static String getIdentifierForRecord(ItemRecord record, int x, int y, int z) {
