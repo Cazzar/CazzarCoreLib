@@ -28,7 +28,6 @@ import cpw.mods.fml.relauncher.ReflectionHelper;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.Minecraft;
-//import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
@@ -36,16 +35,18 @@ import org.lwjgl.opengl.GL11;
 
 import java.lang.reflect.Method;
 
+//import net.minecraft.client.gui.GuiButton;
+
 @SuppressWarnings("UnusedDeclaration")
 @SideOnly(Side.CLIENT)
 public class TexturedButton extends GuiButton {
 
+    private static Method drawCreativeTabText;
     private ResourceLocation textureFile;
     private int xOffset, yOffset, yOffsetForDisabled,
             xOffsetForDisabled, xOffsetForHovered, yOffsetForHovered;
 //    private final GuiContainer gui;
     private String tooltip;
-    private static Method drawCreativeTabText;
 
     public TexturedButton() {
         super();

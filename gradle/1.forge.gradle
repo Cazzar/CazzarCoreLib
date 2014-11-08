@@ -45,14 +45,11 @@ apply plugin: 'forge'
 minecraft {
     version = '1.7.10-10.13.1.1224'
     assetDir = '../run/assets'
+    mappings = 'stable_12'
 }
 
-/**if (System.getenv("BUILD_NUMBER") != null) {
-    version = "${minecraft.version}-$version." + System.getenv("BUILD_NUMBER");
-    project.actualVersion += "." + System.getenv("BUILD_NUMBER");
-} else {
-    version = "${minecraft.version}-$version"
-}**/
+/**if (System.getenv("BUILD_NUMBER") != null) {version = "${minecraft.version}-$version." + System.getenv("BUILD_NUMBER");
+ project.actualVersion += "." + System.getenv("BUILD_NUMBER");} else {version = "${minecraft.version}-$version"}**/
 
 processResources {
     // replace stuff in text files, not binary ones.
