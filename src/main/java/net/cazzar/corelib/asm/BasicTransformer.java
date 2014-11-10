@@ -31,9 +31,7 @@ import org.apache.logging.log4j.Logger;
 import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.tree.ClassNode;
-import org.objectweb.asm.util.CheckClassAdapter;
 
-import java.io.PrintWriter;
 import java.util.Collections;
 import java.util.List;
 
@@ -60,11 +58,11 @@ public abstract class BasicTransformer implements IClassTransformer {
         ClassReader classReader = new ClassReader(bytes);
         classReader.accept(classNode, 0);
 
-        transform(classNode);
+        transform(classNode, transformedName);
 
         ClassWriter writer = new ClassWriter(ClassWriter.COMPUTE_MAXS);
         classNode.accept(writer);
-        CheckClassAdapter.verify(new ClassReader(writer.toByteArray()), false, new PrintWriter(System.err));
+//        CheckClassAdapter.verify(new ClassReader(writer.toByteArray()), false, new PrintWriter(System.err));
         return writer.toByteArray();
 
     }
@@ -73,6 +71,7 @@ public abstract class BasicTransformer implements IClassTransformer {
      * The stub function called to transform the loading class.
      *
      * @param classNode the class it is working on
+     * @param transformedName the name of the class.
      */
-    public abstract void transform(ClassNode classNode);
+    public abstract void transform(ClassNode classNode, String transformedName);
 }

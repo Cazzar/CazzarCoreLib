@@ -26,11 +26,14 @@ package net.cazzar.corelib.lib;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
 
 @SuppressWarnings("UnusedDeclaration")
 public class LogHelper {
+    @NotNull
     public static Logger coreLog = getLogger(Reference.MOD_ID);
 
+    @NotNull
     public static Logger getLogger(String identifier) {
         return LogManager.getLogger(identifier);
     }

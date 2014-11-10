@@ -36,9 +36,7 @@ import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
 import cpw.mods.fml.common.versioning.DefaultArtifactVersion;
-import net.cazzar.corelib.events.ClientEvents;
 import net.cazzar.corelib.lib.Reference;
-import net.minecraftforge.common.MinecraftForge;
 
 import java.io.File;
 import java.net.URISyntaxException;
@@ -92,7 +90,7 @@ public class ModContainer extends DummyModContainer {
     @Subscribe
     public void preInit(FMLPreInitializationEvent event) {
         if (event.getSide().isClient()) {
-            MinecraftForge.EVENT_BUS.register(new ClientEvents());
+//            MinecraftForge.EVENT_BUS.register(new ClientEvents());
         }
     }
 

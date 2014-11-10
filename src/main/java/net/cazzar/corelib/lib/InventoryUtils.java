@@ -26,6 +26,7 @@ package net.cazzar.corelib.lib;
 
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
+import org.jetbrains.annotations.NotNull;
 
 public class InventoryUtils {
 
@@ -35,17 +36,16 @@ public class InventoryUtils {
      * @param items   the items
      * @param tagList the NBT tag list
      */
-    public static void readItemStacksFromTag(ItemStack[] items,
-                                             NBTTagList tagList) {
+    public static void readItemStacksFromTag(@NotNull ItemStack[] items, @NotNull NBTTagList tagList) {
         for (int i = 0; i < tagList.tagCount(); i++) {
             final NBTTagCompound tag = tagList.getCompoundTagAt(i);
             final int b = tag.getShort("Slot");
             items[b] = ItemStack.loadItemStackFromNBT(tag);
             if (tag.hasKey("Quantity")) {
                 final NBTBase qtag = tag.getTag("Quantity");
-                if (qtag instanceof NBTTagInt) items[b].stackSize = ((NBTTagInt) qtag).getInt();
+                if (qtag instanceof NBTTagInt) items[b].stackSize = ((NBTTagInt) qtag).func_150287_d();
                 else if (qtag instanceof NBTTagShort)
-                    items[b].stackSize = ((NBTTagShort) qtag).getShort();
+                    items[b].stackSize = ((NBTTagShort) qtag).func_150289_e();
             }
         }
     }

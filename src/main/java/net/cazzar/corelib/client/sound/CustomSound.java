@@ -26,16 +26,17 @@ package net.cazzar.corelib.client.sound;
 
 import net.minecraft.client.audio.ISound;
 import net.minecraft.util.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 
 public class CustomSound implements ISound {
     private float volume;
-    private ResourceLocation resource;
+    private @NotNull ResourceLocation resource;
     private boolean repeat;
     private int repeatDelay;
     private float pitch;
     private float xPos, yPos, zPos;
 
-    public CustomSound(float volume, ResourceLocation resource, boolean repeat, int repeatDelay, float pitch, float xPos, float yPos, float zPos) {
+    public CustomSound(float volume, @NotNull ResourceLocation resource, boolean repeat, int repeatDelay, float pitch, float xPos, float yPos, float zPos) {
         this.volume = volume;
         this.resource = resource;
         this.repeat = repeat;
@@ -48,7 +49,7 @@ public class CustomSound implements ISound {
 
 
     @Override
-    public ResourceLocation getSoundLocation() {
+    public ResourceLocation getPositionedSoundLocation() {
         return resource;
     }
 

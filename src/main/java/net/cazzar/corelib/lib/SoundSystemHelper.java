@@ -40,6 +40,7 @@ import net.minecraft.item.ItemRecord;
 import net.minecraft.util.ChunkCoordinates;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import org.jetbrains.annotations.Nullable;
 import paulscode.sound.SoundSystem;
 
 import java.lang.reflect.InvocationTargetException;
@@ -51,7 +52,7 @@ import static net.cazzar.corelib.util.ClientUtil.mc;
 
 @SuppressWarnings("UnusedDeclaration")
 public class SoundSystemHelper {
-
+    private static final double MAX_VOLUME = 4D;
     private static List<Entity> entitiesPlayingMusic = Lists.newArrayList();
 
     /**
@@ -91,7 +92,7 @@ public class SoundSystemHelper {
 
         mc().ingameGUI.setRecordPlayingMessage(record.getRecordNameLocal());
         resource = record.getRecordResource("records." + record.recordName);
-        if (resource == null) return;
+//        if (resource == null) return;
 
         if (getSoundSystem().playing(identifier))
             getSoundSystem().stop(identifier);
@@ -107,7 +108,7 @@ public class SoundSystemHelper {
         SoundPoolEntry soundpoolentry = sound.func_148720_g();
 
         SoundCategory soundcategory = sound.getSoundCategory();
-        float volume = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, 1.0D);
+        float volume = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, MAX_VOLUME);
         float pitch = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, 1.0D);
 
 
@@ -118,12 +119,16 @@ public class SoundSystemHelper {
             getSoundManager().delayedSounds.remove(customSound); // do not break the game, just trod along all twe want.
         }
 
-        getSoundManager().playDelayedSound(customSound, 1);
-    }
+        if (getSoundManager().playingSounds.containsValue(customSound)) {
+            return; // do not break the game
+        }
 
+        getSoundManager().addDelayedSound(customSound, 1);
+    }
+    @Nullable
     public static String getIdentifierForRecord(ItemRecord record, int x, int y, int z) {
         ResourceLocation resource = record.getRecordResource("records." + record.recordName);
-        if (resource == null) return null;
+//        if (resource == null) return null;
 
         SoundEventAccessorComposite sound = getSoundHandler().getSound(resource);
         float f1 = 16F;
@@ -135,7 +140,7 @@ public class SoundSystemHelper {
         SoundPoolEntry soundpoolentry = sound.func_148720_g();
 
         SoundCategory soundcategory = sound.getSoundCategory();
-        float volume = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, 1.0D);
+        float volume = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, MAX_VOLUME);
         float pitch = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, 1.0D);
 //        ResourceLocation resourcelocation = soundpoolentry.getSoundPoolEntryLocation();
 
@@ -211,9 +216,7 @@ public class SoundSystemHelper {
         Method m = ReflectionHelper.findMethod(SoundManager.class, getSoundManager(), new String[]{"getURLForSoundResource", "func_148612_a"}, ResourceLocation.class);
         try {
             return (URL) m.invoke(getSoundManager(), location);
-        } catch (IllegalAccessException e) {
-            e.printStackTrace();
-        } catch (InvocationTargetException e) {
+        } catch (IllegalAccessException | InvocationTargetException e) {
             e.printStackTrace();
         }
         return null;

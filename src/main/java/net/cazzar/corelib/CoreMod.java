@@ -86,7 +86,9 @@ public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
 
     @Override
     public String[] getASMTransformerClass() {
-        return new String[0];
+        return new String[0];// {
+//                "net.cazzar.corelib.asm.transformers.BlockTransformer"
+//        };
     }
 
     @Override

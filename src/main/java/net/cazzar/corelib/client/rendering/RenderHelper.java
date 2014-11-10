@@ -27,6 +27,7 @@ package net.cazzar.corelib.client.rendering;
 import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.IIcon;
 import net.minecraftforge.client.model.obj.*;
+import org.jetbrains.annotations.NotNull;
 
 import static java.lang.Math.*;
 
@@ -41,7 +42,7 @@ public class RenderHelper {
      * @param icon  the Icon that contains the UV map
      * @param tes   the {@link net.minecraft.client.renderer.Tessellator} instance to use
      */
-    public static void renderWithIcon(WavefrontObject model, IIcon icon, Tessellator tes) {
+    public static void renderWithIcon(@NotNull WavefrontObject model, @NotNull IIcon icon, @NotNull Tessellator tes) {
         for (GroupObject go : model.groupObjects) {
             for (Face f : go.faces) {
                 Vertex n = f.faceNormal;
@@ -66,7 +67,7 @@ public class RenderHelper {
      * @param y       rotate along the y
      * @param z       rotate along the z
      */
-    public static void rotateModel(WavefrontObject model, double degrees, double x, double y, double z) {
+    public static void rotateModel(@NotNull WavefrontObject model, double degrees, double x, double y, double z) {
         double c = cos(toRadians(degrees));
         double s = sin(toRadians(degrees));
         for (GroupObject go : model.groupObjects) {
@@ -95,7 +96,7 @@ public class RenderHelper {
      * @param y     the scale of the y
      * @param z     the scale of the z
      */
-    public static void scaleModel(WavefrontObject model, double x, double y, double z) {
+    public static void scaleModel(@NotNull WavefrontObject model, double x, double y, double z) {
         for (GroupObject go : model.groupObjects) {
             for (Face f : go.faces) {
                 Vertex n = f.faceNormal;

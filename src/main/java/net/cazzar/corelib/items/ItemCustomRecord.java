@@ -32,6 +32,8 @@ import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -42,10 +44,10 @@ import static java.util.Collections.addAll;
  */
 @SuppressWarnings("UnusedDeclaration")
 public class ItemCustomRecord extends ItemRecord {
-    final String recordInfo;
-    final String[] details;
-    String domain = "minecraft";
-    EnumRarity rarity = null;
+    @NotNull final String recordInfo;
+    @NotNull final String[] details;
+    @NotNull String domain = "minecraft";
+    @Nullable EnumRarity rarity = null;
 
     /**
      * Initialise the ItemCustomRecord class
@@ -59,11 +61,15 @@ public class ItemCustomRecord extends ItemRecord {
         this(recordFile, recordInfo, details);
     }
 
-    public ItemCustomRecord(String file, String name, String... details) {
+    public ItemCustomRecord(String file, @NotNull String name, @Nullable String... details) {
         super(file);
         setUnlocalizedName("record");
         this.recordInfo = name;
-        this.details = details;
+        if (details == null) {
+            this.details = new String[]{};
+        }else {
+            this.details = details;
+        }
 //        if (ClientUtil.isClient()) SoundSystemHelper.registerRecord(recordFile + '.' + ext);
     }
 
@@ -109,7 +115,7 @@ public class ItemCustomRecord extends ItemRecord {
      * @param rarity the new rarity of the record.
      */
     @SideOnly(Side.CLIENT)
-    public void setRarity(EnumRarity rarity) {
+    public void setRarity(@NotNull EnumRarity rarity) {
         this.rarity = rarity;
     }
 
@@ -119,7 +125,7 @@ public class ItemCustomRecord extends ItemRecord {
         itemIcon = par1IconRegister.registerIcon(domain + ":records." + recordName);
     }
 
-    public ItemCustomRecord setDomain(String domain) {
+    public ItemCustomRecord setDomain(@NotNull String domain) {
         if (domain.indexOf(':') == -1) this.domain = domain;
         else this.domain = domain.substring(0, domain.indexOf(':'));
 

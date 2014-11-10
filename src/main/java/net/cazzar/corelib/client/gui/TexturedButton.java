@@ -31,6 +31,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
 import java.lang.reflect.Method;
@@ -72,7 +73,7 @@ public class TexturedButton extends GuiButton {
      * @deprecated Use the new system, setters.
      */
     @Deprecated
-    public TexturedButton(GuiContainer gui, int id, int xPosition, int yPosition, int width, int height, ResourceLocation textureFile, int xOffset, int yOffset, int xOffsetForDisabled, int yOffsetForDisabled, int xOffsetForHovered, int yOffsetForHovered) {
+    public TexturedButton(@NotNull GuiContainer gui, int id, int xPosition, int yPosition, int width, int height, ResourceLocation textureFile, int xOffset, int yOffset, int xOffsetForDisabled, int yOffsetForDisabled, int xOffsetForHovered, int yOffsetForHovered) {
         super(id, xPosition, yPosition, width, height, "");
 //        this.gui = gui;
         setOwner(gui);
@@ -88,7 +89,7 @@ public class TexturedButton extends GuiButton {
 
     @Override
     //drawButton
-    public void drawButton(Minecraft mc, int x, int y) {
+    public void drawButton(@NotNull Minecraft mc, int x, int y) {
         if (visible) {
             mc.renderEngine.bindTexture(textureFile);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -98,7 +99,7 @@ public class TexturedButton extends GuiButton {
             //field_146121_g = height
 //            field_146123_n = x >= xPosition && y >= yPosition && x < xPosition + width && y < yPosition + height;
 
-            switch (getHoverState(hovered)) {
+            switch (getHoverState(field_146123_n)) {
                 case 0:
                     // Disabled
                     drawTexturedModalRect(xPosition, yPosition, xOffsetForDisabled, yOffsetForDisabled, width, height);
@@ -169,25 +170,25 @@ public class TexturedButton extends GuiButton {
     public void setTooltip(String tooltip) {
         this.tooltip = tooltip;
     }
-
+    @NotNull
     public TexturedButton setDisabledOffsets(int x, int y) {
         xOffsetForDisabled = x;
         yOffsetForDisabled = y;
         return this;
     }
-
+    @NotNull
     public TexturedButton setHoveredOffsets(int x, int y) {
         xOffsetForHovered = x;
         yOffsetForHovered = y;
         return this;
     }
-
+    @NotNull
     public TexturedButton setOffsets(int x, int y) {
         xOffset = x;
         yOffset = y;
         return this;
     }
-
+    @NotNull
     public TexturedButton setTexture(ResourceLocation newTex) {
         this.textureFile = newTex;
         return this;

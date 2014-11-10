@@ -47,7 +47,7 @@ public class PositionedSoundRecord extends MethodTransformer {
     }
 
     @Override
-    public void transform(ClassNode node) {
+    public void transform(ClassNode node, String transformedName) {
         MethodNode mtd = new MethodNode(ACC_PUBLIC, "hashCode", "()I", null, new String[0]);
 //        mtd.name = "hashCode";
 //        mtd.desc = "()I";

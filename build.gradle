@@ -54,8 +54,14 @@ project.ext.set('actualVersion', version)
 
 fileTree('gradle').include('*.gradle').collect().sort().each { apply from: it }
 
+
+
 tasks.withType(JavaCompile) {
     sourceCompatibility = "1.7"
     targetCompatibility = "1.7"
     options.encoding = 'UTF-8'
+}
+
+dependencies {
+    compile 'com.intellij:annotations:5.1'
 }

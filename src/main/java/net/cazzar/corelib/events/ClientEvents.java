@@ -31,6 +31,7 @@ import net.cazzar.corelib.client.rendering.RenderTail;
 import net.cazzar.corelib.util.ClientUtil;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraftforge.client.event.RenderPlayerEvent;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 
@@ -49,7 +50,7 @@ public class ClientEvents {
     }
 
     @SubscribeEvent
-    public void playerRenderEvent(RenderPlayerEvent.Post event) {
+    public void playerRenderEvent(@NotNull RenderPlayerEvent.Post event) {
         EntityPlayer player = event.entityPlayer;
         EntityPlayer mcPlayer = ClientUtil.mc().thePlayer;
         if (tails.containsKey(player.getGameProfile().getName())) {

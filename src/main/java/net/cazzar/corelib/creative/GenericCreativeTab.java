@@ -29,13 +29,14 @@ package net.cazzar.corelib.creative;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.Item;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * A generic and simple creative tab.
  */
 @SuppressWarnings("UnusedDeclaration")
 public class GenericCreativeTab extends CreativeTabs {
-    final Item icon;
+    private final Item icon;
 
     /**
      * A generic and simple creative tab.
@@ -43,7 +44,7 @@ public class GenericCreativeTab extends CreativeTabs {
      * @param label the label for the itemGroup.<i>label</i>
      * @param icon  the Item/Block ID for
      */
-    public GenericCreativeTab(String label, Item icon) {
+    public GenericCreativeTab(@NotNull String label, @NotNull Item icon) {
         super(label);
         this.icon = icon;
     }

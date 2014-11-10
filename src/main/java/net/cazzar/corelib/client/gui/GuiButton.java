@@ -28,6 +28,7 @@ import com.google.common.collect.Lists;
 import net.cazzar.corelib.client.gui.handler.IGUIAction;
 import net.cazzar.corelib.client.gui.handler.IGUIAdvancedAction;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.List;
 
@@ -51,23 +52,27 @@ public class GuiButton extends net.minecraft.client.gui.GuiButton {
         super(id, xPosition, yPosition, width, height, s);
     }
 
+    @NotNull
     public GuiButton setDisplayString(String displayString) {
         this.displayString = displayString;
         return this;
     }
 
+    @NotNull
     public GuiButton setPosition(int x, int y) {
         this.xPosition = x;
         this.yPosition = y;
         return this;
     }
 
-    public GuiButton addListener(IGUIAction action) {
+    @NotNull
+    public GuiButton addListener(@NotNull IGUIAction action) {
         basicActions.add(action);
         return this;
     }
 
-    public GuiButton addListener(IGUIAdvancedAction action) {
+    @NotNull
+    public GuiButton addListener(@NotNull IGUIAdvancedAction action) {
         advancedActions.add(action);
         return this;
     }

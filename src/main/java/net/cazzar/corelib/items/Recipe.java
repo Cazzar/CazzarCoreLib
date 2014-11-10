@@ -30,11 +30,11 @@ import net.minecraft.block.Block;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.ShapedOreRecipe;
+import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
 
 import static java.lang.Math.floor;
 
@@ -54,7 +54,7 @@ public class Recipe {
      *
      * @param item the item for the canvas
      */
-    public Recipe(Item item) {
+    public Recipe(@NotNull Item item) {
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 recipe[row][col] = currentChar;
@@ -70,7 +70,7 @@ public class Recipe {
      *
      * @param block the block for the canvas
      */
-    public Recipe(Block block) {
+    public Recipe(@NotNull Block block) {
         for (int row = 0; row < 3; row++) {
             for (int col = 0; col < 3; col++) {
                 recipe[row][col] = currentChar;
@@ -362,21 +362,19 @@ public class Recipe {
             objs.add(stringBuilder.toString());
         }
 
-        for (Map.Entry<Character, Object> entry : characterMap.entrySet()) {
-            if (recipeContains(entry.getKey())) {
-                objs.add(entry.getKey());
-                objs.add(entry.getValue());
-            }
-        }
+        characterMap.entrySet().stream().filter(entry -> doesRecipeContain(entry.getKey())).forEach(entry -> {
+            objs.add(entry.getKey());
+            objs.add(entry.getValue());
+        });
 
         System.out.println(Arrays.toString(objs.toArray()));
         GameRegistry.addRecipe(new ShapedOreRecipe(produces, objs.toArray()));
     }
 
-    private boolean recipeContains(char c) {
-        for (char[] i : recipe)
-            for (char ii : i)
-                if (ii == c) return true;
+    private boolean doesRecipeContain(char c) {
+        for (char[] x : recipe)
+            for (char y : x)
+                if (y == c) return true;
 
         return false;
     }

@@ -31,7 +31,9 @@ import net.cazzar.corelib.lib.LogHelper;
 import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Marker;
 import org.apache.logging.log4j.MarkerManager;
+import org.jetbrains.annotations.NotNull;
 
+import javax.annotation.Nullable;
 import java.io.File;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -51,7 +53,7 @@ public class Config {
         this(new Configuration(configFile));
     }
 
-    static boolean isParseable(Class<?> type) {
+    static boolean isParseable(@NotNull Class<?> type) {
         if (type.isPrimitive() || type == String.class || type == Boolean.class || type == Double.class || type == Integer.class || type == Float.class)
             return true;
         if (type.isArray()) {
@@ -71,7 +73,7 @@ public class Config {
         parseFieldsInClass(clazz);
     }
 
-    private void parseFieldsInClass(Object o) throws IllegalAccessException {
+    private void parseFieldsInClass(@NotNull Object o) throws IllegalAccessException {
         LogHelper.coreLog.info(marker, "Parsing Object {}", o);
         for (Field field : o.getClass().getDeclaredFields()) {
             field.setAccessible(true);
@@ -87,7 +89,7 @@ public class Config {
         }
     }
 
-    public void parseField(Field field, Object instance) throws IllegalAccessException {
+    public void parseField(@NotNull Field field, @NotNull Object instance) throws IllegalAccessException {
         ConfigurationComment configComment = field.getAnnotation(ConfigurationComment.class);
         String comment = "", category, key;
         if (configComment != null) comment = configComment.value();
@@ -113,7 +115,7 @@ public class Config {
      *
      * @param instance the instance of the configurations option if it is non static
      */
-    private void parse(Object instance) {
+    private void parse(@NotNull Object instance) {
         Class clazz = instance.getClass();
         if (clazz.isAnnotationPresent(ConfigurationClass.class)) {
             parseClass(instance, config);
@@ -136,9 +138,7 @@ public class Config {
 
             try {
                 parseField(field, instance, category, key, comment);
-            } catch (IllegalArgumentException e) {
-                e.printStackTrace();
-            } catch (IllegalAccessException e) {
+            } catch (IllegalArgumentException | IllegalAccessException e) {
                 e.printStackTrace();
             }
 
@@ -148,7 +148,7 @@ public class Config {
         }
     }
 
-    private void parseField(Field field, Object instance, String category, String key, String comment) throws IllegalArgumentException, IllegalAccessException {
+    private void parseField(@NotNull Field field, @NotNull Object instance, @NotNull String category, @NotNull String key, @Nullable String comment) throws IllegalArgumentException, IllegalAccessException {
         Class<?> type = field.getType();
         //null check or if it is empty
         if (comment == null || comment.isEmpty()) comment = null;
@@ -224,10 +224,10 @@ public class Config {
         }
     }
 
-    private void parseClass(Object instance, Configuration config) {
+    private void parseClass(@NotNull Object instance, @NotNull Configuration config) {
         Class<?> clazz = instance.getClass();
 
-        ConfigurationClass annotation = clazz.getAnnotation(ConfigurationClass.class);
+        @Nullable ConfigurationClass annotation = clazz.getAnnotation(ConfigurationClass.class);
         if (annotation == null) {
             return;
         }

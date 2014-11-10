@@ -45,7 +45,7 @@ apply plugin: 'forge'
 minecraft {
     version = '1.7.10-10.13.1.1224'
     assetDir = '../run/assets'
-    mappings = 'stable_12'
+//    mappings = 'stable_12'
 }
 
 /**if (System.getenv("BUILD_NUMBER") != null) {version = "${minecraft.version}-$version." + System.getenv("BUILD_NUMBER");
