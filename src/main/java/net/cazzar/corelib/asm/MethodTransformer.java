@@ -98,7 +98,7 @@ public abstract class MethodTransformer extends BasicTransformer {
                     continue;
                 }
                 if (m.name.equals(match.getName()) && m.desc.equals(match.getDesc())) {
-                    logger.debug("Removed %1%2 for %3.%4%5", m.name, m.desc, node.name, name, desc);
+                    logger.debug("Removed {}{} for {}.{}{}", m.name, m.desc, node.name, name, desc);
                     i.remove();
                     break;
                 }
