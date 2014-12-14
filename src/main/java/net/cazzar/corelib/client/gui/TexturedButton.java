@@ -161,7 +161,7 @@ public class TexturedButton extends GuiButton {
      * Gets the tooltip of the button.
      *
      * @return the tooltip
-     * @deprecated {@see getTooltipList}
+     * @deprecated {@link #getTooltipList()}
      */
     @Deprecated
     public String getTooltip() {
