@@ -24,9 +24,9 @@
 
 package net.cazzar.corelib.client;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.minecraft.client.renderer.IImageBuffer;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
@@ -56,5 +56,7 @@ public class HDImageBufferDownload implements IImageBuffer {
     }
 
     @Override
-    public void func_152634_a() {}
+    public void skinAvailable() {
+
+    }
 }

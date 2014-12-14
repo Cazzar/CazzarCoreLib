@@ -24,12 +24,13 @@
 
 package net.cazzar.corelib.tile;
 
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
+
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.NetworkManager;
 import net.minecraft.network.Packet;
 import net.minecraft.network.play.server.S35PacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -75,15 +76,15 @@ public abstract class SyncedTileEntity extends TileEntity {
 //            e.printStackTrace();
         }
         addExtraNBTToPacket(tag);
-        return new S35PacketUpdateTileEntity(xCoord, yCoord, zCoord, 0, tag);
+        return new S35PacketUpdateTileEntity(pos, 0, tag);
     }
 
     @Override
     public void onDataPacket(NetworkManager net, S35PacketUpdateTileEntity pkt) {
-        readFromNBT(pkt.func_148857_g());
+        readFromNBT(pkt.getNbtCompound());
         //noinspection unchecked
-        Set<String> keys = pkt.func_148857_g().func_150296_c();
-        Map tagMap = ObfuscationReflectionHelper.getPrivateValue(NBTTagCompound.class, pkt.func_148857_g(), "tagMap", "field_74784_a");
+        Set<String> keys = pkt.getNbtCompound().getKeySet();
+        Map tagMap = ObfuscationReflectionHelper.getPrivateValue(NBTTagCompound.class, pkt.getNbtCompound(), "tagMap", "field_74784_a");
         for (String key : keys) {
             try {
                 Field f = this.getClass().getDeclaredField(key);
@@ -92,7 +93,7 @@ public abstract class SyncedTileEntity extends TileEntity {
 //                e.printStackTrace();
             }
         }
-        readExtraNBTFromPacket(pkt.func_148857_g());
+        readExtraNBTFromPacket(pkt.getNbtCompound());
     }
 
     /**

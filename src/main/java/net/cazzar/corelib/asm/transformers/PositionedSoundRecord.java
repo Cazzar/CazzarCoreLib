@@ -46,6 +46,7 @@ public class PositionedSoundRecord extends MethodTransformer {
         addClass("net.minecraft.client.audio.PositionedSound");
     }
 
+    @SuppressWarnings("OverlyLongMethod")
     @Override
     public void transform(ClassNode node, String transformedName) {
         MethodNode mtd = new MethodNode(ACC_PUBLIC, "hashCode", "()I", null, new String[0]);
@@ -61,7 +62,7 @@ public class PositionedSoundRecord extends MethodTransformer {
         insns.add(new JumpInsnNode(IFEQ, l1));
         insns.add(new VarInsnNode(ALOAD, 0));
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "volume", "F"));
-        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "floatToIntBits", "(F)I"));
+        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "floatToIntBits", "(F)I", false));
         LabelNode l2 = new LabelNode(new Label());
         insns.add(new JumpInsnNode(GOTO, l2));
         insns.add(l1);
@@ -80,7 +81,7 @@ public class PositionedSoundRecord extends MethodTransformer {
         insns.add(new JumpInsnNode(IFEQ, l5));
         insns.add(new VarInsnNode(ALOAD, 0));
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "field_147663_c", "F"));
-        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "floatToIntBits", "(F)I"));
+        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "floatToIntBits", "(F)I", false));
         LabelNode l6 = new LabelNode(new Label());
         insns.add(new JumpInsnNode(GOTO, l6));
         insns.add(l5);
@@ -101,7 +102,7 @@ public class PositionedSoundRecord extends MethodTransformer {
         insns.add(new JumpInsnNode(IFEQ, l8));
         insns.add(new VarInsnNode(ALOAD, 0));
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "xPosF", "F"));
-        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "floatToIntBits", "(F)I"));
+        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "floatToIntBits", "(F)I", false));
         LabelNode l9 = new LabelNode(new Label());
         insns.add(new JumpInsnNode(GOTO, l9));
         insns.add(l8);
@@ -122,7 +123,7 @@ public class PositionedSoundRecord extends MethodTransformer {
         insns.add(new JumpInsnNode(IFEQ, l11));
         insns.add(new VarInsnNode(ALOAD, 0));
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "yPosF", "F"));
-        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "floatToIntBits", "(F)I"));
+        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "floatToIntBits", "(F)I", false));
         LabelNode l12 = new LabelNode(new Label());
         insns.add(new JumpInsnNode(GOTO, l12));
         insns.add(l11);
@@ -143,7 +144,7 @@ public class PositionedSoundRecord extends MethodTransformer {
         insns.add(new JumpInsnNode(IFEQ, l14));
         insns.add(new VarInsnNode(ALOAD, 0));
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "zPosF", "F"));
-        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "floatToIntBits", "(F)I"));
+        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "floatToIntBits", "(F)I", false));
         LabelNode l15 = new LabelNode(new Label());
         insns.add(new JumpInsnNode(GOTO, l15));
         insns.add(l14);
@@ -182,7 +183,7 @@ public class PositionedSoundRecord extends MethodTransformer {
         insns.add(new InsnNode(IMUL));
         insns.add(new VarInsnNode(ALOAD, 0));
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "field_147666_i", "Lnet/minecraft/client/audio/ISound$AttenuationType;"));
-        insns.add(new MethodInsnNode(INVOKEVIRTUAL, "net/minecraft/client/audio/ISound$AttenuationType", "hashCode", "()I"));
+        insns.add(new MethodInsnNode(INVOKEVIRTUAL, "net/minecraft/client/audio/ISound$AttenuationType", "hashCode", "()I", false));
         insns.add(new InsnNode(IADD));
         insns.add(new VarInsnNode(ISTORE, 1));
         insns.add(new VarInsnNode(ILOAD, 1));
@@ -217,7 +218,7 @@ public class PositionedSoundRecord extends MethodTransformer {
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "field_147663_c", "F"));
         insns.add(new VarInsnNode(ALOAD, 0));
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "field_147663_c", "F"));
-        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "compare", "(FF)I"));
+        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "compare", "(FF)I", false));
         LabelNode l4 = new LabelNode(new Label());
         insns.add(new JumpInsnNode(IFEQ, l4));
         insns.add(new InsnNode(ICONST_0));
@@ -237,7 +238,7 @@ public class PositionedSoundRecord extends MethodTransformer {
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "volume", "F"));
         insns.add(new VarInsnNode(ALOAD, 2));
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "volume", "F"));
-        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "compare", "(FF)I"));
+        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "compare", "(FF)I", false));
         LabelNode l7 = new LabelNode(new Label());
         insns.add(new JumpInsnNode(IFEQ, l7));
         insns.add(new InsnNode(ICONST_0));
@@ -248,7 +249,7 @@ public class PositionedSoundRecord extends MethodTransformer {
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "xPosF", "F"));
         insns.add(new VarInsnNode(ALOAD, 2));
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "xPosF", "F"));
-        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "compare", "(FF)I"));
+        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "compare", "(FF)I", false));
         l7 = new LabelNode(new Label());
         insns.add(new JumpInsnNode(IFEQ, l7));
         insns.add(new InsnNode(ICONST_0));
@@ -259,7 +260,7 @@ public class PositionedSoundRecord extends MethodTransformer {
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "yPosF", "F"));
         insns.add(new VarInsnNode(ALOAD, 2));
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "yPosF", "F"));
-        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "compare", "(FF)I"));
+        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "compare", "(FF)I", false));
         l7 = new LabelNode(new Label());
         insns.add(new JumpInsnNode(IFEQ, l7));
         insns.add(new InsnNode(ICONST_0));
@@ -270,7 +271,7 @@ public class PositionedSoundRecord extends MethodTransformer {
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "zPosF", "F"));
         insns.add(new VarInsnNode(ALOAD, 2));
         insns.add(new FieldInsnNode(GETFIELD, "net/minecraft/client/audio/PositionedSound", "zPosF", "F"));
-        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "compare", "(FF)I"));
+        insns.add(new MethodInsnNode(INVOKESTATIC, "java/lang/Float", "compare", "(FF)I", false));
         l7 = new LabelNode(new Label());
         insns.add(new JumpInsnNode(IFEQ, l7));
         insns.add(new InsnNode(ICONST_0));

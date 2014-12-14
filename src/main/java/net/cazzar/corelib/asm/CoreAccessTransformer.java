@@ -24,7 +24,7 @@
 
 package net.cazzar.corelib.asm;
 
-import cpw.mods.fml.common.asm.transformers.AccessTransformer;
+import net.minecraftforge.fml.common.asm.transformers.AccessTransformer;
 
 import java.io.IOException;
 

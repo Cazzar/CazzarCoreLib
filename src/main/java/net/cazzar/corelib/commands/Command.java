@@ -26,6 +26,7 @@ package net.cazzar.corelib.commands;
 
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.util.BlockPos;
 
 import java.util.List;
 
@@ -50,7 +51,7 @@ public abstract class Command implements ICommand {
      * @return the command name
      */
     @Override
-    public final String getCommandName() {
+    public final String getName() {
         return name;
     }
 
@@ -66,7 +67,7 @@ public abstract class Command implements ICommand {
      */
 
     @Override
-    public List getCommandAliases() {
+    public List getAliases() {
         return null;
     }
 
@@ -76,22 +77,21 @@ public abstract class Command implements ICommand {
      * @return true if the given command sender is allowed to use this command.
      */
     @Override
-    public boolean canCommandSenderUseCommand(ICommandSender icommandsender) {
+    public boolean canCommandSenderUse(ICommandSender sender) {
         return true;
     }
 
     /**
      * Adds the strings available in this command to the given list of tab completion options.
      *
-     * @param icommandsender the sender of the command
-     * @param astring        the current params of the command
+     * @param sender the sender of the command
+     * @param args the current params of the command
+     * @param pos The position of the command sender
      *
      * @return the tab completion list of the command
      */
     @Override
-    public List addTabCompletionOptions(ICommandSender icommandsender, String[] astring) {
-        return null;
-    }
+    public List addTabCompletionOptions(ICommandSender sender, String[] args, BlockPos pos) {return null;}
 
     /**
      * @param astring the current params of the command

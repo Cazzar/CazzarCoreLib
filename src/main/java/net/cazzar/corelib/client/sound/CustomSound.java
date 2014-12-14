@@ -24,13 +24,16 @@
 
 package net.cazzar.corelib.client.sound;
 
+import com.google.common.base.Preconditions;
 import net.minecraft.client.audio.ISound;
 import net.minecraft.util.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
 
 public class CustomSound implements ISound {
     private float volume;
-    private @NotNull ResourceLocation resource;
+    private
+    @NotNull
+    ResourceLocation resource;
     private boolean repeat;
     private int repeatDelay;
     private float pitch;
@@ -39,7 +42,7 @@ public class CustomSound implements ISound {
     public CustomSound(float volume, @NotNull ResourceLocation resource, boolean repeat, int repeatDelay, float pitch, float xPos, float yPos, float zPos) {
         this.volume = volume;
         this.resource = resource;
-        this.repeat = repeat;
+        this.repeat = Preconditions.checkNotNull(repeat);
         this.repeatDelay = repeatDelay;
         this.pitch = pitch;
         this.xPos = xPos;
@@ -49,7 +52,7 @@ public class CustomSound implements ISound {
 
 
     @Override
-    public ResourceLocation getPositionedSoundLocation() {
+    public ResourceLocation getSoundLocation() {
         return resource;
     }
 
@@ -98,23 +101,16 @@ public class CustomSound implements ISound {
         if (this == o) return true;
         if (!(o instanceof CustomSound)) return false;
 
-        CustomSound that = (CustomSound) o;
+        CustomSound other = (CustomSound) o;
 
-        return Float.compare(that.pitch, pitch) == 0 &&
-                repeat == that.repeat &&
-                repeatDelay == that.repeatDelay &&
-                Float.compare(that.volume, volume) == 0 &&
-                Float.compare(that.xPos, xPos) == 0 &&
-                Float.compare(that.yPos, yPos) == 0 &&
-                Float.compare(that.zPos, zPos) == 0 &&
-                !(resource != null ? !resource.equals(that.resource) : that.resource != null);
+        return Float.compare(other.pitch, pitch) == 0 && repeat == other.repeat && repeatDelay == other.repeatDelay && Float.compare(other.volume, volume) == 0 && Float.compare(other.xPos, xPos) == 0 && Float.compare(other.yPos, yPos) == 0 && Float.compare(other.zPos, zPos) == 0 && !(!resource.equals(other.resource));
 
     }
 
     @Override
     public int hashCode() {
         int result = (volume != +0.0f ? Float.floatToIntBits(volume) : 0);
-        result = 31 * result + (resource != null ? resource.hashCode() : 0);
+        result = 31 * result + (resource.hashCode());
         result = 31 * result + (repeat ? 1 : 0);
         result = 31 * result + repeatDelay;
         result = 31 * result + (pitch != +0.0f ? Float.floatToIntBits(pitch) : 0);

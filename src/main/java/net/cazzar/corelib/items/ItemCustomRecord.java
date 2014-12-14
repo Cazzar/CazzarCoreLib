@@ -24,14 +24,14 @@
 
 package net.cazzar.corelib.items;
 
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
-import net.minecraft.client.renderer.texture.IIconRegister;
+
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.item.ItemRecord;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -76,8 +76,7 @@ public class ItemCustomRecord extends ItemRecord {
     @SuppressWarnings({"rawtypes", "unchecked"})
     @Override
     @SideOnly(Side.CLIENT)
-    public void addInformation(ItemStack is, EntityPlayer par2EntityPlayer,
-                               List list, boolean par4) {
+    public void addInformation(ItemStack is, EntityPlayer par2EntityPlayer, List list, boolean par4) {
         list.add(getRecordNameLocal());
         addAll(list, details);
     }
@@ -86,7 +85,7 @@ public class ItemCustomRecord extends ItemRecord {
     @SideOnly(Side.CLIENT)
     public EnumRarity getRarity(ItemStack par1ItemStack) {
         if (rarity == null) {
-            return EnumRarity.rare;
+            return EnumRarity.RARE;
         }
         return rarity;
     }
@@ -117,12 +116,6 @@ public class ItemCustomRecord extends ItemRecord {
     @SideOnly(Side.CLIENT)
     public void setRarity(@NotNull EnumRarity rarity) {
         this.rarity = rarity;
-    }
-
-    @Override
-    public void registerIcons(IIconRegister par1IconRegister) {
-//        super.registerIcons(par1IconRegister);
-        itemIcon = par1IconRegister.registerIcon(domain + ":records." + recordName);
     }
 
     public ItemCustomRecord setDomain(@NotNull String domain) {

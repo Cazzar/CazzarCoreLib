@@ -25,7 +25,6 @@
 package net.cazzar.corelib.client.gui;
 
 import net.minecraft.client.Minecraft;
-import net.minecraft.client.renderer.Tessellator;
 import net.minecraft.util.ResourceLocation;
 
 public class GuiCheckBox extends GuiButton {
@@ -50,10 +49,9 @@ public class GuiCheckBox extends GuiButton {
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY) {
         mc.renderEngine.bindTexture(texture);
-        final Tessellator tess = Tessellator.instance;
 
         drawTexturedModalRect(xPosition, yPosition, checked ? 0 : 22, 0, 22, 22);
-        drawString(mc.fontRenderer, displayString, xPosition + 23, yPosition + 7, 0x404040);
+        drawString(mc.fontRendererObj, displayString, xPosition + 23, yPosition + 7, 0x404040);
     }
 
 
@@ -63,7 +61,7 @@ public class GuiCheckBox extends GuiButton {
                 && mouseY > yPosition && mouseY < (yPosition + 22)) {
             //Toggle check state
             this.checked = !this.checked;
-            func_146113_a(mc.getSoundHandler());
+            playPressSound(mc.getSoundHandler());
         }
         return false;
     }

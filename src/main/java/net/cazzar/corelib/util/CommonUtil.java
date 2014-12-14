@@ -28,10 +28,8 @@
 package net.cazzar.corelib.util;
 
 import com.google.common.collect.Lists;
-import cpw.mods.fml.common.FMLCommonHandler;
-import cpw.mods.fml.relauncher.Side;
-import net.minecraft.block.Block;
-import net.minecraft.world.IBlockAccess;
+import net.minecraftforge.fml.common.FMLCommonHandler;
+import net.minecraftforge.fml.relauncher.Side;
 
 import java.util.List;
 
@@ -93,6 +91,7 @@ public class CommonUtil {
         return last;
     }
 
+/*
     @SuppressWarnings({"OverlyComplexMethod", "OverlyLongMethod"})
     public static int getTextureID(IBlockAccess world, int x, int y, int z, int side) {
         boolean[] bitMatrix = new boolean[8];
@@ -148,5 +147,6 @@ public class CommonUtil {
                                                  22, 26, 7, 7, 24, 24, 7, 7, 10, 10, 29, 29, 44, 41, 29, 29, 39, 33, 4,
                                                  4, 5, 5, 4, 4, 5, 5, 9, 9, 30, 12, 9, 9, 30, 12, 7, 7, 24, 24, 7, 7,
                                                  10, 10, 8, 8, 36, 35, 8, 8, 34, 11};
+*/
 
 }

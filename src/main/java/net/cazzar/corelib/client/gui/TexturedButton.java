@@ -24,17 +24,21 @@
 
 package net.cazzar.corelib.client.gui;
 
-import cpw.mods.fml.relauncher.ReflectionHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import com.google.common.base.Joiner;
+import com.google.common.collect.Lists;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreen;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.NotNull;
 import org.lwjgl.opengl.GL11;
 
 import java.lang.reflect.Method;
+import java.util.List;
 
 //import net.minecraft.client.gui.GuiButton;
 
@@ -47,7 +51,7 @@ public class TexturedButton extends GuiButton {
     private int xOffset, yOffset, yOffsetForDisabled,
             xOffsetForDisabled, xOffsetForHovered, yOffsetForHovered;
 //    private final GuiContainer gui;
-    private String tooltip;
+    private List<String> tooltip;
 
     public TexturedButton() {
         super();
@@ -84,7 +88,7 @@ public class TexturedButton extends GuiButton {
         this.yOffsetForDisabled = yOffsetForDisabled;
         this.xOffsetForHovered = xOffsetForHovered;
         this.yOffsetForHovered = yOffsetForHovered;
-        this.tooltip = "";
+        this.tooltip = Lists.newArrayList();
     }
 
     @Override
@@ -99,7 +103,7 @@ public class TexturedButton extends GuiButton {
             //field_146121_g = height
 //            field_146123_n = x >= xPosition && y >= yPosition && x < xPosition + width && y < yPosition + height;
 
-            switch (getHoverState(field_146123_n)) {
+            switch (getHoverState(hovered)) {
                 case 0:
                     // Disabled
                     drawTexturedModalRect(xPosition, yPosition, xOffsetForDisabled, yOffsetForDisabled, width, height);
@@ -126,8 +130,8 @@ public class TexturedButton extends GuiButton {
         try {
             if (drawCreativeTabText == null)
                 drawCreativeTabText = ReflectionHelper.findMethod(GuiScreen.class, getOwner(),
-                        new String[]{"drawCreativeTabHoveringText", "func_146279_a"},
-                        String.class, int.class, int.class);
+                        new String[]{"drawHoveringText", "func_146283_a"},
+                        List.class, int.class, int.class);
 
             drawCreativeTabText.invoke(getOwner(), tooltip, x, y);
         } catch (Exception e) {
@@ -157,8 +161,19 @@ public class TexturedButton extends GuiButton {
      * Gets the tooltip of the button.
      *
      * @return the tooltip
+     * @deprecated {@see getTooltipList}
      */
+    @Deprecated
     public String getTooltip() {
+        return Joiner.on('\n').join(tooltip);
+    }
+
+    /**
+     * Gets the tooltip of the button.
+     *
+     * @return the tooltip
+     */
+    public List<String> getTooltipList() {
         return tooltip;
     }
 
@@ -168,8 +183,13 @@ public class TexturedButton extends GuiButton {
      * @param tooltip the new tooltip
      */
     public void setTooltip(String tooltip) {
-        this.tooltip = tooltip;
+        this.tooltip = Lists.newArrayList(tooltip.split("\n"));
     }
+
+    public void setTooltip(String... tooltip) {
+        this.tooltip = Lists.newArrayList(tooltip);
+    }
+
     @NotNull
     public TexturedButton setDisabledOffsets(int x, int y) {
         xOffsetForDisabled = x;

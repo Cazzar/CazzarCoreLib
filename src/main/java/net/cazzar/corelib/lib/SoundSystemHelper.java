@@ -27,19 +27,19 @@ package net.cazzar.corelib.lib;
 import com.google.common.collect.BiMap;
 import com.google.common.collect.HashBiMap;
 import com.google.common.collect.Lists;
-import cpw.mods.fml.common.ObfuscationReflectionHelper;
-import cpw.mods.fml.relauncher.ReflectionHelper;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 import net.cazzar.corelib.client.sound.CustomSound;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.audio.*;
 import net.minecraft.client.renderer.RenderGlobal;
 import net.minecraft.entity.Entity;
 import net.minecraft.item.ItemRecord;
-import net.minecraft.util.ChunkCoordinates;
+import net.minecraft.util.BlockPos;
 import net.minecraft.util.MathHelper;
 import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.fml.common.ObfuscationReflectionHelper;
+import net.minecraftforge.fml.relauncher.ReflectionHelper;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
 import org.jetbrains.annotations.Nullable;
 import paulscode.sound.SoundSystem;
 
@@ -105,7 +105,7 @@ public class SoundSystemHelper {
             return;
         }
 
-        SoundPoolEntry soundpoolentry = sound.func_148720_g();
+        SoundPoolEntry soundpoolentry = sound.cloneEntry();
 
         SoundCategory soundcategory = sound.getSoundCategory();
         float volume = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, MAX_VOLUME);
@@ -123,7 +123,7 @@ public class SoundSystemHelper {
             return; // do not break the game
         }
 
-        getSoundManager().addDelayedSound(customSound, 1);
+        getSoundManager().playDelayedSound(customSound, 1);
     }
     @Nullable
     public static String getIdentifierForRecord(ItemRecord record, int x, int y, int z) {
@@ -137,7 +137,7 @@ public class SoundSystemHelper {
             return null;
         }
 
-        SoundPoolEntry soundpoolentry = sound.func_148720_g();
+        SoundPoolEntry soundpoolentry = sound.cloneEntry();
 
         SoundCategory soundcategory = sound.getSoundCategory();
         float volume = (float) MathHelper.clamp_double((double) f1 * soundpoolentry.getVolume() * (double) mc().gameSettings.getSoundLevel(soundcategory), 0.0D, MAX_VOLUME);
@@ -167,7 +167,7 @@ public class SoundSystemHelper {
      *
      * @param world the world that it is playing in
      */
-    public static void stop(RenderGlobal world, ChunkCoordinates chunkCoordinates) {
+    public static void stop(RenderGlobal world, BlockPos chunkCoordinates) {
         ISound sound = getSoundForChunkCoordinates(world, chunkCoordinates);
         if (sound != null)
             getSoundSystem().stop(getChannel(sound));
@@ -191,7 +191,7 @@ public class SoundSystemHelper {
      * @param coordinates the coordinates of the "player"
      * @return if the {@link SoundSystem} is playing with that identifier.
      */
-    public static boolean isPlaying(RenderGlobal world, ChunkCoordinates coordinates) {
+    public static boolean isPlaying(RenderGlobal world, BlockPos coordinates) {
         ISound sound = getSoundForChunkCoordinates(world, coordinates);
         return sound != null && getSoundSystem().playing(getChannel(sound));
         //        return sound != null && getSoundHandler().isSoundPlaying(sound);
@@ -223,8 +223,7 @@ public class SoundSystemHelper {
     }
 
     @SideOnly(Side.CLIENT)
-    public static ISound getSoundForChunkCoordinates(RenderGlobal world, ChunkCoordinates coords) {
-//        Map<ChunkCoordinates, ISound> mapSoundPositions = ObfuscationReflectionHelper.getPrivateValue(RenderGlobal.class, world, "field_147593_P", "mapSoundPositions");
+    public static ISound getSoundForChunkCoordinates(RenderGlobal world, BlockPos coords) {
         return (ISound) world.mapSoundPositions.get(coords);
     }
 

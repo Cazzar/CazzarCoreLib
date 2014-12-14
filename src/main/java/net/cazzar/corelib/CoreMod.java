@@ -27,11 +27,12 @@
  */
 package net.cazzar.corelib;
 
-import cpw.mods.fml.common.CertificateHelper;
-import cpw.mods.fml.relauncher.IFMLCallHook;
-import cpw.mods.fml.relauncher.IFMLLoadingPlugin;
+
 import net.cazzar.corelib.asm.McpMappings;
 import net.cazzar.corelib.lib.LogHelper;
+import net.minecraftforge.fml.common.CertificateHelper;
+import net.minecraftforge.fml.relauncher.IFMLCallHook;
+import net.minecraftforge.fml.relauncher.IFMLLoadingPlugin;
 
 import java.io.File;
 import java.lang.reflect.Field;
@@ -43,7 +44,7 @@ import java.util.Map;
  * The FML coremod for the plugin also containing information about Deobf and minecraft's running location
  */
 @SuppressWarnings("CanBeFinal")
-@IFMLLoadingPlugin.TransformerExclusions("net.cazzar.corelib.asm.*")
+@IFMLLoadingPlugin.TransformerExclusions({"net.cazzar.corelib.asm.*", "net.cazzar.corelib.asm.transformers.*"})
 public class CoreMod implements IFMLLoadingPlugin, IFMLCallHook {
     private static final String FINGERPRINT = "B6:9D:73:36:FB:E4:C3:E9:72:79:EB:3E:E3:19:9F:00:9A:90:34:75".toLowerCase().replace(":", "");
     @SuppressWarnings("FieldCanBeLocal")
