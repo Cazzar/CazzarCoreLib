@@ -93,7 +93,7 @@ public class TexturedButton extends GuiButton {
 
     @Override
     //drawButton
-    public void drawButton(@NotNull Minecraft mc, int x, int y) {
+    public void drawButton(@NotNull Minecraft mc, int mouseX, int mouseY) {
         if (visible) {
             mc.renderEngine.bindTexture(textureFile);
             GL11.glColor4f(1.0F, 1.0F, 1.0F, 1.0F);
@@ -102,6 +102,8 @@ public class TexturedButton extends GuiButton {
             //field_146120_f = width
             //field_146121_g = height
 //            field_146123_n = x >= xPosition && y >= yPosition && x < xPosition + width && y < yPosition + height;
+            this.hovered = mouseX >= this.xPosition && mouseY >= this.yPosition && mouseX < this.xPosition + this.width && mouseY < this.yPosition + this.height;
+
 
             switch (getHoverState(hovered)) {
                 case 0:
