@@ -55,6 +55,7 @@ public class TexturedButton extends GuiButton {
 
     public TexturedButton() {
         super();
+        this.tooltip = Lists.newArrayList();
     }
 
     /**
